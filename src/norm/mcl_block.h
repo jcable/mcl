@@ -63,7 +63,7 @@ public:
 	/****** Public Members ************************************************/
 	/*
 	 * There is no default constructor for performance reasons...
-	 * The class is assumed to be manually reset to 0 after creation.
+	 * The  is assumed to be manually reset to 0 after creation.
 	 * see mcl_adu::segment_for_tx()
 	 */
 
@@ -114,12 +114,12 @@ public:
 	/**
 	 * Set the head of the DU ordered list.
 	 */
-	void		set_du_head (class mcl_du *const du);
+	void		set_du_head ( mcl_du *const du);
 
 	/**
 	 * Get the head of the DU ordered list.
 	 */
-	class mcl_du	*get_du_head () const;
+	 mcl_du	*get_du_head () const;
 
 	/**
 	 * Insert a DU in the data DU ordered list.
@@ -128,25 +128,25 @@ public:
 	 * 		in list or if an error occured
 	 */
 	mcl_error_status  insert_in_du_list (mcl_cb		*const mclcb,
-					     class mcl_du	*du);
+					      mcl_du	*du);
 
 	/**
 	 * Set the head of the FEC DU ordered list.
 	 * @param du	new DU head
 	 */
-	void		set_fec_du_head (class mcl_du *const du);
+	void		set_fec_du_head ( mcl_du *const du);
 
 	/**
 	 * Get the head of the FEC DU ordered list.
 	 * @return	head
 	 */
-	class mcl_du	*get_fec_du_head () const;
+	 mcl_du	*get_fec_du_head () const;
 
 	/**
 	 * Get the tail of the FEC DU ordered list.
 	 * @return	tail
 	 */
-	class mcl_du	*get_fec_du_tail () const;
+	 mcl_du	*get_fec_du_tail () const;
 
 	/**
 	 * Insert a DU in the FEC DU ordered list.
@@ -155,7 +155,7 @@ public:
 	 * 		in list or if an error occured
 	 */
 	mcl_error_status  insert_in_fec_du_list (mcl_cb		*const mclcb,
-						 class mcl_du	*du);
+						  mcl_du	*du);
 
 	/**
 	 * Remove and free all data DUs of the list.
@@ -182,7 +182,7 @@ public:
 	INT32		get_fec_du_nb_in_list ();
 
 	/****** Public Attributes *********************************************/
-  	class mcl_adu	*adu;		// ADU to which this block belongs
+  	 mcl_adu	*adu;		// ADU to which this block belongs
 	UINT32		seq;		// block sequence number
 	INT32		len;		// number of bytes in this block
 
@@ -196,8 +196,8 @@ private:
 	/*
 	 * DU lists
 	 */
- 	class mcl_du	*du_head;	// first DU of this block in list/tab
-	class mcl_du	*fec_du_head;	// first FEC DU of this block in list
+ 	 mcl_du	*du_head;	// first DU of this block in list/tab
+	 mcl_du	*fec_du_head;	// first FEC DU of this block in list
 	INT32		du_in_list;	// nb of non-FEC DUs avail (!= du_nb)
 	INT32		fec_du_in_list;	// nb of FEC DUs available in list
 
@@ -208,35 +208,35 @@ private:
 
 
 //------------------------------------------------------------------------------
-// Inlines for all classes follow
+// Inlines for all es follow
 //------------------------------------------------------------------------------
 
 inline void
-mcl_block::set_du_head (class mcl_du	*const du)
+mcl_block::set_du_head ( mcl_du	*const du)
 {
 	this->du_head = du;
 }
 
-inline class mcl_du *
+inline  mcl_du *
 mcl_block::get_du_head () const
 {
 	return this->du_head;
 }
 
 inline void
-mcl_block::set_fec_du_head (class mcl_du	*const du)
+mcl_block::set_fec_du_head ( mcl_du	*const du)
 {
 	ASSERT(du);
 	this->fec_du_head = du;
 }
 
-inline class mcl_du *
+inline  mcl_du *
 mcl_block::get_fec_du_head () const
 {
 	return this->fec_du_head;
 }
 
-inline class mcl_du *
+inline  mcl_du *
 mcl_block::get_fec_du_tail () const
 {
 	if (this->fec_du_head)
@@ -272,7 +272,7 @@ mcl_block::set_rx_status (mcl_block_rx_status	new_status)
 
 inline mcl_error_status
 mcl_block::insert_in_du_list (mcl_cb	*const mclcb,
-			      class mcl_du	*du)
+			       mcl_du	*du)
 {
 	if (du->insert_in_list(mclcb, &(this->du_head)) == MCL_OK) {
 		this->du_in_list++;
@@ -283,7 +283,7 @@ mcl_block::insert_in_du_list (mcl_cb	*const mclcb,
 
 inline mcl_error_status
 mcl_block::insert_in_fec_du_list (mcl_cb	*const mclcb,
-				  class mcl_du	*du)
+				   mcl_du	*du)
 {
 	if (du->insert_in_list(mclcb, &(this->fec_du_head)) == MCL_OK) {
 		this->fec_du_in_list++;

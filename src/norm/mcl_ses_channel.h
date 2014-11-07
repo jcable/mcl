@@ -104,7 +104,7 @@ public:
 	 * @return Completion status (MCL_OK or MCL_ERROR).
 	 */
 	mcl_error_status
-	mcl_ses_channel::send_pkt (mcl_cb		*const mclcb,
+	send_pkt (mcl_cb		*const mclcb,
 				   //mcl_addr		*const addr,
 				   mcl_addr		const addr,
 				   norm_common_hdr_t	*const hdr,

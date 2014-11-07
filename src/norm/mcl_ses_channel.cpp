@@ -241,7 +241,7 @@ mcl_ses_channel::recv_pkt (mcl_cb *const mclcb)
 {
 	mcl_rx_pkt	*pkt;		// recv'd packet buffer
 	struct sockaddr	saddr;		// buffer for src addr
-	INT32		saddr_len;	// buffer for src addr len
+	socklen_t	saddr_len;	// buffer for src addr len
 	mcl_addr	addr;		// class for src addr
 	INT32		n;
 	fd_set		tmp_fds;
@@ -310,9 +310,6 @@ again:
 			if ((pkt->pkt_len = recvfrom(this->ses_sock,
 					pkt->get_buf(), pkt->get_buf_len(),
 					0, &saddr,
-#ifndef SOLARIS				/* linux: uint, solaris: int */
-					(size_t*)
-#endif
 					&saddr_len)) < 0) {
 				/* we are in non-blocking mode! */
 #ifdef SOLARIS	/* cannot check errno reliably on Solaris! don't know why!!! */
@@ -369,9 +366,6 @@ again:
 			if ((pkt->pkt_len = recvfrom(this->priv_sock,
 					pkt->get_buf(), pkt->get_buf_len(),
 					0, &saddr,
-#ifndef SOLARIS				/* linux => uint, solaris => int */
-					(size_t*)
-#endif
 					&saddr_len)) < 0) {
 
 
@@ -501,7 +495,7 @@ mcl_ses_channel::sock_init (mcl_cb		*const mclcb)
 	struct ip_mreq		imr;		/* ... to join mcast group */
 	struct in_addr		if_addr;	/* interface IP address */
 	struct sockaddr_in	tmp_addr;	/* temporary addr */
-	INT32			tmp_len;	/* temporary addr length */
+	socklen_t		tmp_len;	/* temporary addr length */
 	INT32			sock_size;	/* socket size */
 	INT32			mode = 0;	// tx/rx mode
 
@@ -627,9 +621,6 @@ mcl_ses_channel::sock_init (mcl_cb		*const mclcb)
 	tmp_len = sizeof(tmp_addr);
 	if (this->priv_sock > 0 &&
 	    getsockname(this->priv_sock, (struct sockaddr *)&tmp_addr,
-#ifndef SOLARIS
-			(size_t*) /* linux => uint, solaris => int */
-#endif
 			&tmp_len) < 0) {
 		perror("mcl_ses_channel::sock_init: getsockname");
 		goto error;

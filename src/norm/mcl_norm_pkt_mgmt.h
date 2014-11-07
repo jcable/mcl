@@ -239,7 +239,7 @@ public:
 	 * @return	the header length or <= 0 in case of error
 	 */
 	INT32
-	mcl_norm_pkt_mgmt::create_nack_hdr (mcl_cb		*const mclcb,
+	create_nack_hdr (mcl_cb		*const mclcb,
 					    norm_common_hdr_t	**hdr,
 					    UINT32		adu_id,
 					    UINT32		blk_id,

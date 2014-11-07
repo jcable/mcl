@@ -22,6 +22,10 @@
 #ifndef MCL_ADU_H
 #define MCL_ADU_H
 
+
+class mcl_block;
+class mcl_cb;
+class mcl_du;
 #include "mcl_norm_pkt_mgmt.h"		// for mcl_data_hdr_infos_t definition
 
 
@@ -77,7 +81,7 @@ public:
 	 * 			contains dest addr otherwise.
 	 * 			Contains sender's addr at a receiver.
 	 */
-	mcl_adu (class mcl_cb	*const mclcb,
+	mcl_adu (mcl_cb	*const mclcb,
 		 //mcl_tx_or_rx	tx_or_rx,
 		 INT32		const alen,
 		 mcl_addr	const* saddr);
@@ -85,7 +89,7 @@ public:
 	/**
 	 * Default constructor used by the receiver.
 	 */
-	mcl_adu (class mcl_cb		*const mclcb,
+	mcl_adu (mcl_cb		*const mclcb,
 		 mcl_data_hdr_infos_t	const* dhdr_infos,
 		 mcl_addr		const* saddr);
 	/**
@@ -99,7 +103,7 @@ public:
 	 * the data and FEC DUs they contain.
 	 * Used by sender and receiver.
 	 */
-	void		remove_and_free_all_buffers (class mcl_cb *const mclcb);
+	void		remove_and_free_all_buffers (mcl_cb *const mclcb);
 
 	/**
 	 * Returns the adu seq number.
@@ -211,7 +215,7 @@ public:
 	 * Return the head of the block list for this adu.
 	 * This info is read-only (initialized at adu creation).
 	 */
-	class mcl_block	*get_block_head () const;
+	mcl_block	*get_block_head () const;
 
 	/**
 	 * Return the number of blocks for this adu.
@@ -225,7 +229,7 @@ public:
 	 * @param bseq	block sequence number
 	 * @return	returns a pointer to the block if found, NULL otherwise
 	 */
-	class mcl_block	*find_block (mcl_cb	*const mclcb,
+	mcl_block	*find_block (mcl_cb	*const mclcb,
 				     UINT32	seq);
 
 	/**
@@ -300,7 +304,7 @@ private:
 	INT32		padded_len;	// len with optional 0 padding
 	INT32		full_size_block_len; // lenght in bytes of a full size
 					// block if any, else size of 1st blk
-	class mcl_block	*block_head;	// first block of this ADU in list
+	mcl_block	*block_head;	// first block of this ADU in list
 	INT32		block_nb;	// number of blocks in this ADU
 	/* fields only used by the sender */
 	char		*data;		// ptr to data buffer */

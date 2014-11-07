@@ -772,3 +772,23 @@ fatal_error:
 	return -1;	/* unreachable; avoid a compiler warning */
 }
 
+INT32
+mcl_fec::get_pending_fec_creation_req (mcl_block        *blk)
+{
+        return (blk->pending_fec_creation_req);
+}
+
+void
+mcl_fec::incr_pending_fec_creation_req (mcl_block       *blk,
+                                        INT32           fec_to_create)
+{
+        blk->pending_fec_creation_req += fec_to_create;
+}
+
+void
+mcl_fec::decr_pending_fec_creation_req (mcl_block       *blk,
+                                        INT32           fec_created)
+{
+        blk->pending_fec_creation_req -= fec_created;
+}
+

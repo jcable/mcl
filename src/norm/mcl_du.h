@@ -22,6 +22,7 @@
 #ifndef MCL_DU_H
 #define MCL_DU_H
 
+class mcl_block;
 
 /**
  * Data Unit (DU)

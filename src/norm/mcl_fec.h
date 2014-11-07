@@ -22,6 +22,8 @@
 #ifndef MCL_FEC_H
 #define MCL_FEC_H
 
+class mcl_block;
+
 /*
  * Simplified synchronous FEC class.
  * Encoding is performed in the current thread rather than in a dedicated
@@ -337,26 +339,6 @@ inline float
 mcl_fec::get_fec_ratio () const
 {
 	return ((double)this->get_n() / (double)this->get_k());
-}
-
-inline INT32
-mcl_fec::get_pending_fec_creation_req (mcl_block	*blk)
-{
-	return (blk->pending_fec_creation_req);
-}
-
-inline void
-mcl_fec::incr_pending_fec_creation_req (mcl_block	*blk,
-					INT32		fec_to_create)
-{
-	blk->pending_fec_creation_req += fec_to_create;
-}
-
-inline void
-mcl_fec::decr_pending_fec_creation_req (mcl_block	*blk,
-					INT32		fec_created)
-{
-	blk->pending_fec_creation_req -= fec_created;
 }
 
 #endif // MCL_FEC_H

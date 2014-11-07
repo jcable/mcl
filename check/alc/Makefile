@@ -20,7 +20,7 @@ ifeq (${OS},linux)
 	# codec in use: if LDPC is used, then add the libbdpc.a library.
 	#
 	#LIBRARIES = -lc -lm -lpthread ${BINDIR}/libmclalc.a
-	LIBRARIES = -lc -lm -lpthread ${BINDIR}/libmclalc.a ${LDPC_BINDIR}/libldpc.a
+	LIBRARIES = -L${BINDIR} -lmclalc -lldpc -lc -lm -lpthread 
 endif
 
 ifeq (${OS},solaris)

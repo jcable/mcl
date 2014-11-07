@@ -147,7 +147,7 @@ void
 mcl_process_pkt (mcl_cb*	mclcb,
 		 mcl_rx_pkt	*pkt,	/* recv'd pkt */
 		 mcl_addr	*saddr,	/* src addr */
-		 int		layer)
+		 INT32		layer)
 {
 	hdr_infos_t	hdr_infos;	/* info extracted from the LCT header */
 	du_t		*du;		/* DU descriptor of the data buf */

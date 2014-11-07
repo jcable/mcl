@@ -45,8 +45,8 @@ FluteFDT::FluteFDT(class flute_cb * flutecb)
         XMLString::transcode("XML 1.0 XML 2.0 Range 2.0 Traversal 2.0", tempStr, 99);
         impl = DOMImplementationRegistry::getDOMImplementation(tempStr);
 	
-	/* Initialize the dom_builder */	
-	dom_builder = ((DOMImplementationLS*)impl)->createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
+    /* Initialize the dom parser */
+    dom_parser = ((DOMImplementationLS*)impl)->createLSParser(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
 
 	/* I create a new document with FDT as root element */
 	XMLString::transcode("FDT", tempStr, 99);
@@ -326,8 +326,8 @@ void FluteFDT::updateFDT(char* xmlfdtinstance, unsigned int length)
 #endif
 
 		/*Then build the DOM tree*/
-          	const DOMInputSource* domIS = new Wrapper4InputSource(new MemBufInputSource((const XMLByte *) xmlfdtinstance,length, tempStr));
-		fdtinstance = dom_builder->parse(*domIS);
+        const DOMLSInput* domIS = new Wrapper4InputSource(new MemBufInputSource((const XMLByte *) xmlfdtinstance,length, tempStr));
+        fdtinstance = dom_parser->parse(domIS);
 		delete domIS;
 
         }
@@ -762,14 +762,15 @@ unsigned int FluteFDT::getFinalFDTInstance(XERCES_CPP_NAMESPACE_QUALIFIER DOMDoc
 			return 0;
 	}
 
-	DOMWriter* theSerializer = ((DOMImplementationLS*)impl)->createDOMWriter();
-
+    DOMLSSerializer* theSerializer = ((DOMImplementationLS*)impl)->createLSSerializer();
 	XMLString::transcode("UTF-8", tempStr2, 99);
-	theSerializer->setEncoding(tempStr2);
-	
+    DOMLSOutput* theOutputDesc = ((DOMImplementationLS*)impl)->createLSOutput();
+    theOutputDesc->setEncoding(tempStr2);
+
 	MemBufFormatTarget *  target = new MemBufFormatTarget(FLUTE_MAX_FDT_SIZE);
-	
-	theSerializer->writeNode(target,*fdtinstance);
+    theOutputDesc->setByteStream(target);
+
+    theSerializer->write(fdtinstance, theOutputDesc);
 
 	len = target->getLen();
 	

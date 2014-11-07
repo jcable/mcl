@@ -40,7 +40,7 @@ static int	extract_addr	(char *addr_string, struct sockaddr **addr,
 /*
  * global variables common to ALC / NORM
  */
-int		id = 0;
+INT32		id = 0;
 int		verbose = 0;
 int		stats = 0;
 struct sockaddr	*addr = NULL;		/* session address (IPv4 or IPv6) */
@@ -162,7 +162,7 @@ main (int argc, char *argv[])
 
 #if defined(ALC)
 	if (nb_layers > 0) {
-		err += mcl_ctl(id, MCL_OPT_LAYER_NB, (void*)&nb_layers, sizeof(int));
+		err += mcl_ctl(id, MCL_OPT_LAYER_NB, (void*)&nb_layers, sizeof(INT32));
 		EXIT_ON_ERROR(err, ("Fcast: ERROR, mcl_ctl failed for LAYER_NB\n"))
 	}
 #endif /* RM_PROTOCOL */

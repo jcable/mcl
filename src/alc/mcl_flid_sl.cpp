@@ -134,7 +134,7 @@ FLIDs_NewTimeSlot (mcl_cb	*mclcb)
  * Build the FLID-SL header for each packet to send.
  * => See header file for more informations.
  */
-INT32
+int
 FLIDs_tx_FillHeader (mcl_cb		*mclcb,
 		     flids_hdr_t	*hdr_buff,
 		     UINT8		grp_idx)
@@ -176,7 +176,7 @@ FLIDs_tx_FillHeader (mcl_cb		*mclcb,
  * Analyze the packet FLID-SL header.
  * => See header file for more informations.
  */
-INT32
+int
 FLIDs_rx_AnalyzePacket (mcl_cb		*mclcb,
 			flids_hdr_t	*hdr_buff)
 {
@@ -394,7 +394,7 @@ error:
 /**
  * Return NEW CURRENT TSI...
  */
-static int
+static INT32
 CheckSequence (mcl_cb	*mclcb,
 		UINT8	layer,
 		UINT16	seqid,
@@ -488,7 +488,7 @@ CheckSequence (mcl_cb	*mclcb,
 /**
  * A packet is late, remember there is one.
  */
-static int
+static INT32
 AddLate (mcl_cb	*mclcb,
 	INT32	layer,
 	INT32	nseq)
@@ -506,7 +506,7 @@ AddLate (mcl_cb	*mclcb,
 /**
  * We finally received the delayed packet.
  */
-static int
+static INT32
 RemoveLate (mcl_cb	*mclcb,
 		INT32	layer,
 		INT32	nseq)

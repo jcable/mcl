@@ -74,9 +74,9 @@ extern INT32	mcl_open	(const char *mode);
  * @param  id	MCL session identifier
  * @return	returns 0 if ok, or < 0 in case of error
  */
-extern INT32	mcl_close	(INT32 id);
+extern int	mcl_close	(INT32 id);
 
-extern INT32	mcl_abort	(INT32 id);
+extern int	mcl_abort	(INT32 id);
 
 /**
  * Get or set control parameters for the session.
@@ -94,7 +94,7 @@ extern INT32	mcl_abort	(INT32 id);
  * @param optlen	the length in bytes of the associated value field
  * @return		returns 0 if ok, or < 0 in case of error
  */
-extern INT32	mcl_ctl		(INT32 id, INT32 optname, void *optvalue,
+extern int	mcl_ctl		(INT32 id, INT32 optname, void *optvalue,
 				 INT32 optlen);
 
 /**

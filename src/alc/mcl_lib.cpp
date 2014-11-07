@@ -32,7 +32,7 @@
  * Open an MCL_ALC session.
  * => See header file for more informations.
  */
-int
+INT32
 mcl_open (const char*	mode)
 {
 	mcl_cb		*mclcb;
@@ -67,7 +67,7 @@ bad:
  * => See header file for more informations.
  */
 int
-mcl_close (int	id)
+mcl_close (INT32 id)
 {
 	int	max_adu;	/* highest ADU seq number */
 	mcl_cb	*mclcb;
@@ -161,7 +161,7 @@ mcl_close (int	id)
  * => See header file for more informations.
  */
 int
-mcl_abort (int	id)
+mcl_abort (INT32	id)
 {
 	mcl_cb	*mclcb;
 	int	err;		/* return code from close */
@@ -251,10 +251,10 @@ mcl_abort (int	id)
  * => See header file for more informations.
  */
 int
-mcl_ctl (int	id,
-	 int	optname,
+mcl_ctl (INT32	id,
+	 INT32	optname,
 	 void	*optvalue,
-	 int	optlen)
+	 INT32	optlen)
 {
 	mcl_cb	*mclcb;
 	int	err;
@@ -284,9 +284,9 @@ mcl_ctl (int	id,
  */
 int
 mcl_ctl2 (mcl_cb	*const mclcb,
-	  int		optname,
+	  INT32		optname,
 	  void		*optvalue,
-	  int		optlen)
+	  INT32		optlen)
 {
 	char	opt_found;
 
@@ -1473,10 +1473,10 @@ error:
  * mcl_send.
  * => See header file for more informations.
  */
-int
-mcl_send (int		id,
+INT32
+mcl_send (INT32		id,
 	  const void	*data,
-	  int		len)
+	  INT32		len)
 {
 	INT32			result;
 	mcl_cb			*mclcb;
@@ -1508,12 +1508,12 @@ mcl_send (int		id,
  * mcl_sendto.
  * => See header file for more informations.
  */
-int
-mcl_sendto (int			id,
+INT32
+mcl_sendto (INT32		id,
 	    const void		*data,
-	    int			len,
+	    INT32		len,
 	    const struct sockaddr *saddr,
-	    int 		saddr_len)
+	    INT32 		saddr_len)
 {
 	INT32 			result;
 	mcl_cb			*mclcb;
@@ -2204,12 +2204,12 @@ error:
  * mcl_recv.
  * => See header file for more informations.
  */
-int
-mcl_recv (int	id,
+INT32
+mcl_recv (INT32	id,
 	  void	*buf,
-	  int	len)
+      INT32	len)
 {
-	int	saddr_len = 0;
+    INT32	saddr_len = 0;
 	return mcl_recvfrom(id, buf, len, NULL, &saddr_len);
 }
 
@@ -2217,18 +2217,18 @@ mcl_recv (int	id,
  * mcl_recvfrom.
  * => See header file for more informations.
  */
-int
-mcl_recvfrom (int		id,
+INT32
+mcl_recvfrom (INT32		id,
 	      void		*buf,
-	      int		len,
+	      INT32		len,
 	      struct sockaddr	*saddr,
-	      int 		*saddr_len)	      
+	  INT32 		*saddr_len)
 {	
 	int			rlen = 0;
 	mcl_cb			*mclcb;
 	struct mcl_iovec	iov;
 	struct mcl_msghdr	msg;
-	unsigned int		toi = 0;
+    UINT32          	toi = 0;
 
 	if (id >= MAX_NB_MCLCB || (mclcb = mclcb_tab[id]) == NULL) {
 		PRINT_ERR((mcl_stderr, "mcl_recvfrom: ERROR, bad id %d\n", id))
@@ -2386,13 +2386,13 @@ error:
  * => See header file for more informations.
  */
 INT64
-mcl_recvmsg (int		id,
+mcl_recvmsg (INT32 id,
 	     struct mcl_msghdr	*msg,
 	     enum mcl_msgflag	flags)
 {
 	int		rlen;
 	mcl_cb		*mclcb;
-	unsigned int	toi = 0;
+    UINT32	toi = 0;
 
 	if (id >= MAX_NB_MCLCB || (mclcb = mclcb_tab[id]) == NULL) {
 		PRINT_ERR((mcl_stderr, "mcl_recvmsg: ERROR, bad id %d\n", id))

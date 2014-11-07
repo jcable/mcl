@@ -83,7 +83,7 @@ static int RandomLoss(mcl_cb	*mclcb,
  */
 int
 mcl_send_pkt (mcl_cb	*mclcb,
-	      int	layer,
+	      INT32	layer,
 	      du_t	*du,
 	      adu_t	*adu)
 {
@@ -412,12 +412,7 @@ again:
 				pkt->pkt_len = recvfrom(so->ses_sock,
 					pkt->get_buf(), pkt->get_buf_len(),
 					0, (sockaddr *) &saddr,
-#if defined(LINUX) || defined(AIX)
-					(size_t*)
-#elif defined(FREEBSD)
-					(socklen_t*)
-#endif
-					&saddr_len);
+                    (socklen_t*) &saddr_len);
 #ifdef WIN32
 				if(pkt->pkt_len == SOCKET_ERROR || pkt->pkt_len == 0) {
 					/* we are in non-blocking mode! */

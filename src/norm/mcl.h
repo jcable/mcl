@@ -36,7 +36,7 @@ enum mcl_tx_or_rx {
 /****** prototypes ************************************************************/
 
 extern void	mcl_moreabout (void);
-extern void	mcl_exit (int n);
+extern void	mcl_exit (INT32 n);
 extern void	mcl_global_init (void);
 extern void	mcl_stdout_stderr_init (void);
 

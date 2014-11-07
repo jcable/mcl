@@ -78,13 +78,13 @@ static tx_prof_t	tx_prof_tab[] = {
 /*
  * set a pre-defined profile, modifying some MCL parameters as required
  */
-INT32
+int
 mcl_set_tx_profile (mcl_cb	*mclcb,
 		    int		profile)
 {
 	INT32	val;
 	double	dval;	// same as val but with double format
-	INT32	err;
+	int	err;
 
 	TRACELVL(5, (mcl_stdout, "-> mcl_set_tx_profile: prof=%d\n", profile))
 	switch (profile) {

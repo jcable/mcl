@@ -153,7 +153,7 @@ all:	alc norm
 
 alc:	${OFILES} ${MCL_LIBRARY}
 	@echo "** Compiling fcast-ALC using the MCL library..."
-	${CC} ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FCAST}
+	${CC} ${CFLAGS} ${OFILES} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FCAST}
 	${CC} -static  -static-libgcc ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FCAST_STATIC}
 
 norm:	${OFILES} ${MCL_LIBRARY}

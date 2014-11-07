@@ -177,7 +177,7 @@ private:
 	 /*local variables*/
 	XERCES_CPP_NAMESPACE_QUALIFIER DOMDocument* doc;
 	DOMImplementation *impl;
-	DOMBuilder* dom_builder;
+    DOMLSParser* dom_parser;
 	
 	UINT64 fdt_lifetime;
 	class flute_cb * flutecb;

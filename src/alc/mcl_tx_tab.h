@@ -84,7 +84,7 @@ public:
 	 * delivery mode.
 	 * @return		returns 0 if ok, < 0 if an error
 	 */
-	int	new_tx_cycle (class mcl_cb *const mclcb);
+	INT32	new_tx_cycle (class mcl_cb *const mclcb);
 
 	/**
 	 * Look in the txtab and mark the ADU of all the DUs waiting to be sent
@@ -125,7 +125,7 @@ private:
 	 * Returns 1 if list was empty, 0 otherwise.
 	 * @param mclcb
 	 */
-	int 		insert_txtab (mcl_cb *const mclcb, txtab_t *tt);
+	INT32 		insert_txtab (mcl_cb *const mclcb, txtab_t *tt);
 
 	/**
 	 * Remove this txtab (there's only one) from the list.

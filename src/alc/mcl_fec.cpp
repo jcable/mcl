@@ -715,7 +715,7 @@ mcl_fec::decode (mcl_cb		*const mclcb,
 	UINT32	last_du_len;	/* last DU (true) length */
 	INT32	i;
 	u_char	**dst;		/* put rx data or fec here... */
-	INT32	rx_index[GF_SIZE]; /* ... and their seq# here */
+    int	rx_index[GF_SIZE]; /* ... and their seq# here */
 	INT32	idx;		/* index in dst[] and rx_index[] tabs */
 	UINT32 	rem;		/* remaining nb of DUs */
 	void 	*code;

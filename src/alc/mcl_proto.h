@@ -120,7 +120,7 @@ extern void	mcl_rx_free_this_adu	(class mcl_cb *mclcb, adu_t *adu);
  * mcl_tx_prof.c
  */
 extern int		mcl_set_tx_profile	(class mcl_cb *mclcb,
-						 INT32 profile);
+						 int profile);
 extern mcl_error_status	mcl_print_tx_profile	(mcl_cb *mclcb);
 
 

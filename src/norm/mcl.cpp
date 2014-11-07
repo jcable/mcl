@@ -105,7 +105,7 @@ mcl_moreabout (void)
  * @param n	int to be returned by exit()
  */
 void
-mcl_exit (int	n)
+mcl_exit (INT32	n)
 {
 	int	id;
 	mcl_cb	*mclcb = NULL;

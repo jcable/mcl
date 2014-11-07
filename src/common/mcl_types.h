@@ -25,18 +25,14 @@
 /*
  * types
  */
+#include <stdint.h>
 #ifndef UINT32
-#define INT8	char
-#define	INT16	short
-#define	UINT8	unsigned char
-#define	UINT16	unsigned short
-#if defined(__LP64__) || (__WORDSIZE == 64) /* 64 bit architectures */
-#define INT32	long
-#define	UINT32	unsigned long
-#else  /* 32 bit architectures */
-#define INT32	int		// int creates less compilations pbs than long
-#define	UINT32	unsigned int	// int creates less compilations pbs than long
-#endif /* 32/64 architectures */
+#define INT8	int8_t
+#define	INT16	int16_t
+#define	UINT8	uint8_t
+#define	UINT16	uint16_t
+#define INT32	int32_t
+#define	UINT32	uint32_t
 #endif /* !UINT32 */
 
 #if defined(WIN32)

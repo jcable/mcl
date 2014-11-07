@@ -129,7 +129,7 @@ UINT64 FluteReceiver::recv(bool blocking){
  *	ALWAYS : always overwrite existing file.
  * @param overwrite	NEVER, ALWAYS, or PROMPT
  */
-void FluteReceiver::setOverwriteFile (int overwrite) {
+void FluteReceiver::setOverwriteFile (INT32 overwrite) {
 
 	flutecb->lock();
 

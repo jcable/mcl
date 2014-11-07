@@ -449,7 +449,7 @@ error:
  * @return 		The time (in the mcl_time_count timeline) when
  *			next SP will occur.
  */
-static int
+static INT32
 rlc_SP_spacing (rlccb_t	*rlccb,
 		INT32	layer)
 {

@@ -50,7 +50,7 @@ endif
 # OS specific variables and tools
 #
 ifeq (${OS},linux)
-	OSFLAGS = -DLINUX
+	OSFLAGS = -DLINUX -fpermissive -Wwrite-strings
 	# Which compiler?
 	# NB: use -Wall for compilation warnings with gcc
 	#

@@ -162,7 +162,7 @@ extern void	mcl_init_random		(void);
 extern void	mcl_winsock_init	(void);
 extern bool	mcl_is_valid_sock	(SOCKET sock);
 #else  // UNIX
-extern bool	mcl_is_valid_sock	(INT32 sock);
+extern bool	mcl_is_valid_sock	(int sock);
 #endif // OS
 
 

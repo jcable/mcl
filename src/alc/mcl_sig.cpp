@@ -43,7 +43,7 @@ static short	max_tx_times[SIG_CLOSE+1];
  */
 int
 SendNONEWADU (mcl_cb	*mclcb,
-	      int	max_adu) /* last ADU to be sent */
+	      INT32	max_adu) /* last ADU to be sent */
 {
 	int	*ptr;
 	int	err;
@@ -196,9 +196,9 @@ CanCopyMoreSig (mcl_cb	*mclcb,
  */
 int
 CopySigToLCTinfos (mcl_cb      *mclcb,
-		   int		level,		/* send pkt here */
+		   INT32	level,		/* send pkt here */
 		   hdr_infos_t	*hdr_infos,	/* where to copy */
-		   int		len)		/* available size for new SIG */
+		   INT32	len)		/* available size for new SIG */
 {
 	int		nb = 0;		/* # of SIG written */
 	int		sz = 0;		/* total size written to buf */

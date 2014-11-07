@@ -137,7 +137,7 @@ bool FluteFileInfo::isSelected() {
  * (-1 fail, 0 no information, 1 check ok)
  * @return 	-1 fail, 0 no information, 1 check ok
  */
-int FluteFileInfo::getIntegrity() {
+INT32 FluteFileInfo::getIntegrity() {
 
 	return integrity;
 	

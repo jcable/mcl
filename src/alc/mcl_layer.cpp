@@ -133,7 +133,7 @@ mcl_init_layer_sockets (mcl_cb	*mclcb)
  */
 int
 mcl_add_layer (mcl_cb	*mclcb,
-	       int	layer)
+	       INT32	layer)
 {
 	//struct sockaddr_in	saddr;
 	mcl_addr	addr;
@@ -201,7 +201,7 @@ bad:
  */
 int
 mcl_drop_layer (mcl_cb	*mclcb,
-		int	layer,		/* layer to drop */
+		INT32	layer,		/* layer to drop */
 		int	check)		/* MCL_CHECK_ONLY if check w/o */
 					/* dropping MCL_DO_IT otherwise */
 {
@@ -258,7 +258,7 @@ bad:
  */
 int
 mcl_drop_this_layer (mcl_cb	*mclcb,
-		     int	layer)	/* layer to drop */
+		     INT32	layer)	/* layer to drop */
 {
 	mcl_socket		*so;
 	mcl_addr		addr;

@@ -121,7 +121,7 @@
 
 /****** Globals ******/
 
-extern int	id;
+extern INT32	id;
 extern int	verbose;
 extern int	levels;
 //extern unsigned long addr;

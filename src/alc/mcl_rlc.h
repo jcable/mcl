@@ -234,7 +234,7 @@ extern void	rlc_end_session		(class mcl_cb *mclcb );
  * @param layer		the layer for this packet
  * @return		Completion status (MCL_OK or an error code)
  */
-extern int	rlc_tx_fill_header	(class mcl_cb *mclcb,
+extern INT32	rlc_tx_fill_header	(class mcl_cb *mclcb,
 					 rlc_hdr_t *hdr_buff, UINT8 pkt_layer);
 
 
@@ -245,7 +245,7 @@ extern int	rlc_tx_fill_header	(class mcl_cb *mclcb,
  * @return		the layer number (>=0) if success, else the error
  * 			code as defined in mcl_error.h.
  */
-extern int	rlc_rx_analyze_packet	(class mcl_cb *mclcb,
+extern INT32	rlc_rx_analyze_packet	(class mcl_cb *mclcb,
 					 rlc_hdr_t *hdr_buff);
 
 

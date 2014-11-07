@@ -158,7 +158,7 @@ int
 alc_hdr_parse (mcl_cb		*mclcb,
 	       fixed_lct_hdr_t	*lct_hdr,
 	       hdr_infos_t	*hdr_infos,
-	       int		plen)	/* packet len (data+rlc+alc headers) */
+	       INT32		plen)	/* packet len (data+rlc+alc headers) */
 {
 	int	hlen;
 

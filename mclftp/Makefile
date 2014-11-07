@@ -131,58 +131,22 @@ depend :
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
 mclrecv.o: mclftp.h /usr/include/stdio.h /usr/include/features.h
-mclrecv.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
-mclrecv.o: /usr/lib/gcc/i386-redhat-linux/3.4.2/include/stddef.h
-mclrecv.o: /usr/include/bits/types.h /usr/include/bits/wordsize.h
-mclrecv.o: /usr/include/bits/typesizes.h /usr/include/libio.h
+mclrecv.o: /usr/include/stdc-predef.h /usr/include/libio.h
 mclrecv.o: /usr/include/_G_config.h /usr/include/wchar.h
-mclrecv.o: /usr/include/bits/wchar.h /usr/include/gconv.h
-mclrecv.o: /usr/lib/gcc/i386-redhat-linux/3.4.2/include/stdarg.h
-mclrecv.o: /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h
-mclrecv.o: /usr/include/stdlib.h /usr/include/errno.h
-mclrecv.o: /usr/include/bits/errno.h /usr/include/linux/errno.h
-mclrecv.o: /usr/include/asm/errno.h /usr/include/ctype.h
-mclrecv.o: /usr/include/endian.h /usr/include/bits/endian.h
-mclrecv.o: /usr/include/string.h /usr/include/sys/types.h /usr/include/time.h
-mclrecv.o: /usr/include/sys/stat.h /usr/include/bits/stat.h
-mclrecv.o: /usr/include/fcntl.h /usr/include/bits/fcntl.h
-mclrecv.o: /usr/include/unistd.h /usr/include/bits/posix_opt.h
-mclrecv.o: /usr/include/bits/confname.h /usr/include/netdb.h
+mclrecv.o: /usr/include/stdlib.h /usr/include/alloca.h /usr/include/errno.h
+mclrecv.o: /usr/include/ctype.h /usr/include/endian.h /usr/include/xlocale.h
+mclrecv.o: /usr/include/string.h /usr/include/fcntl.h /usr/include/time.h
+mclrecv.o: /usr/include/unistd.h /usr/include/getopt.h /usr/include/netdb.h
 mclrecv.o: /usr/include/netinet/in.h /usr/include/stdint.h
-mclrecv.o: /usr/include/sys/socket.h /usr/include/sys/uio.h
-mclrecv.o: /usr/include/bits/uio.h /usr/include/bits/socket.h
-mclrecv.o: /usr/include/limits.h
-mclrecv.o: /usr/lib/gcc/i386-redhat-linux/3.4.2/include/limits.h
-mclrecv.o: /usr/include/bits/sockaddr.h /usr/include/asm/socket.h
-mclrecv.o: /usr/include/asm/sockios.h /usr/include/bits/in.h
-mclrecv.o: /usr/include/bits/byteswap.h /usr/include/bits/netdb.h
-mclrecv.o: /usr/include/arpa/inet.h ../src/common/mcl_lib_api.h
-mclrecv.o: ../src/common/mcl_types.h
+mclrecv.o: /usr/include/rpc/netdb.h /usr/include/arpa/inet.h
+mclrecv.o: ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
 mclsend.o: mclftp.h /usr/include/stdio.h /usr/include/features.h
-mclsend.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
-mclsend.o: /usr/lib/gcc/i386-redhat-linux/3.4.2/include/stddef.h
-mclsend.o: /usr/include/bits/types.h /usr/include/bits/wordsize.h
-mclsend.o: /usr/include/bits/typesizes.h /usr/include/libio.h
+mclsend.o: /usr/include/stdc-predef.h /usr/include/libio.h
 mclsend.o: /usr/include/_G_config.h /usr/include/wchar.h
-mclsend.o: /usr/include/bits/wchar.h /usr/include/gconv.h
-mclsend.o: /usr/lib/gcc/i386-redhat-linux/3.4.2/include/stdarg.h
-mclsend.o: /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h
-mclsend.o: /usr/include/stdlib.h /usr/include/errno.h
-mclsend.o: /usr/include/bits/errno.h /usr/include/linux/errno.h
-mclsend.o: /usr/include/asm/errno.h /usr/include/ctype.h
-mclsend.o: /usr/include/endian.h /usr/include/bits/endian.h
-mclsend.o: /usr/include/string.h /usr/include/sys/types.h /usr/include/time.h
-mclsend.o: /usr/include/sys/stat.h /usr/include/bits/stat.h
-mclsend.o: /usr/include/fcntl.h /usr/include/bits/fcntl.h
-mclsend.o: /usr/include/unistd.h /usr/include/bits/posix_opt.h
-mclsend.o: /usr/include/bits/confname.h /usr/include/netdb.h
+mclsend.o: /usr/include/stdlib.h /usr/include/alloca.h /usr/include/errno.h
+mclsend.o: /usr/include/ctype.h /usr/include/endian.h /usr/include/xlocale.h
+mclsend.o: /usr/include/string.h /usr/include/fcntl.h /usr/include/time.h
+mclsend.o: /usr/include/unistd.h /usr/include/getopt.h /usr/include/netdb.h
 mclsend.o: /usr/include/netinet/in.h /usr/include/stdint.h
-mclsend.o: /usr/include/sys/socket.h /usr/include/sys/uio.h
-mclsend.o: /usr/include/bits/uio.h /usr/include/bits/socket.h
-mclsend.o: /usr/include/limits.h
-mclsend.o: /usr/lib/gcc/i386-redhat-linux/3.4.2/include/limits.h
-mclsend.o: /usr/include/bits/sockaddr.h /usr/include/asm/socket.h
-mclsend.o: /usr/include/asm/sockios.h /usr/include/bits/in.h
-mclsend.o: /usr/include/bits/byteswap.h /usr/include/bits/netdb.h
-mclsend.o: /usr/include/arpa/inet.h ../src/common/mcl_lib_api.h
-mclsend.o: ../src/common/mcl_types.h
+mclsend.o: /usr/include/rpc/netdb.h /usr/include/arpa/inet.h
+mclsend.o: ../src/common/mcl_lib_api.h ../src/common/mcl_types.h

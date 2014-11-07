@@ -10,7 +10,7 @@ ifeq (${OS},linux)
 	# Linux version
 	#
 	BINDIR = ../../bin/linux
-	LDPC_BINDIR = ../../../ldpc/bin/linux
+	LDPC_BINDIR = ../../bin/linux
 	XERCES_DIR = ../../../xerces-c
 	# Shared version (default)
 	LIBRARIES = -lc -lm -lpthread 
@@ -28,7 +28,7 @@ ifeq (${OS},solaris)
 	# needed.
 	#
 	BINDIR = ../../bin/solaris
-	LDPC_BINDIR = ../../../ldpc/bin/solaris
+	LDPC_BINDIR = ../../bin/solaris
 	XERCES_DIR = ../../../xerces-c
 	OPENSSL_DIR = /usr/local/ssl
 	LIBRARIES = -lc -lm -lsocket -lnsl -lposix4 -mt -lpthread -L/usr/ucblib -lucb -L${OPENSSL_DIR}/lib -lcrypto
@@ -40,7 +40,7 @@ ifeq (${OS},freebsd)
 	# CC requires: -mt -lpthread for multithreaded applications
 	#
 	BINDIR = ../../bin/freebsd
-	LDPC_BINDIR = ../../../ldpc/bin/freebsd
+	LDPC_BINDIR = ../../bin/freebsd
 	XERCES_DIR = ../../../xerces-c
 	LIBRARIES = -lm -pthread -L/usr/local/lib -lcrypto
 	#ADD_INCLUDES = -I/usr/local/include/ -I${XERCES_DIR}/include
@@ -50,7 +50,7 @@ endif
 ifeq (${OS},aix)
 	# AIX version
 	BINDIR = ../../bin/aix
-	LDPC_BINDIR = ../../../ldpc/bin/aix
+	LDPC_BINDIR = ../../bin/aix
 	XERCES_DIR = ../../../xerces-c
 	LIBRARIES = -lm -pthread -lc -lcrypto
 	ADD_INCLUDES = -I/usr/local/include/ -I${XERCES_DIR}/include
@@ -59,7 +59,7 @@ endif
 ifeq (${OS},hp-ux)
 	# HP-UX version
 	BINDIR = ../../bin/hp-ux
-	LDPC_BINDIR = ../../../ldpc/bin/hp-ux
+	LDPC_BINDIR = ../../bin/hp-ux
 	XERCES_DIR = ../../../xerces-c
 	LIBRARIES = -lc -lm -pthread -lcrypto
 	ADD_INCLUDES = -I/usr/local/include/ -I${XERCES_DIR}/include
@@ -68,7 +68,7 @@ endif
 ifeq (${OS},irix)
 	# IRIX version
 	BINDIR = ../../bin/irix
-	LDPC_BINDIR = ../../../ldpc/bin/irix
+	LDPC_BINDIR = ../../bin/irix
 	XERCES_DIR = ../../../xerces-c
 	LIBRARIES = -lc -lm -pthread -lcrypto
 	ADD_INCLUDES = -I/usr/local/include/ -I${XERCES_DIR}/include

@@ -13,7 +13,8 @@ include ../../Makefile.common
 ifeq (${OS},linux)
 	# Linux version
 	BINDIR = ../../bin/linux
-	LDPC_BINDIR = ../../../ldpc/bin/linux
+	INCDIR = ../../include
+	LDPC_BINDIR = ../../bin/linux
 	LIBRARIES = -lc -lm -lpthread
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 endif
@@ -21,7 +22,7 @@ endif
 ifeq (${OS},solaris)
 	# Solaris version
 	BINDIR = ../../bin/solaris
-	LDPC_BINDIR = ../../../ldpc/bin/solaris
+	LDPC_BINDIR = ../../bin/solaris
 	LIBRARIES = -lc -lm -lsocket -lnsl -L/usr/ucblib -lucb -lpthread
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 endif
@@ -29,7 +30,7 @@ endif
 ifeq (${OS},freebsd)
 	# FreeBSD version
 	BINDIR = ../../bin/freebsd
-	LDPC_BINDIR = ../../../ldpc/bin/freebsd
+	LDPC_BINDIR = ../../bin/freebsd
 	LIBRARIES = -lm -pthread
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 endif
@@ -37,7 +38,7 @@ endif
 ifeq (${OS},aix)
 	# AIX version
 	BINDIR = ../../bin/aix
-	LDPC_BINDIR = ../../../ldpc/bin/aix
+	LDPC_BINDIR = ../../bin/aix
 	LIBRARIES = -lm -pthread -lc
 	# TBC
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -46,7 +47,7 @@ endif
 ifeq (${OS},hp-ux)
 	# HP-UX version
 	BINDIR = ../../bin/hp-ux
-	LDPC_BINDIR = ../../../ldpc/bin/hp-ux
+	LDPC_BINDIR = ../../bin/hp-ux
 	LIBRARIES = -lc -lm -pthread
 	# TBC
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -55,7 +56,7 @@ endif
 ifeq (${OS},irix)
 	# IRIX version
 	BINDIR = ../../bin/irix
-	LDPC_BINDIR = ../../../ldpc/bin/irix
+	LDPC_BINDIR = ../../bin/irix
 	LIBRARIES = -lc -lm -pthread
 	# TBC
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -76,7 +77,7 @@ OFILES = ${SRCFILES:.cpp=.o}
 # General purpose local FLAGS.
 # WARNING: with gcc/g++, never use -O3 optimisation (compiler bugs)
 #
-CFLAGS	= -DALC ${OSFLAGS} ${LARGEFILE_FLAGS} -DDEBUG -g	# debug version
+CFLAGS	= -I${INCDIR} -DALC ${OSFLAGS} ${LARGEFILE_FLAGS} -DDEBUG -g	# debug version
 #CFLAGS	= -DALC ${OSFLAGS} ${LARGEFILE_FLAGS} -O -g 		# optimized 
 #CFLAGS	= -DALC ${OSFLAGS} ${LARGEFILE_FLAGS} -O -g -pg 	# optimized with profiling
 
@@ -137,13 +138,12 @@ depend :
 ../common//mcl_addr.o: ../common/mcl_debug.h ../common/mcl_itime.h
 ../common//mcl_addr.o: ../common/mcl_blocking_struct.h
 ../common//mcl_addr.o: ../common/mcl_periodic_timer.h ../common/mcl_file_io.h
-../common//mcl_addr.o: mcl.h mcl_error.h ../common/rse_fec.h
-../common//mcl_addr.o: ../../../ldpc/src/ldpc_fec.h
-../common//mcl_addr.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_addr.o: ../../../ldpc/src/tools.h
-../common//mcl_addr.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
-../common//mcl_addr.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-../common//mcl_addr.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h
+../common//mcl_addr.o: mcl.h mcl_error.h ../../include/rse_fec.h
+../common//mcl_addr.o: ../../include/ldpc_fec.h
+../common//mcl_addr.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_addr.o: ../../include/tools.h ../../include/ldpc_create_pchk.h
+../common//mcl_addr.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h
+../common//mcl_addr.o: mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h mcl_socket.h
 ../common//mcl_addr.o: mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
 ../common//mcl_addr.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
 ../common//mcl_addr.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
@@ -159,10 +159,10 @@ depend :
 ../common//mcl_socket_lib.o: ../common/mcl_blocking_struct.h
 ../common//mcl_socket_lib.o: ../common/mcl_periodic_timer.h
 ../common//mcl_socket_lib.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-../common//mcl_socket_lib.o: ../common/rse_fec.h ../../../ldpc/src/ldpc_fec.h
-../common//mcl_socket_lib.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_socket_lib.o: ../../../ldpc/src/tools.h
-../common//mcl_socket_lib.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
+../common//mcl_socket_lib.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+../common//mcl_socket_lib.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_socket_lib.o: ../../include/tools.h
+../common//mcl_socket_lib.o: ../../include/ldpc_create_pchk.h mcl_lib.h
 ../common//mcl_socket_lib.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h
 ../common//mcl_socket_lib.o: mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
 ../common//mcl_socket_lib.o: mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
@@ -184,19 +184,19 @@ depend :
 ../common//mcl_blocking_struct.o: ../common/mcl_blocking_struct.h
 ../common//mcl_blocking_struct.o: ../common/mcl_periodic_timer.h
 ../common//mcl_blocking_struct.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-../common//mcl_blocking_struct.o: ../common/rse_fec.h
-../common//mcl_blocking_struct.o: ../../../ldpc/src/ldpc_fec.h
-../common//mcl_blocking_struct.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_blocking_struct.o: ../../../ldpc/src/tools.h
-../common//mcl_blocking_struct.o: ../../../ldpc/src/ldpc_create_pchk.h
-../common//mcl_blocking_struct.o: mcl_lib.h mcl_data.h mcl_vrmem.h
-../common//mcl_blocking_struct.o: mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
-../common//mcl_blocking_struct.o: mcl_flid_sl.h mcl_socket.h
-../common//mcl_blocking_struct.o: mcl_periodic_proc.h mcl_lct_hdr.h
-../common//mcl_blocking_struct.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
-../common//mcl_blocking_struct.o: mcl_proto.h mcl_rx.h mcl_rx_window.h
-../common//mcl_blocking_struct.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
-../common//mcl_blocking_struct.o: mcl_meta_object.h mcl_meta_object_layer.h
+../common//mcl_blocking_struct.o: ../../include/rse_fec.h
+../common//mcl_blocking_struct.o: ../../include/ldpc_fec.h
+../common//mcl_blocking_struct.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_blocking_struct.o: ../../include/tools.h
+../common//mcl_blocking_struct.o: ../../include/ldpc_create_pchk.h mcl_lib.h
+../common//mcl_blocking_struct.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h
+../common//mcl_blocking_struct.o: mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
+../common//mcl_blocking_struct.o: mcl_socket.h mcl_periodic_proc.h
+../common//mcl_blocking_struct.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h
+../common//mcl_blocking_struct.o: mcl_fsm.h mcl_proto.h mcl_rx.h
+../common//mcl_blocking_struct.o: mcl_rx_window.h mcl_flute.h mcl_tx.h
+../common//mcl_blocking_struct.o: mcl_cb.h mcl_fec.h mcl_meta_object.h
+../common//mcl_blocking_struct.o: mcl_meta_object_layer.h
 ../common//mcl_debug.o: ../alc/mcl_includes.h ../common/mcl_types.h
 ../common//mcl_debug.o: ../common/mcl_osdep.h mcl_profile.h
 ../common//mcl_debug.o: ../common/mcl_defines.h ../common/mcl_lib_api.h
@@ -207,16 +207,16 @@ depend :
 ../common//mcl_debug.o: ../common/mcl_blocking_struct.h
 ../common//mcl_debug.o: ../common/mcl_periodic_timer.h
 ../common//mcl_debug.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-../common//mcl_debug.o: ../common/rse_fec.h ../../../ldpc/src/ldpc_fec.h
-../common//mcl_debug.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_debug.o: ../../../ldpc/src/tools.h
-../common//mcl_debug.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
-../common//mcl_debug.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-../common//mcl_debug.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h
-../common//mcl_debug.o: mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-../common//mcl_debug.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
-../common//mcl_debug.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-../common//mcl_debug.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+../common//mcl_debug.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+../common//mcl_debug.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_debug.o: ../../include/tools.h
+../common//mcl_debug.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+../common//mcl_debug.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+../common//mcl_debug.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
+../common//mcl_debug.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
+../common//mcl_debug.o: mcl_proto.h mcl_rx.h mcl_rx_window.h mcl_flute.h
+../common//mcl_debug.o: mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
+../common//mcl_debug.o: mcl_meta_object_layer.h
 ../common//mcl_osdep.o: ../alc/mcl_includes.h ../common/mcl_types.h
 ../common//mcl_osdep.o: ../common/mcl_osdep.h mcl_profile.h
 ../common//mcl_osdep.o: ../common/mcl_defines.h ../common/mcl_lib_api.h
@@ -227,16 +227,16 @@ depend :
 ../common//mcl_osdep.o: ../common/mcl_blocking_struct.h
 ../common//mcl_osdep.o: ../common/mcl_periodic_timer.h
 ../common//mcl_osdep.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-../common//mcl_osdep.o: ../common/rse_fec.h ../../../ldpc/src/ldpc_fec.h
-../common//mcl_osdep.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_osdep.o: ../../../ldpc/src/tools.h
-../common//mcl_osdep.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
-../common//mcl_osdep.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-../common//mcl_osdep.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h
-../common//mcl_osdep.o: mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-../common//mcl_osdep.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
-../common//mcl_osdep.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-../common//mcl_osdep.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+../common//mcl_osdep.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+../common//mcl_osdep.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_osdep.o: ../../include/tools.h
+../common//mcl_osdep.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+../common//mcl_osdep.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+../common//mcl_osdep.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
+../common//mcl_osdep.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
+../common//mcl_osdep.o: mcl_proto.h mcl_rx.h mcl_rx_window.h mcl_flute.h
+../common//mcl_osdep.o: mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
+../common//mcl_osdep.o: mcl_meta_object_layer.h
 ../common//rse_fec.o: ../common/mcl_debug.h
 ../common//mcl_itime.o: ../alc/mcl_includes.h ../common/mcl_types.h
 ../common//mcl_itime.o: ../common/mcl_osdep.h mcl_profile.h
@@ -248,16 +248,16 @@ depend :
 ../common//mcl_itime.o: ../common/mcl_blocking_struct.h
 ../common//mcl_itime.o: ../common/mcl_periodic_timer.h
 ../common//mcl_itime.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-../common//mcl_itime.o: ../common/rse_fec.h ../../../ldpc/src/ldpc_fec.h
-../common//mcl_itime.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_itime.o: ../../../ldpc/src/tools.h
-../common//mcl_itime.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
-../common//mcl_itime.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-../common//mcl_itime.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h
-../common//mcl_itime.o: mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-../common//mcl_itime.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
-../common//mcl_itime.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-../common//mcl_itime.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+../common//mcl_itime.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+../common//mcl_itime.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_itime.o: ../../include/tools.h
+../common//mcl_itime.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+../common//mcl_itime.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+../common//mcl_itime.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
+../common//mcl_itime.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
+../common//mcl_itime.o: mcl_proto.h mcl_rx.h mcl_rx_window.h mcl_flute.h
+../common//mcl_itime.o: mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
+../common//mcl_itime.o: mcl_meta_object_layer.h
 ../common//mcl_periodic_timer.o: ../alc/mcl_includes.h ../common/mcl_types.h
 ../common//mcl_periodic_timer.o: ../common/mcl_osdep.h mcl_profile.h
 ../common//mcl_periodic_timer.o: ../common/mcl_defines.h
@@ -271,19 +271,19 @@ depend :
 ../common//mcl_periodic_timer.o: ../common/mcl_blocking_struct.h
 ../common//mcl_periodic_timer.o: ../common/mcl_periodic_timer.h
 ../common//mcl_periodic_timer.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-../common//mcl_periodic_timer.o: ../common/rse_fec.h
-../common//mcl_periodic_timer.o: ../../../ldpc/src/ldpc_fec.h
-../common//mcl_periodic_timer.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_periodic_timer.o: ../../../ldpc/src/tools.h
-../common//mcl_periodic_timer.o: ../../../ldpc/src/ldpc_create_pchk.h
-../common//mcl_periodic_timer.o: mcl_lib.h mcl_data.h mcl_vrmem.h
-../common//mcl_periodic_timer.o: mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
-../common//mcl_periodic_timer.o: mcl_flid_sl.h mcl_socket.h
-../common//mcl_periodic_timer.o: mcl_periodic_proc.h mcl_lct_hdr.h
-../common//mcl_periodic_timer.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
-../common//mcl_periodic_timer.o: mcl_proto.h mcl_rx.h mcl_rx_window.h
-../common//mcl_periodic_timer.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
-../common//mcl_periodic_timer.o: mcl_meta_object.h mcl_meta_object_layer.h
+../common//mcl_periodic_timer.o: ../../include/rse_fec.h
+../common//mcl_periodic_timer.o: ../../include/ldpc_fec.h
+../common//mcl_periodic_timer.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_periodic_timer.o: ../../include/tools.h
+../common//mcl_periodic_timer.o: ../../include/ldpc_create_pchk.h mcl_lib.h
+../common//mcl_periodic_timer.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h
+../common//mcl_periodic_timer.o: mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
+../common//mcl_periodic_timer.o: mcl_socket.h mcl_periodic_proc.h
+../common//mcl_periodic_timer.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h
+../common//mcl_periodic_timer.o: mcl_fsm.h mcl_proto.h mcl_rx.h
+../common//mcl_periodic_timer.o: mcl_rx_window.h mcl_flute.h mcl_tx.h
+../common//mcl_periodic_timer.o: mcl_cb.h mcl_fec.h mcl_meta_object.h
+../common//mcl_periodic_timer.o: mcl_meta_object_layer.h
 ../common//mcl_file_io.o: ../alc/mcl_includes.h ../common/mcl_types.h
 ../common//mcl_file_io.o: ../common/mcl_osdep.h mcl_profile.h
 ../common//mcl_file_io.o: ../common/mcl_defines.h ../common/mcl_lib_api.h
@@ -295,10 +295,10 @@ depend :
 ../common//mcl_file_io.o: ../common/mcl_blocking_struct.h
 ../common//mcl_file_io.o: ../common/mcl_periodic_timer.h
 ../common//mcl_file_io.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-../common//mcl_file_io.o: ../common/rse_fec.h ../../../ldpc/src/ldpc_fec.h
-../common//mcl_file_io.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-../common//mcl_file_io.o: ../../../ldpc/src/tools.h
-../common//mcl_file_io.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
+../common//mcl_file_io.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+../common//mcl_file_io.o: ../../include/ldpc_matrix_sparse.h
+../common//mcl_file_io.o: ../../include/tools.h
+../common//mcl_file_io.o: ../../include/ldpc_create_pchk.h mcl_lib.h
 ../common//mcl_file_io.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h
 ../common//mcl_file_io.o: mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h mcl_socket.h
 ../common//mcl_file_io.o: mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
@@ -312,13 +312,13 @@ mcl_cb.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_cb.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_cb.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_cb.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_cb.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_cb.o: ../../../ldpc/src/ldpc_fec.h ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_cb.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_cb.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_cb.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_cb.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_cb.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_cb.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_cb.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_cb.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_cb.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_cb.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_cb.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_cb.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
 mcl_cb.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_periodic_proc.o: mcl_includes.h ../common/mcl_types.h
 mcl_periodic_proc.o: ../common/mcl_osdep.h mcl_profile.h
@@ -329,13 +329,12 @@ mcl_periodic_proc.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_periodic_proc.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_periodic_proc.o: ../common/mcl_blocking_struct.h
 mcl_periodic_proc.o: ../common/mcl_periodic_timer.h ../common/mcl_file_io.h
-mcl_periodic_proc.o: mcl.h mcl_error.h ../common/rse_fec.h
-mcl_periodic_proc.o: ../../../ldpc/src/ldpc_fec.h
-mcl_periodic_proc.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_periodic_proc.o: ../../../ldpc/src/tools.h
-mcl_periodic_proc.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
-mcl_periodic_proc.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_periodic_proc.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
+mcl_periodic_proc.o: mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_periodic_proc.o: ../../include/ldpc_fec.h
+mcl_periodic_proc.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_periodic_proc.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_periodic_proc.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_periodic_proc.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
 mcl_periodic_proc.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
 mcl_periodic_proc.o: mcl_proto.h mcl_rx.h mcl_rx_window.h mcl_flute.h
 mcl_periodic_proc.o: mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
@@ -347,10 +346,10 @@ mcl_vtmem.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_vtmem.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_vtmem.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_vtmem.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_vtmem.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_vtmem.o: ../../../ldpc/src/ldpc_fec.h
-mcl_vtmem.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_vtmem.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_vtmem.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_vtmem.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_vtmem.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_vtmem.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_vtmem.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_vtmem.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl_vtmem.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
@@ -363,10 +362,10 @@ mcl_vrmem.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_vrmem.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_vrmem.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_vrmem.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_vrmem.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_vrmem.o: ../../../ldpc/src/ldpc_fec.h
-mcl_vrmem.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_vrmem.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_vrmem.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_vrmem.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_vrmem.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_vrmem.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_vrmem.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_vrmem.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl_vrmem.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
@@ -380,16 +379,14 @@ mcl_rx_storage.o: ../common/mcl_addr.h ../common/ssm_for_linux.h
 mcl_rx_storage.o: ../common/mcl_socket_lib.h ../common/mcl_debug.h
 mcl_rx_storage.o: ../common/mcl_itime.h ../common/mcl_blocking_struct.h
 mcl_rx_storage.o: ../common/mcl_periodic_timer.h ../common/mcl_file_io.h
-mcl_rx_storage.o: mcl.h mcl_error.h ../common/rse_fec.h
-mcl_rx_storage.o: ../../../ldpc/src/ldpc_fec.h
-mcl_rx_storage.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_rx_storage.o: ../../../ldpc/src/tools.h
-mcl_rx_storage.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
-mcl_rx_storage.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
-mcl_rx_storage.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_rx_storage.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
-mcl_rx_storage.o: mcl_proto.h mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h
-mcl_rx_storage.o: mcl_cb.h mcl_fec.h mcl_meta_object.h
+mcl_rx_storage.o: mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_rx_storage.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_rx_storage.o: ../../include/tools.h ../../include/ldpc_create_pchk.h
+mcl_rx_storage.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h
+mcl_rx_storage.o: mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h mcl_socket.h
+mcl_rx_storage.o: mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h
+mcl_rx_storage.o: mcl_fsm.h mcl_proto.h mcl_rx.h mcl_rx_window.h mcl_flute.h
+mcl_rx_storage.o: mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
 mcl_rx_storage.o: mcl_meta_object_layer.h
 mcl_layer.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_layer.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
@@ -398,10 +395,10 @@ mcl_layer.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_layer.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_layer.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_layer.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_layer.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_layer.o: ../../../ldpc/src/ldpc_fec.h
-mcl_layer.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_layer.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_layer.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_layer.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_layer.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_layer.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_layer.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_layer.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl_layer.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
@@ -414,15 +411,15 @@ mcl_socket.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_socket.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_socket.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_socket.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_socket.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_socket.o: ../../../ldpc/src/ldpc_fec.h
-mcl_socket.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_socket.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_socket.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_socket.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_socket.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_socket.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-mcl_socket.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+mcl_socket.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_socket.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_socket.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_socket.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_socket.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_socket.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_socket.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_socket.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_socket.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_lct_hdr.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_lct_hdr.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_lct_hdr.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -430,15 +427,15 @@ mcl_lct_hdr.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_lct_hdr.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_lct_hdr.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_lct_hdr.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_lct_hdr.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_lct_hdr.o: ../../../ldpc/src/ldpc_fec.h
-mcl_lct_hdr.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_lct_hdr.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_lct_hdr.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_lct_hdr.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_lct_hdr.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_lct_hdr.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-mcl_lct_hdr.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+mcl_lct_hdr.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_lct_hdr.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_lct_hdr.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_lct_hdr.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_lct_hdr.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_lct_hdr.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_lct_hdr.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_lct_hdr.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_lct_hdr.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_alc_hdr.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_alc_hdr.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_alc_hdr.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -446,15 +443,15 @@ mcl_alc_hdr.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_alc_hdr.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_alc_hdr.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_alc_hdr.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_alc_hdr.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_alc_hdr.o: ../../../ldpc/src/ldpc_fec.h
-mcl_alc_hdr.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_alc_hdr.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_alc_hdr.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_alc_hdr.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_alc_hdr.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_alc_hdr.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-mcl_alc_hdr.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+mcl_alc_hdr.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_alc_hdr.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_alc_hdr.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_alc_hdr.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_alc_hdr.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_alc_hdr.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_alc_hdr.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_alc_hdr.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_alc_hdr.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_tx_tab.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_tx_tab.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_tx_tab.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -462,15 +459,15 @@ mcl_tx_tab.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_tx_tab.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_tx_tab.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_tx_tab.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_tx_tab.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_tx_tab.o: ../../../ldpc/src/ldpc_fec.h
-mcl_tx_tab.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_tx_tab.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_tx_tab.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_tx_tab.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_tx_tab.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_tx_tab.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-mcl_tx_tab.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+mcl_tx_tab.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_tx_tab.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_tx_tab.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_tx_tab.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_tx_tab.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_tx_tab.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_tx_tab.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_tx_tab.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_tx_tab.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_rlc.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_rlc.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_rlc.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -478,15 +475,14 @@ mcl_rlc.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_rlc.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_rlc.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_rlc.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_rlc.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_rlc.o: ../../../ldpc/src/ldpc_fec.h
-mcl_rlc.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_rlc.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
-mcl_rlc.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
-mcl_rlc.o: mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-mcl_rlc.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h mcl_rx_window.h
-mcl_rlc.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
-mcl_rlc.o: mcl_meta_object_layer.h
+mcl_rlc.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_rlc.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_rlc.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_rlc.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_rlc.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_rlc.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_rlc.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_rlc.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_flid_sl.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_flid_sl.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_flid_sl.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -494,26 +490,26 @@ mcl_flid_sl.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_flid_sl.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_flid_sl.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_flid_sl.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_flid_sl.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_flid_sl.o: ../../../ldpc/src/ldpc_fec.h
-mcl_flid_sl.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_flid_sl.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_flid_sl.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_flid_sl.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_flid_sl.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_flid_sl.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-mcl_flid_sl.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+mcl_flid_sl.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_flid_sl.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_flid_sl.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_flid_sl.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_flid_sl.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_flid_sl.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_flid_sl.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_flid_sl.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_flid_sl.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h ../common/mcl_version.h
 mcl.o: ../common/mcl_addr.h ../common/ssm_for_linux.h
 mcl.o: ../common/mcl_socket_lib.h ../common/mcl_debug.h ../common/mcl_itime.h
 mcl.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl.o: ../../../ldpc/src/ldpc_fec.h ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
 mcl.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
 mcl.o: mcl_meta_object.h mcl_meta_object_layer.h
@@ -524,15 +520,14 @@ mcl_lib.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_lib.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_lib.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_lib.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_lib.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_lib.o: ../../../ldpc/src/ldpc_fec.h
-mcl_lib.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_lib.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
-mcl_lib.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
-mcl_lib.o: mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-mcl_lib.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h mcl_rx_window.h
-mcl_lib.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
-mcl_lib.o: mcl_meta_object_layer.h
+mcl_lib.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_lib.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_lib.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_lib.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_lib.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_lib.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_lib.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_lib.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_tx_prof.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_tx_prof.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_tx_prof.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -540,15 +535,15 @@ mcl_tx_prof.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_tx_prof.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_tx_prof.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_tx_prof.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_tx_prof.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_tx_prof.o: ../../../ldpc/src/ldpc_fec.h
-mcl_tx_prof.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_tx_prof.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_tx_prof.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_tx_prof.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_tx_prof.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_tx_prof.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-mcl_tx_prof.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+mcl_tx_prof.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_tx_prof.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_tx_prof.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_tx_prof.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_tx_prof.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_tx_prof.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_tx_prof.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_tx_prof.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_tx_prof.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_sched.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_sched.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_sched.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -556,10 +551,10 @@ mcl_sched.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_sched.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_sched.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_sched.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_sched.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_sched.o: ../../../ldpc/src/ldpc_fec.h
-mcl_sched.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_sched.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_sched.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_sched.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_sched.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_sched.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_sched.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_sched.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl_sched.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
@@ -572,13 +567,13 @@ mcl_tx.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_tx.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_tx.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_tx.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_tx.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_tx.o: ../../../ldpc/src/ldpc_fec.h ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_tx.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_tx.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_tx.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_tx.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_tx.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_tx.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_tx.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_tx.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_tx.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_tx.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_tx.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_tx.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
 mcl_tx.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_rx.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_rx.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
@@ -587,13 +582,13 @@ mcl_rx.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_rx.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_rx.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_rx.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_rx.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_rx.o: ../../../ldpc/src/ldpc_fec.h ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_rx.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_rx.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_rx.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_rx.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_rx.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_rx.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_rx.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_rx.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_rx.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_rx.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_rx.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_rx.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
 mcl_rx.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_rx_window.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_rx_window.o: mcl_profile.h ../common/mcl_defines.h
@@ -603,10 +598,9 @@ mcl_rx_window.o: ../common/mcl_addr.h ../common/ssm_for_linux.h
 mcl_rx_window.o: ../common/mcl_socket_lib.h ../common/mcl_debug.h
 mcl_rx_window.o: ../common/mcl_itime.h ../common/mcl_blocking_struct.h
 mcl_rx_window.o: ../common/mcl_periodic_timer.h ../common/mcl_file_io.h mcl.h
-mcl_rx_window.o: mcl_error.h ../common/rse_fec.h ../../../ldpc/src/ldpc_fec.h
-mcl_rx_window.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_rx_window.o: ../../../ldpc/src/tools.h
-mcl_rx_window.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_rx_window.o: mcl_error.h ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_rx_window.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_rx_window.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_rx_window.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_rx_window.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl_rx_window.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
@@ -619,15 +613,14 @@ mcl_sig.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_sig.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_sig.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_sig.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_sig.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_sig.o: ../../../ldpc/src/ldpc_fec.h
-mcl_sig.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_sig.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
-mcl_sig.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
-mcl_sig.o: mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-mcl_sig.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h mcl_rx_window.h
-mcl_sig.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
-mcl_sig.o: mcl_meta_object_layer.h
+mcl_sig.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_sig.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_sig.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_sig.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_sig.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_sig.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_sig.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_sig.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_network.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_network.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_network.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -635,15 +628,15 @@ mcl_network.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_network.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_network.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_network.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_network.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_network.o: ../../../ldpc/src/ldpc_fec.h
-mcl_network.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_network.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_network.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_network.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_network.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_network.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h
-mcl_network.o: mcl_fec.h mcl_meta_object.h mcl_meta_object_layer.h
+mcl_network.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_network.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_network.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_network.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_network.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_network.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_network.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_network.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_network.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_du.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_du.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_du.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -651,13 +644,13 @@ mcl_du.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_du.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_du.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_du.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_du.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_du.o: ../../../ldpc/src/ldpc_fec.h ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_du.o: ../../../ldpc/src/tools.h ../../../ldpc/src/ldpc_create_pchk.h
-mcl_du.o: mcl_lib.h mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
-mcl_du.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
-mcl_du.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h
-mcl_du.o: mcl_rx.h mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_du.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_du.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_du.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_du.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_du.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_du.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_du.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
 mcl_du.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_adu.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_adu.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
@@ -666,15 +659,14 @@ mcl_adu.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_adu.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_adu.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_adu.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_adu.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_adu.o: ../../../ldpc/src/ldpc_fec.h
-mcl_adu.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_adu.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
-mcl_adu.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
-mcl_adu.o: mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-mcl_adu.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h mcl_rx_window.h
-mcl_adu.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
-mcl_adu.o: mcl_meta_object_layer.h
+mcl_adu.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_adu.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_adu.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_adu.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_adu.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_adu.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_adu.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_adu.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_stats.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_stats.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_stats.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -682,10 +674,10 @@ mcl_stats.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_stats.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_stats.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_stats.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_stats.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_stats.o: ../../../ldpc/src/ldpc_fec.h
-mcl_stats.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_stats.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_stats.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_stats.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_stats.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_stats.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_stats.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_stats.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl_stats.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
@@ -698,15 +690,14 @@ mcl_fec.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_fec.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_fec.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_fec.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_fec.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_fec.o: ../../../ldpc/src/ldpc_fec.h
-mcl_fec.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_fec.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
-mcl_fec.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
-mcl_fec.o: mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-mcl_fec.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h mcl_rx_window.h
-mcl_fec.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
-mcl_fec.o: mcl_meta_object_layer.h
+mcl_fec.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_fec.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_fec.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_fec.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_fec.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_fec.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_fec.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_fec.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_fsm.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_fsm.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_fsm.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -714,15 +705,14 @@ mcl_fsm.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_fsm.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_fsm.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_fsm.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_fsm.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_fsm.o: ../../../ldpc/src/ldpc_fec.h
-mcl_fsm.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_fsm.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
-mcl_fsm.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h mcl_flid_sl.h
-mcl_fsm.o: mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h
-mcl_fsm.o: mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h mcl_rx_window.h
-mcl_fsm.o: mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h mcl_meta_object.h
-mcl_fsm.o: mcl_meta_object_layer.h
+mcl_fsm.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_fsm.o: ../../include/ldpc_fec.h ../../include/ldpc_matrix_sparse.h
+mcl_fsm.o: ../../include/tools.h ../../include/ldpc_create_pchk.h mcl_lib.h
+mcl_fsm.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
+mcl_fsm.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
+mcl_fsm.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
+mcl_fsm.o: mcl_rx_window.h mcl_flute.h mcl_tx.h mcl_cb.h mcl_fec.h
+mcl_fsm.o: mcl_meta_object.h mcl_meta_object_layer.h
 mcl_flute.o: mcl_includes.h ../common/mcl_types.h ../common/mcl_osdep.h
 mcl_flute.o: mcl_profile.h ../common/mcl_defines.h ../common/mcl_lib_api.h
 mcl_flute.o: ../common/mcl_types.h ../alc/mcl_lib_api_alc.h
@@ -730,10 +720,10 @@ mcl_flute.o: ../common/mcl_version.h ../common/mcl_addr.h
 mcl_flute.o: ../common/ssm_for_linux.h ../common/mcl_socket_lib.h
 mcl_flute.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_flute.o: ../common/mcl_blocking_struct.h ../common/mcl_periodic_timer.h
-mcl_flute.o: ../common/mcl_file_io.h mcl.h mcl_error.h ../common/rse_fec.h
-mcl_flute.o: ../../../ldpc/src/ldpc_fec.h
-mcl_flute.o: ../../../ldpc/src/ldpc_matrix_sparse.h ../../../ldpc/src/tools.h
-mcl_flute.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_flute.o: ../common/mcl_file_io.h mcl.h mcl_error.h
+mcl_flute.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_flute.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_flute.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_flute.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_flute.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h mcl_lct_hdr.h
 mcl_flute.o: mcl_alc_hdr.h mcl_stats.h mcl_fsm.h mcl_proto.h mcl_rx.h
@@ -747,11 +737,10 @@ mcl_meta_object.o: ../common/mcl_addr.h ../common/ssm_for_linux.h
 mcl_meta_object.o: ../common/mcl_socket_lib.h ../common/mcl_debug.h
 mcl_meta_object.o: ../common/mcl_itime.h ../common/mcl_blocking_struct.h
 mcl_meta_object.o: ../common/mcl_periodic_timer.h ../common/mcl_file_io.h
-mcl_meta_object.o: mcl.h mcl_error.h ../common/rse_fec.h
-mcl_meta_object.o: ../../../ldpc/src/ldpc_fec.h
-mcl_meta_object.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_meta_object.o: ../../../ldpc/src/tools.h
-mcl_meta_object.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h mcl_data.h
+mcl_meta_object.o: mcl.h mcl_error.h ../../include/rse_fec.h
+mcl_meta_object.o: ../../include/ldpc_fec.h
+mcl_meta_object.o: ../../include/ldpc_matrix_sparse.h ../../include/tools.h
+mcl_meta_object.o: ../../include/ldpc_create_pchk.h mcl_lib.h mcl_data.h
 mcl_meta_object.o: mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h mcl_rlc.h
 mcl_meta_object.o: mcl_flid_sl.h mcl_socket.h mcl_periodic_proc.h
 mcl_meta_object.o: mcl_lct_hdr.h mcl_alc_hdr.h mcl_stats.h mcl_fsm.h
@@ -768,10 +757,10 @@ mcl_meta_object_layer.o: ../common/mcl_debug.h ../common/mcl_itime.h
 mcl_meta_object_layer.o: ../common/mcl_blocking_struct.h
 mcl_meta_object_layer.o: ../common/mcl_periodic_timer.h
 mcl_meta_object_layer.o: ../common/mcl_file_io.h mcl.h mcl_error.h
-mcl_meta_object_layer.o: ../common/rse_fec.h ../../../ldpc/src/ldpc_fec.h
-mcl_meta_object_layer.o: ../../../ldpc/src/ldpc_matrix_sparse.h
-mcl_meta_object_layer.o: ../../../ldpc/src/tools.h
-mcl_meta_object_layer.o: ../../../ldpc/src/ldpc_create_pchk.h mcl_lib.h
+mcl_meta_object_layer.o: ../../include/rse_fec.h ../../include/ldpc_fec.h
+mcl_meta_object_layer.o: ../../include/ldpc_matrix_sparse.h
+mcl_meta_object_layer.o: ../../include/tools.h
+mcl_meta_object_layer.o: ../../include/ldpc_create_pchk.h mcl_lib.h
 mcl_meta_object_layer.o: mcl_data.h mcl_vrmem.h mcl_rx_storage.h mcl_tx_tab.h
 mcl_meta_object_layer.o: mcl_rlc.h mcl_flid_sl.h mcl_socket.h
 mcl_meta_object_layer.o: mcl_periodic_proc.h mcl_lct_hdr.h mcl_alc_hdr.h

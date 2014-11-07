@@ -121,10 +121,10 @@ extern int errno;
 #include "mcl_error.h"
 
 #ifdef RSE_FEC
-#include "../common/rse_fec.h"
+#include <rse_fec.h>
 #endif
 #ifdef LDPC_FEC
-#include "../../../ldpc/src/ldpc_fec.h"
+#include <ldpc_fec.h>
 #endif
 
 #include "mcl_lib.h"

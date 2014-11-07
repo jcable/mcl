@@ -15,7 +15,7 @@ ifeq (${OS},linux)
 	# Linux version
 	#
 	BINDIR = ../../bin/linux
-	LDPC_BINDIR = ../../../ldpc/bin/linux
+	LDPC_BINDIR = ../../bin/linux
 	# Edit the following two lines as appropriate, according to the FEC
 	# codec in use: if LDPC is used, then add the libbdpc.a library.
 	#
@@ -27,7 +27,7 @@ ifeq (${OS},solaris)
 	# Solaris version
 	#
 	BINDIR = ../../bin/solaris
-	LDPC_BINDIR = ../../../ldpc/bin/solaris
+	LDPC_BINDIR = ../../bin/solaris
 	# Edit the following two lines as appropriate, according to the FEC
 	# codec in use: if LDPC is used, then add the libbdpc.a library.
 	#
@@ -39,7 +39,7 @@ ifeq (${OS},freebsd)
 	# Linux version
 	#
 	BINDIR = ../../bin/freebsd
-	LDPC_BINDIR = ../../../ldpc/bin/freebsd
+	LDPC_BINDIR = ../../bin/freebsd
 	# Edit the following two lines as appropriate, according to the FEC
 	# codec in use: if LDPC is used, then add the libbdpc.a library.
 	#

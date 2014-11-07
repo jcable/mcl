@@ -11,12 +11,12 @@ ifeq (${OS},linux)
 	# Linux version
 	#
 	BINDIR = ../bin/linux
-	LDPC_BINDIR = ../../ldpc/bin/linux
-	XERCES_DIR = ../../xerces-c
+	LDPC_BINDIR = ../bin/linux
+	XERCES_DIR = /usr/include/xercesc
 	# Shared version (default)
 	LIBRARIES = -lc -lm -lpthread 
 	#-lcrypto
-	ADD_INCLUDES = -I/usr/local/include/ -I${XERCES_DIR}/include
+	ADD_INCLUDES = -I${XERCES_DIR}
 endif
 
 ifeq (${OS},solaris)
@@ -104,13 +104,13 @@ OS_UPPER_CASE = `echo ${OS} | tr 'a-z' 'A-Z'`
 
 # XML parsing library
 # choose between the static / dynamic (default) xerces-c versions.
-dynamic: LIBRARIES := ${LIBRARIES} -lxerces-c -lxerces-depdom
-static:  LIBRARIES := ${LIBRARIES} ${XERCES_DIR}/lib/libxerces-c.a
+dynamic: LIBRARIES := ${LIBRARIES} -lxerces-c 
+static:  LIBRARIES := ${LIBRARIES} -lxerces-c
 
 # Other libraries
-MCL_LIBRARY = ${BINDIR}/libmclalc.a ${LDPC_BINDIR}/libldpc.a
-SDP_LIBRARY = ${BINDIR}/libsinistersdp.a
-FLUTE_LIBRARY = ${BINDIR}/libflute.a
+MCL_LIBRARY = -lmclalc -lldpc
+SDP_LIBRARY = -lsinistersdp
+FLUTE_LIBRARY = -lflute
 
 # executable is here:
 dynamic: TARGET_FLUTE = ${BINDIR}/flute
@@ -127,14 +127,14 @@ all:	dynamic
 .cpp.o:
 	$(CC) -c $(CFLAGS) -o $*.o $*.cpp
 
-dynamic:	${OFILES} ${FLUTE_LIBRARY}
+dynamic:	${OFILES} ${BINDIR}/libflute.a
 	@echo "** Compiling flute-ALC using the MCL library..."
-	${CC} ${CFLAGS} ${OFILES} ${LIBRARIES} ${FLUTE_LIBRARY} ${SDP_LIBRARY} ${MCL_LIBRARY} -o ${TARGET_FLUTE}
+	${CC} ${CFLAGS} ${OFILES} -L${BINDIR} ${FLUTE_LIBRARY} ${SDP_LIBRARY} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FLUTE}
 
 
-static: ${OFILES} ${FLUTE_LIBRARY}
+static: ${OFILES} ${BINDIR}/libflute.a
 	@echo "** Compiling flute-ALC using the MCL library..."
-	${CC} -static  -static-libgcc ${CFLAGS} ${OFILES} ${FLUTE_LIBRARY} ${SDP_LIBRARY} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FLUTE}
+	${CC} -static -static-libgcc ${CFLAGS} ${OFILES} -L${BINDIR} ${FLUTE_LIBRARY} ${SDP_LIBRARY} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FLUTE}
 
 clean :
 	@for f in core ${OFILES} *_pure* *.pure_* .pur* *purify* ; do \

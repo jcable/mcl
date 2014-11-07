@@ -30,7 +30,7 @@ endif
 ifeq (${OS},freebsd)
 	# FreeBSD version
 	BINDIR = ../../bin/freebsd
-	LDPC_BINDIR = ../../../ldpc/bin/freebsd
+	LDPC_BINDIR = ../../bin/freebsd
 	LIBRARIES = -lc -lm -pthread ${BINDIR}/libmclnorm.a
 endif
 

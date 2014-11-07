@@ -15,7 +15,7 @@ ifeq (${OS},linux)
 	# add MPATROL support if required
 	#
 	BINDIR = ../bin/linux
-	LDPC_BINDIR = ../../ldpc/bin/linux
+	LDPC_BINDIR = ../bin/linux
 	LIBRARIES = -lc -lm -lpthread
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 endif
@@ -46,7 +46,7 @@ endif
 ifeq (${OS},aix)
 	# AIX version
 	BINDIR = ../../bin/aix
-	LDPC_BINDIR = ../../../ldpc/bin/aix
+	LDPC_BINDIR = ../../bin/aix
 	LIBRARIES = -lm -pthread -lc
 	# TBC
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -55,7 +55,7 @@ endif
 ifeq (${OS},hp-ux)
 	# HP-UX version
 	BINDIR = ../../bin/hp-ux
-	LDPC_BINDIR = ../../../ldpc/bin/hp-ux
+	LDPC_BINDIR = ../../bin/hp-ux
 	LIBRARIES = -lc -lm -pthread
 	# TBC
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -64,7 +64,7 @@ endif
 ifeq (${OS},irix)
 	# IRIX version
 	BINDIR = ../../bin/irix
-	LDPC_BINDIR = ../../../ldpc/bin/irix
+	LDPC_BINDIR = ../../bin/irix
 	LIBRARIES = -lc -lm -pthread
 	# TBC
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -154,12 +154,12 @@ all:	alc norm
 alc:	${OFILES} ${MCL_LIBRARY}
 	@echo "** Compiling fcast-ALC using the MCL library..."
 	${CC} ${CFLAGS} ${OFILES} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FCAST}
-	${CC} -static  -static-libgcc ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FCAST_STATIC}
+	${CC} -static  -static-libgcc ${CFLAGS} ${OFILES} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FCAST_STATIC}
 
 norm:	${OFILES} ${MCL_LIBRARY}
 	@echo "** Compiling fcast-ALC using the MCL library..."
-	${CC} ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FCAST}
-	${CC} -static  -static-libgcc ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FCAST_STATIC}
+	${CC} ${CFLAGS} ${OFILES} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FCAST}
+	${CC} -static  -static-libgcc ${CFLAGS} ${OFILES} ${MCL_LIBRARY} ${LIBRARIES} -o ${TARGET_FCAST_STATIC}
 
 #pure:	${OFILES} ${MCL_LIBRARY}
 #	@echo "** Compiling fcast using the MCL library..."

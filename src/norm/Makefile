@@ -34,7 +34,7 @@ endif
 ifeq (${OS},freebsd)
 	# FreeBSD version
 	BINDIR = ../../bin/freebsd
-	LDPC_BINDIR = ../../../ldpc/bin/freebsd
+	LDPC_BINDIR = ../../bin/freebsd
 	LIBRARIES = -lm -pthread
 	# TBC
 	LARGEFILE_FLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE

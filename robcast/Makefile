@@ -17,8 +17,8 @@ ifeq (${OS},linux)
 	# add MPATROL support if required
 	#
 	BINDIR = ../bin/linux
-	LDPC_BINDIR = ../../ldpc/bin/linux
-	LIBRARIES = -lc -lm -lpthread ${BINDIR}/libmclalc.a ${LDPC_BINDIR}/libldpc.a
+	LDPC_BINDIR = ../bin/linux
+	LIBRARIES = -L${BINDIR} -lmclalc -lldpc -lc -lm -lpthread
 endif
 
 ifeq (${OS},solaris)

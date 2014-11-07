@@ -57,7 +57,7 @@ main (int       argc,
 {
 	int     id[SESSION_NB];
 	int	port = 2000;				/* in host format! */
-	unsigned long	addr = ntohl(inet_addr("230.0.0.0"));	/* in host format! */
+	UINT32  addr = ntohl(inet_addr("230.0.0.0"));	/* in host format! */
 	int	err;
 	int	ses;
 	char	buf[BUFLEN];

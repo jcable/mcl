@@ -71,7 +71,7 @@
 
 int	id[SESSION_NB];			/* MCL session identifiers */
 int	port[SESSION_NB];
-unsigned long	addr[SESSION_NB];
+UINT32	addr[SESSION_NB];
 int	verbose[SESSION_NB];
 int	cur_TSI = -1;			/* current Transport Session Id to */
 					/* use for data session */

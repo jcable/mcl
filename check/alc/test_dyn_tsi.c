@@ -91,7 +91,7 @@ sender ()
 {
 	int     id;
 	int	tsi[2] = {DEMUX_LABEL_0, DEMUX_LABEL_1}; /* labels to use */
-	unsigned long	addr = ntohl(inet_addr("225.1.0.0")); /* host format */
+	UINT32  addr = ntohl(inet_addr("225.1.0.0")); /* host format */
 	int	err;
 	char	buf[BUFLEN];
 	int	fec_code;  /* FEC codec to use (RSE for 1st part) */
@@ -203,7 +203,7 @@ receiver ()
 {
 	int     id;
 	int	tsi = DEMUX_LABEL_0;	/* label to use first */
-	unsigned long	addr = ntohl(inet_addr("225.1.0.0")); /* host format */
+	UINT32  addr = ntohl(inet_addr("225.1.0.0")); /* host format */
 	int	err;
 	char	buf[BUFLEN];
 	int	fec_code;  /* FEC codec to use (RSE for 1st part) */

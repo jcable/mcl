@@ -52,7 +52,7 @@ main (int       argc,
 {
 	int     id[SESSION_NB];
 	int	port[SESSION_NB] = {2000, 2100};	/* in host format! */
-	unsigned long	addr[SESSION_NB] = {
+	UINT32	addr[SESSION_NB] = {
 			ntohl(inet_addr("225.1.0.0")),
 			ntohl(inet_addr("225.2.0.0"))}; /* in host format! */
 	int	err;

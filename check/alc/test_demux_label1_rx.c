@@ -57,7 +57,7 @@ main (int       argc,
 	int	dl[SESSION_NB] =			/* labels to use */
 			{DEMUX_LABEL_0, DEMUX_LABEL_1, DEMUX_LABEL_2};
 	int	port = 2000;				/* in host format! */
-	unsigned long	addr = ntohl(inet_addr("225.1.1.1"));	/* in host format! */
+	UINT32  addr = ntohl(inet_addr("225.1.1.1"));	/* in host format! */
 	int	err;
 	int	ses;
 	char	buf[BUFLEN];

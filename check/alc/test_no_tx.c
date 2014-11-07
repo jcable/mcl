@@ -50,7 +50,7 @@ main (int       argc,
 {
 	int     id = 0;
 	int	port = 2324;
-	unsigned long	addr = ntohl(inet_addr("230.1.2.3"));
+	UINT32	addr = ntohl(inet_addr("230.1.2.3"));
 	int	err;
 
 	printf("test_no_tx: open(r)/close\n");

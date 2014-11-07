@@ -54,7 +54,7 @@ main (int       argc,
 {
 	int     id;
 	int	port = 2000;				/* in host format! */
-	unsigned long	addr = ntohl(inet_addr("225.1.0.0"));	/* in host format! */
+	UINT32	addr = ntohl(inet_addr("225.1.0.0"));	/* in host format! */
 	int	err;
 	int	ses;
 	char	buf[BUFLEN];

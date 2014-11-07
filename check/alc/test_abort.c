@@ -55,7 +55,7 @@ main (int       argc,
 {
 	int     id = 0;
 	int	port = 2324;
-	INT32   addr = ntohl(inet_addr("230.1.2.3"));
+	UINT32  addr = ntohl(inet_addr("230.1.2.3"));
 	int	verbose = VERBOSITY;
 	char	buf[BUFLEN];
 	int	err;

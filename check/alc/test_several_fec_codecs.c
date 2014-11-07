@@ -87,7 +87,7 @@ void
 sender ()
 {
 	int     id;
-	unsigned long	addr = ntohl(inet_addr("225.1.0.0")); /* host format */
+	UINT32	addr = ntohl(inet_addr("225.1.0.0")); /* host format */
 	int	err;
 	char	buf[BUFLEN];
 	int	codec_idx;	/* fec codec to use */
@@ -182,7 +182,7 @@ void
 receiver ()
 {
 	int     id;
-	unsigned long	addr = ntohl(inet_addr("225.1.0.0")); /* host format */
+	UINT32	addr = ntohl(inet_addr("225.1.0.0")); /* host format */
 	int	err;
 	char	buf[BUFLEN];		/* buffer containing received data */
 	char	ref_buf[BUFLEN];	/* reference buffer */

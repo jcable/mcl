@@ -1,0 +1,925 @@
+=head1 NAME
+
+SinisterSdpParser - The SDP parser routines
+
+=head1 SYNOPSIS
+
+ #include <SDP/SDP_Parser.h>
+ 
+ int main(void)
+ {
+ 	SDP_Parser *parser;
+ 	SDP_Description *description;
+ 
+ 	parser = SDP_NewParser();
+ 	description = SDP_ParseFile(parser, 'description.sdp');
+ 
+	...
+ }
+
+=head1 DESCRIPTION
+
+The SinisterSdp parser is a standards compliant (RFC 2327) SDP parser that can
+parse SDP descriptions from multiple types of sreams. The parsed descriptions
+and their fields are encapsulated by structures and functions that operate on
+them, which are described in
+L<SinisterSdpDescriptions.html|SinisterSdpDescriptions.html>.
+
+The parser performs some basic validation on the descriptions it parses,
+ensuring required sub fields are present, for example, or that the fields are
+not horribly out of order. These non fatal parser errors can be caught and
+handled dynamically using a non-fatal error handler as described in
+L<SinisterSdpError.html|SinisterSdpError.html>.
+
+Also exposed here in the API is the lower-level event stream parser. This
+simple parser alows you to register handlers for certain events (like
+encountering the start of a description, encountering a field, encountering the
+end of a description) and build your own custom SDP parser.
+
+=head1 FUNCTIONS
+
+The following functions are available:
+
+=head2 SDP_NewParser()
+
+ SDP_Parser *SDP_NewParser(void);
+
+This function creates a new C<SDP_Parser> struct. All of the other parser
+functions take a pointer to this struct as their first argument.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_Parser> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Parser struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_Parse(parser, string)
+
+ SDP_Description *SDP_Parse(
+ 	SDP_Parser *   parser,
+ 	const char *   string
+ );
+
+This function parses one or more SDP session descriptions from a string into
+a linked list of C<SDP_Description> stucts, each of which encapsulate a single
+session description.
+
+You can retrieve and modify the various parts of the description encapsulated
+by an C<SDP_Description> struct with the routines outlined in
+L<SinisterSdpDescriptions.html|SinisterSdpDescriptions.html>.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the first and probably only
+C<SDP_Description> struct in the linked list. If an error occurs, it returns a
+NULL pointer instead. For extended error information call
+C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the description(s).
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_MALFORMED_V_FIELD      = The "v" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_O_FIELD      = The "o" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_E_FIELD      = An "e" field was malformed and
+                                  could not be parsed. 
+ SDP_ERR_MALFORMED_P_FIELD      = A "p" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_C_FIELD      = A "c" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_B_FIELD      = A "b" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_T_FIELD      = The "t" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_R_FIELD      = An "r" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_Z_FIELD      = The "z" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_K_FIELD      = A "k" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_A_FIELD      = An "a" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_M_FIELD      = An "m" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FIELDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item string
+
+A pointer to the string to parse.
+
+=back
+
+=back
+
+=head2 SDP_ParseFile(parser, filename)
+
+ SDP_Description *SDP_Parse(
+ 	SDP_Parser *   parser,
+ 	const char *   filename
+ );
+
+This function parses one or more SDP session descriptions from a file into
+a linked list of C<SDP_Description> stucts, each of which encapsulate a single
+session description.
+
+You can retrieve and modify the various parts of the description encapsulated
+by an C<SDP_Description> struct with the routines outlined in
+L<SinisterSdpDescriptions>.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the first and probably only
+C<SDP_Description> struct in the linked list. If an error occurs, it returns a
+NULL pointer instead. For extended error information call
+C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the description(s).
+ SDP_ERR_FILE_OPEN_FAILED       = Couldn't open the file you
+                                  specified.
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_MALFORMED_V_FIELD      = The "v" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_O_FIELD      = The "o" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_E_FIELD      = An "e" field was malformed and
+                                  could not be parsed. 
+ SDP_ERR_MALFORMED_P_FIELD      = A "p" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_C_FIELD      = A "c" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_B_FIELD      = A "b" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_T_FIELD      = The "t" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_R_FIELD      = An "r" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_Z_FIELD      = The "z" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_K_FIELD      = A "k" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_A_FIELD      = An "a" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_M_FIELD      = An "m" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FIELDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item filename
+
+A pointer to a string containing the name of the file to parse.
+
+=back
+
+=back
+
+=head2 SDP_DestroyParser(parser)
+
+ void SDP_Parse(SDP_Parser *parser);
+
+This function destroys an C<SDP_Parser> struct, freeing any memory associated
+with it. Call this when you are finished with it and don't need to do any more
+parsing.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_EventStreamParse(parser, string)
+
+ int SDP_EventStreamParse(
+ 	SDP_Parser *   parser,
+ 	const char *   string
+ );
+
+This function provides access to the lower-level event stream parser. It parses
+the string as an event stream and calls various event handlers as it goes. It
+also passes on a pointer to some piece of data if you supply one.
+
+The handlers you can register are:
+
+ 1) a start handler to be invoked before the parser starts parsing;
+
+ 2) a start-of-description handler to be invoked when the current field
+    denotes the start of an SDP description (a "v" field);
+ 
+ 3) a field handler to be invoked for each field;
+
+ 4) an end-of-description handler to be invoked when the current field
+    denotes the end of a description (a subsequint "v" field or the end
+    of the stream);
+
+ 5) and then an end handler to be invoked when it stops parsing.
+
+The end handler (if registered) will be invoked when parsing stops regardless
+of whether or not it stops after successfully parsing the stream or stops
+because of an error (this is to enable you to do any neccessary cleanup). As
+a convience, the return value detailed below will also be passed on to the
+end handler.
+
+You can register a non-fatal error handler to catch parser errors and decide
+dynamically whether or not you want it to keep parsing. See
+L<SinisterSdpErrorHandling> for more information on this.
+
+=over 4
+
+=item Return Value
+
+This function returns true if it is able to successfully parse the string,
+false otherwise. Call C<SDP_GetLastError()> for extened error information.
+Among the error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the fields.
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FEILDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item string
+
+A pointer to the string to parse.
+
+=back
+
+=back
+
+=head2 SDP_EventStreamParseFile(parser, filename)
+
+ int SDP_EventStreamParseFile(
+ 	SDP_Parser *   parser,
+ 	const char *   filename
+ );
+
+This function works just like C<SDP_EventStreamParse> except instead of a
+string to parse, it takes the name of a file, opens it, and then parses the
+file as an event stream.
+
+=over 4
+
+=item Return Value
+
+This function returns true if it is able to successfully parse the file,
+false otherwise. Call C<SDP_GetLastError()> for extened error information.
+Among the error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the fields.
+ SDP_ERR_FILE_OPEN_FAILED       = Couldn't open the file you
+                                  specified.
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FEILDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item filename
+
+A pointer to a string containing the name of the file to parse.
+
+=back
+
+=back
+
+=head2 SDP_SetStartHandler(parser, handler)
+
+ void SDP_SetStartHandler(
+ 	SDP_Parser *       parser,
+ 	SDP_StartHandler   handler
+ );
+
+This function registers a start handler to be invoked when parsing starts.
+
+Here is a prototype for a sample handler:
+
+ int sample_start_handler(
+ 	SDP_Parser *   parser,
+ 	void *         user_data
+ );
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item handler
+
+A pointer to the start handler function to register.
+
+=back
+
+=back
+
+=head2 SDP_SetStartDescriptionHandler(parser, handler)
+
+ void SDP_SetStartDescriptionHandler(
+ 	SDP_Parser *                  parser,
+ 	SDP_StartDescriptionHandler   handler
+ );
+
+This function registers a start-of-description handler to be invoked when a
+"v" field is encoutered (designating the start of a new description).
+
+Here is the prototype for a sample handler:
+
+ int sample_start_of_description_handler(
+ 	SDP_Parser *   parser,
+ 	int            current_description_number,
+ 	void *         user_data
+ );
+
+The second argument passed to the handler is the number of the description
+(e.g., 1 for the first description encountered, 2 for the second, 3 for the
+third, etc.)
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item handler
+
+A pointer to the start of description handler function to register.
+
+=back
+
+=back
+
+=head2 SDP_SetFieldHandler(parser, handler)
+
+ void SDP_SetFieldHandler(
+ 	SDP_Parser *       parser,
+ 	SDP_FieldHandler   handler
+ );
+
+This function registers a field handler to be invoked for each SDP field
+encountered.
+
+Here is the prototype of a sample handler:
+
+ int sample_field_handler(
+ 	SDP_Parser *   parser,
+ 	char           type,
+ 	const char *   value,
+ 	void *         user_data
+ );
+
+The second argument passed in is the type character for the field (e.g., "v",
+"o", "t", "r", "m"). The third is a pointer to a string containing the field's
+value.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item handler
+
+A pointer to the field handler function to register.
+
+=back
+
+=back
+
+=head2 SDP_SetEndDescriptionHandler(parser, handler)
+
+ void SDP_SetEndDescriptionHandler(
+ 	SDP_Parser *                parser,
+ 	SDP_EndDescriptionHandler   handler
+ );
+
+This function registers an end-of-description handler to be invoked when the
+end of an SDP description is encountered (either by reaching the end of the
+stream or by encountering another "v" field, which denotes the start of the
+next description).
+
+Here is the prototype for a sample handler:
+
+ int sample_end_description_handler(
+ 	struct _SDP_Parser *   parser,
+ 	int                    current_description_number,
+ 	void *                 user_data
+ );
+
+The second argument passed in is the same as that for the start-of-description
+handler, the number of the current description.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item handler
+
+A pointer to the end-of-description handler function to register.
+
+=back
+
+=back
+
+=head2 SDP_SetEndHandler(parser, handler)
+
+ void SDP_SetEndHandler(
+ 	SDP_Parser *     parser,
+ 	SDP_EndHandler   handler
+ );
+
+This function registers an end handler to be invoked when parsing stops.
+
+Here is the prototype of a sample handler:
+
+ void sample_end_handler(
+ 	SDP_Parser *   parser,
+ 	int            result,
+ 	void *         user_data
+ );
+
+The second argument passed in is same thing returned by either of the
+C<SDP_EventStreamParse()> or C<SDP_EventStreamParseFile()> functions, the
+result of parsing, true or false indicating success or failure.
+
+Note the "void" return type.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item handler
+
+A pointer to the end handler function to register.
+
+=back
+
+=back
+
+=head2 SDP_SetUserData(parser, user_data)
+
+ void SDP_SetUserData(
+ 	SDP_Parser *   parser,
+ 	void *         user_data
+ );
+
+This function takes a pointer to some piece of data you want each of the above
+mentioned handlers to get passed.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item user_data
+
+A pointer to some piece of data.
+
+=back
+
+=back
+
+=head2 SDP_GetStartHandler(parser)
+
+ SDP_StartHandler SDP_GetStartHandler(SDP_Parser *parser);
+
+This function retrieves the current start handler.
+
+=over 4
+
+=item Return Value
+
+If a start handler function was register, then it returns a pointer to it.
+Otherwise, a NULL pointer is returned instead.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetStartDescriptionHandler(parser)
+
+ SDP_StartDescriptionHandler SDP_GetStartDescriptionHandler(
+ 	SDP_Parser *parser
+ );
+
+This function retrieves the current start-of-description handler.
+
+=over 4
+
+=item Return Value
+
+If a start-of-description handler function was register, then it returns a
+pointer to it. Otherwise, a NULL pointer is returned instead.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetFieldHandler(parser)
+
+ SDP_FieldHandler SDP_GetFieldHandler(SDP_Parser *parser);
+
+This function retrieves the curreent field handler.
+
+=over 4
+
+=item Return Value
+
+If a field handler function was register, then it returns a pointer to it.
+Otherwise, a NULL pointer is returned instead.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetEndDescriptionHandler(parser)
+
+ SDP_EndDescriptionHandler SDP_GetEndDescriptionHandler(SDP_Parser *parser);
+
+This function retrieves the current end-of-description handler.
+
+=over 4
+
+=item Return Value
+
+If an end-of-description handler function was register, then it returns a
+pointer to it. Otherwise, a NULL pointer is returned instead.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetEndHandler(parser)
+
+ SDP_EndHandler SDP_GetEndHandler(SDP_Parser *parser);
+
+This function retrieves the current end handler.
+
+=over 4
+
+=item Return Value
+
+If an end-of-description handler function was register, then it returns a
+pointer to it. Otherwise, a NULL pointer is returned instead.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetUserData(parser)
+
+ void *SDP_GetUserData(SDP_Parser *parser);
+
+This function retrieves your current user data.
+
+=over 4
+
+=item Return Value
+
+A pointer to the piece of data or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetCurrentLineNumber(parser)
+
+ int SDP_GetCurrentLineNumber(SDP_Parser *parser);
+
+This function returns the number of the current line in the stream being parsed
+(for example, 1 for the first line, 2 for the second, etc.).
+
+=over 4
+
+=item Return Value
+
+The line number.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetCurrentDescriptionNumber(parser)
+
+ int SDP_GetCurrentDescriptionNumber(SDP_Parser *parser);
+
+This function returns the number of the current description being parsed (e.g.,
+1 for the first description, 2 for the second, etc.).
+
+=over 4
+
+=item Return Value
+
+The description number.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetCurrentFieldType(parser)
+
+ char SDP_GetCurrentFieldType(SDP_Parser *parser);
+
+This function returns the character of the current SDP field (for example, "v",
+"o", "t", "r", "m", etc.).
+
+=over 4
+
+=item Return Value
+
+The field type character.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetCurrentField(parser)
+
+ char *SDP_GetCurrentField(SDP_Parser *parser);
+
+This function retrieves the current field value.
+
+=over 4
+
+=item Return Value
+
+A pointer to a string containing the current field value.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=back
+
+=back
+
+=head2 SDP_FieldEncountered(parser, field_type)
+
+ int SDP_FieldEncountered(
+ 	SDP_Parser *   parser,
+ 	char           field_type
+ );
+
+This function can be used to tell you if a particular field has been
+encountered yet for the current description being parsed.
+
+=over 4
+
+=item Return Value
+
+The number of times the field has been encountered.
+
+=item Parameters
+
+=over 4
+
+=item parser
+
+A pointer to the C<SDP_Parser> struct.
+
+=item field_type
+
+The field type character.
+
+=back
+
+=back
+
+=head1 BUGS
+
+Bugs in this package can be reported and monitored using sourceforge.net:
+http://sourceforge.net/tracker/?atid=644250&group_id=106387&func=browse
+
+You can also email me directly:
+<william_g_davis at users dot sourceforge dot net>.
+
+=head1 COPYRIGHT
+
+Copyright 2004 by William G. Davis.
+
+This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.
+
+=cut
+

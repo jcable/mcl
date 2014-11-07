@@ -1,0 +1,53 @@
+=head1 NAME
+
+SinisterSdp - A C library for parsing and generating SDP session descriptions
+
+=head1 SYNOPSIS
+
+ #include <SDP/SDP_Parser.h>
+ #include <SDP/SDP_Generator.h>
+ ...
+
+=head1 DESCRIPTION
+
+SinisterSdp is an open source ANSI C library that parses and generates Session
+Description Protocol session descriptions for multimedia streaming and VoIP
+(Voice over Internet Protocol). The Session Description Protocol is described
+in RFC 2327 (http://www.ietf.org/rfc/rfc2327.txt).
+
+This library is divided up into two main components: a parser and a generator.
+See the L<SinisterSdpParser|SinisterSdpParser> and
+L<SinisterSdpGenerator|SinisterSdpGenerator> documents for how to use
+each. L<SinisterSdpDescriptions|SinisterSdpDescriptions> describes
+how to use the structures that encapsulate SDP descriptions, and
+L<SinisterSdpError.html|SinisterSdpError.html> details the mechanisms by which
+SinisterSdp handles errors.
+
+=head1 BUILDING
+
+To build SinisterSdp, just edit and run the Makefile in the "src" directory to
+create a binary you can statically link to. See the README file for full
+instructions.
+
+=head1 BUGS
+
+Bugs in this package can be reported and monitored using sourceforge.net:
+http://sourceforge.net/tracker/?atid=644250&group_id=106387&func=browse
+
+You can also email me directly:
+<william_g_davis at users dot sourceforge dot net>.
+
+=head1 COPYRIGHT
+
+Copyright 2004 by William G. Davis.
+
+This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.
+
+=cut
+

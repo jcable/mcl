@@ -1,0 +1,54 @@
+	  $Id: README,v 1.1.1.1 2003/09/03 12:45:41 chneuman Exp $
+
+     -----------------------------------------------------------
+     FCAST: Multicast File Transfert Application over MCL Lib
+		(as defined in the ALC internet draft)
+    
+	       README - Vincent Roca, Julien LABOURE
+     -----------------------------------------------------------
+
+
+1- USING THE FCAST TOOLS
+-------------------
+
+	./fcast -help
+		for a list of commands/parameters available.
+	
+	Sample:
+	    as Sender:    ./fcast -send -a230.1.2.3/1234 send.me
+		Sends the file send.me to 230.1.2.3/1234 multicast group.
+
+	    as Seceiver:  ./fcast -recv -a230.1.2.3/1234
+		Get and save to current directory file(s)
+		(and folders if recursive mode is ON) from
+		230.1.2.3/1234 multicast group.
+
+NOTES
+----
+
+	Note about recursive mode for directories transferts :
+		This mode allows to send recusrively a directory with all files
+		and subdirs.
+		The arborescence is created in the receiver current directory.
+		ie:
+		 1/ if we use -r "../foo/" as sender parameter, then fcast will
+		send all files and subdirs in "../foo/" from current dir
+		On receiver side, a "foo/" directory will be created in current
+		dir and filled with the corresponding files.
+		
+		 2/ if we use -r "/home/user/foo/" as sender parameter, then
+		on receiver side, a "home/user/foo/ directory will be created
+		in current dir and filled with the corresponding files.
+		
+		THIS MODE IS CURRENTLY NOT FULLY IMPLEMENTED, so you *may* 
+		notice some bugs, or hasardous results if tool is used in 
+		non-standard ways...
+		ie: ./fcast -send -r ~/../$HOME/././foo/  *MAY* not work :-)
+		
+		Also, files modes/permissions are not supported at the moment.
+
+
+			---------------------------
+	For further informations/comments, or if you find this tool
+	interesting, then send an email at:	Vincent.Roca@inrialpes.fr
+						Julien.Laboure@inrialpes.fr

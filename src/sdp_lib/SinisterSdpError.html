@@ -1,0 +1,365 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Pod::HtmlEasy/0.06 Perl/5.006001 []">
+<title>SinisterSdpError.pod</title>
+<style type="text/css">
+<!--
+
+BODY {
+  background: white;
+  color: black;
+  font-family: arial,sans-serif;
+  margin: 0;
+  padding: 1ex;
+}
+TABLE {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-width: 0;
+  color: inherit;
+}
+IMG { border: 0; }
+FORM { margin: 0; }
+input { margin: 2px; }
+A.fred {
+  text-decoration: none;
+}
+A:link, A:visited {
+  background: transparent;
+  color: #006699;
+}
+TD {
+  margin: 0;
+  padding: 0;
+}
+DIV {
+  border-width: 0;
+}
+DT {
+  margin-top: 1em;
+}
+TH {
+  background: #bbbbbb;
+  color: inherit;
+  padding: 0.4ex 1ex;
+  text-align: left;
+}
+TH A:link, TH A:visited {
+  background: transparent;
+  color: black;
+}
+A.m:link, A.m:visited {
+  background: #006699;
+  color: white;
+  font: bold 10pt Arial,Helvetica,sans-serif;
+  text-decoration: none;
+}
+A.o:link, A.o:visited {
+  background: #006699;
+  color: #ccffcc;
+  font: bold 10pt Arial,Helvetica,sans-serif;
+  text-decoration: none;
+}
+A.o:hover {
+  background: transparent;
+  color: #ff6600;
+  text-decoration: underline;
+}
+A.m:hover {
+  background: transparent;
+  color: #ff6600;
+  text-decoration: underline;
+}
+table.dlsip     {
+  background: #dddddd;
+  border: 0.4ex solid #dddddd;
+}
+.pod PRE     {
+  background: #eeeeee;
+  border: 1px solid #888888;
+  color: black;
+  padding-top: 1em;
+  white-space: pre;
+}
+.pod H1      {
+  background: transparent;
+  color: #006699;
+  font-size: large;
+}
+.pod H2      {
+  background: transparent;
+  color: #006699;
+  font-size: medium;
+}
+.pod IMG     {
+  vertical-align: top;
+}
+.pod .toc A  {
+  text-decoration: none;
+}
+.pod .toc LI {
+  line-height: 1.2em;
+  list-style-type: none;
+}
+
+--></style>
+</head>
+<body alink="#FF0000" bgcolor="#FFFFFF" link="#000000" text="#000000" vlink="#000066"><a name='_top'></a>
+
+<div class="toc">
+<ul>
+<li><a href='#NAME'>NAME</a>
+<li><a href='#SYNOPSIS'>SYNOPSIS</a>
+<li><a href='#DESCRIPTION'>DESCRIPTION</a>
+<li><a href='#FUNCTIONS'>FUNCTIONS</a>
+
+<ul>
+<li><a href='#SDP_GetLastError--'>SDP_GetLastError()</a>
+<li><a href='#SDP_GetLastErrorString--'>SDP_GetLastErrorString()</a>
+<li><a href='#SDP_ErrorRaised--'>SDP_ErrorRaised()</a>
+<li><a href='#SDP_SetFatalErrorHandler-handler-'>SDP_SetFatalErrorHandler(handler)</a>
+<li><a href='#SDP_SetNonFatalErrorHandler-handler-'>SDP_SetNonFatalErrorHandler(handler)</a>
+<li><a href='#SDP_UseHandlersForErrors-use_handlers-'>SDP_UseHandlersForErrors(use_handlers)</a>
+</ul><li><a href='#BUGS'>BUGS</a>
+<li><a href='#COPYRIGHT'>COPYRIGHT</a>
+
+</ul>
+</div>
+
+<div class='pod'><div>
+<a name='NAME'></a><h1>NAME</h1>
+
+<p>SinisterSdpError - SinisterSdp error handling.</p>
+<a name='SYNOPSIS'></a><h1>SYNOPSIS</h1>
+
+<pre> #include &lt;stdarg.h&gt;
+ #include &lt;stdio.h&gt;
+ #include &lt;SDP/SDP_Parser.h&gt;
+ 
+ /* Function to quit: */
+ int quit(const char *format, ...)
+ {
+ 	va_list arg;
+ 
+ 	va_start(format, arg);
+ 	vfprintf(stderr, format, arg);
+ 	va_end(arg);
+ 
+ 	exit(0);
+ }
+ 
+ /* Error handlers that can be registered: */
+ void fatal_error_handler(SDP_Error error_code, const char *error_string)
+ {
+ 	quit("An error has occurred: %s", error_string);
+ }
+ int non_fatal_error_handler(SDP_Error error_code, const char *error_string)
+ {
+ 	fprintf(stderr, "WARNING: %s", error_string);
+	return 1; /* Keep going... */
+ }
+ 
+ int main(void)
+ {
+ 	SDP_Parser *parser;
+ 	SDP_Description *description;
+ 
+ 	parser = SDP_NewParser();
+ 	if (parser == NULL)
+		quit("Error: %s\n", SDP_GetLastErrorString());
+ 
+ 	description = SDP_ParseFile(parser, './sessions/description.sdp');
+ 	if (description == NULL)
+ 		quit("Couldn't parse: %s\n", SDP_GetLastErrorString());
+ 
+ 	...
+ 
+ 	/* Or, instead, register the error handlers: */
+ 	SDP_SetFatalErrorHandler(fatal_error_handler);
+ 	SDP_SetNonFatalErrorHandler(fatal_error_handler);
+ 
+ 	/* Now you can just ignore all return codes: */
+ 	parser = SDP_NewParser();
+ 	description = SDP_ParseFile(parser, './sessions/description.sdp');
+
+	...
+ }
+
+</pre>
+<a name='DESCRIPTION'></a><h1>DESCRIPTION</h1>
+
+<p>SinisterSdp employs a standard error code system for handling errors. Functions
+return either false values or NULL pointers to indicate failure, and error
+codes and strings can be retrieved using <font face='Courier New'>SDP_GetLastError()</font> and
+<font face='Courier New'>SDP_GetLastErrorString()</font>.</p>
+<p>In addition, you can register error handlers to catch and process errors as
+they occur.</p>
+<p>The error code variable, error string variable, and the variables that hold the
+function pointers to the error handlers are the only <i>real</i> global variables
+in SinisterSdp, and they are <b>not</b> reentrant and they are <b>not</b> thread-safe.
+This was done to keep portability at a maximum and refrain from having to
+introduce any platform-specific code into what is otherwise a relatively
+straightforward text manipulating library.</p>
+<p>If you need thread safety, go edit SDP_Error.c and put the variables in thread
+local storage.</p>
+<a name='FUNCTIONS'></a><h1>FUNCTIONS</h1>
+
+<p>The following functions are available:</p>
+<a name='SDP_GetLastError--'></a><h2>SDP_GetLastError()</h2>
+
+<pre> SDP_Error SDP_GetLastError(void);
+
+</pre>
+<p>This function retrieves the error code of the last error that occurred. If some
+function call fails, call this to find out why.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>This function returns the error code of the last error to occur from the global
+error code variable.</p>
+<p>The following error codes may be returned by <font face='Courier New'>SDP_GetLastError()</font>:</p>
+<ul>
+<li><a name='Fatal-errors-'></a><b>Fatal errors:</b></li>
+<pre> SDP_ERR_OUT_OF_MEMORY
+ SDP_ERR_FILE_OPEN_FAILED
+
+</pre>
+<li><a name='Non-fatal-errors-'></a><b>Non-fatal errors:</b></li>
+<pre> SDP_ERR_MALFORMED_LINE
+ SDP_ERR_MALFORMED_V_FIELD
+ SDP_ERR_MALFORMED_O_FIELD
+ SDP_ERR_MALFORMED_E_FIELD
+ SDP_ERR_MALFORMED_P_FIELD
+ SDP_ERR_MALFORMED_C_FIELD
+ SDP_ERR_MALFORMED_B_FIELD
+ SDP_ERR_MALFORMED_T_FIELD
+ SDP_ERR_MALFORMED_R_FIELD
+ SDP_ERR_MALFORMED_Z_FIELD
+ SDP_ERR_MALFORMED_K_FIELD
+ SDP_ERR_MALFORMED_A_FIELD
+ SDP_ERR_MALFORMED_M_FIELD
+ SDP_ERR_INVALID_TYPE_CHARACTER
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS
+ SDP_ERR_FIELDS_OUT_OF_SEQUENCE
+
+</pre>
+</ul>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_GetLastErrorString--'></a><h2>SDP_GetLastErrorString()</h2>
+
+<pre> const char *SDP_GetLastErrorString(void);
+
+</pre>
+<p>In addition to error codes, SinisterSdp functions produce printable error
+messages when they fail. these messages are generated on the fly and stored in
+the global error string variable.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the global error string variable.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_ErrorRaised--'></a><h2>SDP_ErrorRaised()</h2>
+
+<pre> int SDP_ErrorRaised(void);
+
+</pre>
+<p>Can be used to tell whether or not any error has occurred yet.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>Returns true if some error has been raised, false otherwise.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_SetFatalErrorHandler-handler-'></a><h2>SDP_SetFatalErrorHandler(handler)</h2>
+
+<pre> void SDP_SetFatalErrorHandler(SDP_FatalErrorHandler handler);
+
+</pre>
+<p>This function allows you to register a handler to be invoked when any "fatal"
+error occurs. A fatal error being one that the routine you called cannot
+continue after and must return prematurely.</p>
+<p>Afterwards, any time a fatal error occurs, your handler will be invoked with
+the error code as the first argument and the error string as the second.</p>
+<p>Here's the prototype of a sample handler:</p>
+<pre> void sample_fatal_error_handler(
+ 	SDP_Error      error_code,
+ 	const char *   error_string
+ );
+
+</pre>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='handler'></a><b>handler</b></li>
+<p>A pointer to the handler function to register. If NULL, nothing will be invoked
+for fatal errors.</p>
+</ul>
+</ul>
+<a name='SDP_SetNonFatalErrorHandler-handler-'></a><h2>SDP_SetNonFatalErrorHandler(handler)</h2>
+
+<pre> void SDP_SetNonFatalErrorHandler(SDP_NonFatalErrorHandler handler);
+
+</pre>
+<p>This function allows you to register a non-fatal error handler to be invoked
+for all non-fatal errors. Non-fatal errors being errors that the function you
+called *can* continue safely after, but probably shouldn't. The return value
+of your handler is used by the function you called to tell whether or not it 
+should keep going anyway. A true return value means it should, a false value
+means it shouldn't.</p>
+<p>Here's the prototype of a sample handler:</p>
+<pre> int sample_non_fatal_error_handler(
+ 	SDP_Error      error_code,
+ 	const char *   error_string
+ );
+
+</pre>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='handler'></a><b>handler</b></li>
+<p>A pointer to the handler function to register. If NULL, nothing will be invoked
+for non-fatal errors.</p>
+</ul>
+</ul>
+<a name='SDP_UseHandlersForErrors-use_handlers-'></a><h2>SDP_UseHandlersForErrors(use_handlers)</h2>
+
+<pre> void SDP_UseHandlersForErrors(int use_handlers);
+
+</pre>
+<p>This function allows you to turn on or turn off the error handlers by
+specifying a true or false value respectively. When off, neither of the two
+handlers will be invoked when errors occur.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='use_handlers'></a><b>use_handlers</b></li>
+<p>Boolean true or false; invoke the error handlers when errors occur?</p>
+</ul>
+</ul>
+<a name='BUGS'></a><h1>BUGS</h1>
+
+<p>Bugs in this package can be reported and monitored using sourceforge.net:
+<a href='http://sourceforge.net/tracker/?atid=644250' target='_blank'>http://sourceforge.net/tracker/?atid=644250</a>&amp;group_id=106387&amp;func=browse</p>
+<p>You can also email me directly:
+&lt;william_g_davis at users dot sourceforge dot net&gt;.</p>
+<a name='COPYRIGHT'></a><h1>COPYRIGHT</h1>
+
+<p>Copyright 2004 by William G. Davis.</p>
+<p>This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.</p>
+<p>This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+
+<div></div></body></html>

@@ -1,0 +1,3743 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Pod::HtmlEasy/0.06 Perl/5.006001 []">
+<title>SinisterSdpDescriptions.pod</title>
+<style type="text/css">
+<!--
+
+BODY {
+  background: white;
+  color: black;
+  font-family: arial,sans-serif;
+  margin: 0;
+  padding: 1ex;
+}
+TABLE {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-width: 0;
+  color: inherit;
+}
+IMG { border: 0; }
+FORM { margin: 0; }
+input { margin: 2px; }
+A.fred {
+  text-decoration: none;
+}
+A:link, A:visited {
+  background: transparent;
+  color: #006699;
+}
+TD {
+  margin: 0;
+  padding: 0;
+}
+DIV {
+  border-width: 0;
+}
+DT {
+  margin-top: 1em;
+}
+TH {
+  background: #bbbbbb;
+  color: inherit;
+  padding: 0.4ex 1ex;
+  text-align: left;
+}
+TH A:link, TH A:visited {
+  background: transparent;
+  color: black;
+}
+A.m:link, A.m:visited {
+  background: #006699;
+  color: white;
+  font: bold 10pt Arial,Helvetica,sans-serif;
+  text-decoration: none;
+}
+A.o:link, A.o:visited {
+  background: #006699;
+  color: #ccffcc;
+  font: bold 10pt Arial,Helvetica,sans-serif;
+  text-decoration: none;
+}
+A.o:hover {
+  background: transparent;
+  color: #ff6600;
+  text-decoration: underline;
+}
+A.m:hover {
+  background: transparent;
+  color: #ff6600;
+  text-decoration: underline;
+}
+table.dlsip     {
+  background: #dddddd;
+  border: 0.4ex solid #dddddd;
+}
+.pod PRE     {
+  background: #eeeeee;
+  border: 1px solid #888888;
+  color: black;
+  padding-top: 1em;
+  white-space: pre;
+}
+.pod H1      {
+  background: transparent;
+  color: #006699;
+  font-size: large;
+}
+.pod H2      {
+  background: transparent;
+  color: #006699;
+  font-size: medium;
+}
+.pod IMG     {
+  vertical-align: top;
+}
+.pod .toc A  {
+  text-decoration: none;
+}
+.pod .toc LI {
+  line-height: 1.2em;
+  list-style-type: none;
+}
+
+--></style>
+</head>
+<body alink="#FF0000" bgcolor="#FFFFFF" link="#000000" text="#000000" vlink="#000066"><a name='_top'></a>
+
+<div class="toc">
+<ul>
+<li><a href='#NAME'>NAME</a>
+<li><a href='#SYNOPSIS'>SYNOPSIS</a>
+<li><a href='#DESCRIPTION'>DESCRIPTION</a>
+<li><a href='#FUNCTIONS'>FUNCTIONS</a>
+<li><a href='#CONSTRUCTOR-FUNCTIONS'>CONSTRUCTOR FUNCTIONS</a>
+
+<ul>
+<li><a href='#SDP_NewDescription--'>SDP_NewDescription()</a>
+<li><a href='#SDP_NewOwner--'>SDP_NewOwner()</a>
+<li><a href='#SDP_NewEmailContact--'>SDP_NewEmailContact()</a>
+<li><a href='#SDP_NewPhoneContact--'>SDP_NewPhoneContact()</a>
+<li><a href='#SDP_NewConnection--'>SDP_NewConnection()</a>
+<li><a href='#SDP_NewBandwidth--'>SDP_NewBandwidth()</a>
+<li><a href='#SDP_NewSessionPlayTime--'>SDP_NewSessionPlayTime()</a>
+<li><a href='#SDP_NewRepeatTime--'>SDP_NewRepeatTime()</a>
+<li><a href='#SDP_NewZoneAdjustment--'>SDP_NewZoneAdjustment()</a>
+<li><a href='#SDP_NewEncryption--'>SDP_NewEncryption()</a>
+<li><a href='#SDP_NewAttribute--'>SDP_NewAttribute()</a>
+<li><a href='#SDP_NewMediaDescription--'>SDP_NewMediaDescription()</a>
+</ul><li><a href='#-SET--ACCESSOR-FUNCTIONS'>"SET" ACCESSOR FUNCTIONS</a>
+
+<ul>
+<li><a href='#SDP_SetProtocolVersion-description--version-'>SDP_SetProtocolVersion(description, version)</a>
+<li><a href='#SDP_SetOwner-description--username--session_id--session_version--network_type--address_type--address-'>SDP_SetOwner(description, username, session_id, session_version, network_type, address_type, address)</a>
+<li><a href='#SDP_SetUsername-owner--username-'>SDP_SetUsername(owner, username)</a>
+<li><a href='#SDP_SetSessionID-owner--session_id-'>SDP_SetSessionID(owner, session_id)</a>
+<li><a href='#SDP_SetSessionVersion-owner--session_version-'>SDP_SetSessionVersion(owner, session_version)</a>
+<li><a href='#SDP_SetOwnerNetworkType-owner--network_type-'>SDP_SetOwnerNetworkType(owner, network_type)</a>
+<li><a href='#SDP_SetOwnerAddressType-owner--address_type-'>SDP_SetOwnerAddressType(owner, address_type)</a>
+<li><a href='#SDP_SetOwnerAddress-owner--address-'>SDP_SetOwnerAddress(owner, address)</a>
+<li><a href='#SDP_SetSessionName-description--session_name-'>SDP_SetSessionName(description, session_name)</a>
+<li><a href='#SDP_SetSessionInformation-description--session_information-'>SDP_SetSessionInformation(description, session_information)</a>
+<li><a href='#SDP_SetURI-description--uri-'>SDP_SetURI(description, uri)</a>
+<li><a href='#SDP_AddEmailContact-description--email_contact-'>SDP_AddEmailContact(description, email_contact)</a>
+<li><a href='#SDP_AddNewEmailContact-description--address--name-'>SDP_AddNewEmailContact(description, address, name)</a>
+<li><a href='#SDP_SetEmailAddress-email_contact--address-'>SDP_SetEmailAddress(email_contact, address)</a>
+<li><a href='#SDP_SetEmailName-email_contact--name-'>SDP_SetEmailName(email_contact, name)</a>
+<li><a href='#SDP_AddPhoneContact-description--phone_contact-'>SDP_AddPhoneContact(description, phone_contact)</a>
+<li><a href='#SDP_AddNewPhoneContact-description--number--name-'>SDP_AddNewPhoneContact(description, number, name)</a>
+<li><a href='#SDP_SetPhoneNumber-phone_contact--number-'>SDP_SetPhoneNumber(phone_contact, number)</a>
+<li><a href='#SDP_SetPhoneName-phone_contact--name-'>SDP_SetPhoneName(phone_contact, name)</a>
+<li><a href='#SDP_SetConnection-description--network_type--address_type--address--ttl--total_addresses-'>SDP_SetConnection(description, network_type, address_type, address, ttl, total_addresses)</a>
+<li><a href='#SDP_SetConnectionNetworkType-connection--network_type-'>SDP_SetConnectionNetworkType(connection, network_type)</a>
+<li><a href='#SDP_SetConnectionAddressType-connection--address_type-'>SDP_SetConnectionAddressType(connection, address_type)</a>
+<li><a href='#SDP_SetConnectionAddress-connection--address-'>SDP_SetConnectionAddress(connection, address)</a>
+<li><a href='#SDP_SetConnectionTTL-connection--ttl-'>SDP_SetConnectionTTL(connection, ttl)</a>
+<li><a href='#SDP_SetTotalConnectionAddresses-connection--total_addresses-'>SDP_SetTotalConnectionAddresses(connection, total_addresses)</a>
+<li><a href='#SDP_SetBandwidth-description--modifier--value-'>SDP_SetBandwidth(description, modifier, value)</a>
+<li><a href='#SDP_SetBandwidthModifier-bandwidth--modifier-'>SDP_SetBandwidthModifier(bandwidth, modifier)</a>
+<li><a href='#SDP_SetBandwidthValue-bandwidth--value-'>SDP_SetBandwidthValue(bandwidth, value)</a>
+<li><a href='#SDP_AddSessionPlayTime-description--session_play_time-'>SDP_AddSessionPlayTime(description, session_play_time)</a>
+<li><a href='#SDP_AddNewSessionPlayTime-description--start_time--end_time-'>SDP_AddNewSessionPlayTime(description, start_time, end_time)</a>
+<li><a href='#SDP_SetStartTime-session_play_time--start_time-'>SDP_SetStartTime(session_play_time, start_time)</a>
+<li><a href='#SDP_SetEndTime-session_play_time--end_time-'>SDP_SetEndTime(session_play_time, end_time)</a>
+<li><a href='#SDP_AddRepeatTime-session_play_time--repeat_time-'>SDP_AddRepeatTime(session_play_time, repeat_time)</a>
+<li><a href='#SDP_AddNewRepeatTime-session_play_time--repeat_interval--active_duration--repeat_offsets--total_offsets-'>SDP_AddNewRepeatTime(session_play_time, repeat_interval, active_duration, repeat_offsets, total_offsets)</a>
+<li><a href='#SDP_SetRepeatInterval-repeat_time--repeat_interval-'>SDP_SetRepeatInterval(repeat_time, repeat_interval)</a>
+<li><a href='#SDP_SetActiveDuration-repeat_time--active_duration-'>SDP_SetActiveDuration(repeat_time, active_duration)</a>
+<li><a href='#SDP_SetRepeatOffsets-repeat_time--repeat_offsets--total_offsets-'>SDP_SetRepeatOffsets(repeat_time, repeat_offsets, total_offsets)</a>
+<li><a href='#SDP_AddZoneAdjustment-description--zone_adjustment-'>SDP_AddZoneAdjustment(description, zone_adjustment)</a>
+<li><a href='#SDP_AddNewZoneAdjustment-description--time--offset-'>SDP_AddNewZoneAdjustment(description, time, offset)</a>
+<li><a href='#SDP_SetZoneAdjustmentTime-zone_adjustment--time-'>SDP_SetZoneAdjustmentTime(zone_adjustment, time)</a>
+<li><a href='#SDP_SetZoneAdjustmentOffset-zone_adjustment--offset-'>SDP_SetZoneAdjustmentOffset(zone_adjustment, offset)</a>
+<li><a href='#SDP_SetEncryption-description--method--key-'>SDP_SetEncryption(description, method, key)</a>
+<li><a href='#SDP_SetEncryptionMethod-encryption--method-'>SDP_SetEncryptionMethod(encryption, method)</a>
+<li><a href='#SDP_SetEncryptionKey-encryption--key-'>SDP_SetEncryptionKey(encryption, key)</a>
+<li><a href='#SDP_AddAttribute-description--attribute-'>SDP_AddAttribute(description, attribute)</a>
+<li><a href='#SDP_AddNewAttribute-description--name--value-'>SDP_AddNewAttribute(description, name, value)</a>
+<li><a href='#SDP_SetAttributeName-attribute--name-'>SDP_SetAttributeName(attribute, name)</a>
+<li><a href='#SDP_SetAttributeValue-attribute--value-'>SDP_SetAttributeValue(attribute, value)</a>
+<li><a href='#SDP_AddMediaDescription-description--media_description-'>SDP_AddMediaDescription(description, media_description)</a>
+<li><a href='#SDP_AddNewMediaDescription-description--media_type--port--total_ports--transport_protocol--formats--media_information-'>SDP_AddNewMediaDescription(description, media_type, port, total_ports, transport_protocol, formats, media_information)</a>
+<li><a href='#SDP_SetMediaType-media_description--media_type-'>SDP_SetMediaType(media_description, media_type)</a>
+<li><a href='#SDP_SetMediaPort-media_description--port-'>SDP_SetMediaPort(media_description, port)</a>
+<li><a href='#SDP_SetTotalMediaPorts-media_description--total_ports-'>SDP_SetTotalMediaPorts(media_description, total_ports)</a>
+<li><a href='#SDP_SetMediaTransportProtocol-media_description--transport_protocol-'>SDP_SetMediaTransportProtocol(media_description, transport_protocol)</a>
+<li><a href='#SDP_SetMediaFormats-media_description--formats-'>SDP_SetMediaFormats(media_description, formats)</a>
+<li><a href='#SDP_SetMediaInformation-media_description--media_information-'>SDP_SetMediaInformation(media_description, media_information)</a>
+<li><a href='#SDP_SetMediaConnection-media_description--network_type--address_type--address--ttl--total_addresses-'>SDP_SetMediaConnection(media_description, network_type, address_type, address, ttl, total_addresses)</a>
+<li><a href='#SDP_SetMediaBandwidth-media_description--modifier--value-'>SDP_SetMediaBandwidth(media_description, modifier, value)</a>
+<li><a href='#SDP_SetMediaEncryption-media_description--method--key-'>SDP_SetMediaEncryption(media_description, method, key)</a>
+<li><a href='#SDP_AddMediaAttribute-media_description--attribute-'>SDP_AddMediaAttribute(media_description, attribute)</a>
+<li><a href='#SDP_AddNewMediaAttribute-media_description--name--value-'>SDP_AddNewMediaAttribute(media_description, name, value)</a>
+</ul><li><a href='#-GET--ACCESSOR-FUNCTIONS'>"GET" ACCESSOR FUNCTIONS</a>
+
+<ul>
+<li><a href='#SDP_GetNextDescription-description-'>SDP_GetNextDescription(description)</a>
+<li><a href='#SDP_GetPreviousDescription-description-'>SDP_GetPreviousDescription(description)</a>
+<li><a href='#SDP_GetProtocolVersion-description-'>SDP_GetProtocolVersion(description)</a>
+<li><a href='#SDP_GetOwner-description-'>SDP_GetOwner(description)</a>
+<li><a href='#SDP_GetUsername-owner-'>SDP_GetUsername(owner)</a>
+<li><a href='#SDP_GetSessionID-owner-'>SDP_GetSessionID(owner)</a>
+<li><a href='#SDP_GetSessionVersion-owner-'>SDP_GetSessionVersion(owner)</a>
+<li><a href='#SDP_GetOwnerNetworkType-owner-'>SDP_GetOwnerNetworkType(owner)</a>
+<li><a href='#SDP_GetOwnerAddressType-owner-'>SDP_GetOwnerAddressType(owner)</a>
+<li><a href='#SDP_GetOwnerAddress-owner-'>SDP_GetOwnerAddress(owner)</a>
+<li><a href='#SDP_GetSessionName-description-'>SDP_GetSessionName(description)</a>
+<li><a href='#SDP_GetSessionInformation-description-'>SDP_GetSessionInformation(description)</a>
+<li><a href='#SDP_GetURI-description-'>SDP_GetURI(description)</a>
+<li><a href='#SDP_GetEmailContacts-description-'>SDP_GetEmailContacts(description)</a>
+<li><a href='#SDP_GetNextEmailContact-email_contact-'>SDP_GetNextEmailContact(email_contact)</a>
+<li><a href='#SDP_GetPreviousEmailContact-email_contact-'>SDP_GetPreviousEmailContact(email_contact)</a>
+<li><a href='#SDP_GetEmailAddress-email_contact-'>SDP_GetEmailAddress(email_contact)</a>
+<li><a href='#SDP_GetEmailName-email_contact-'>SDP_GetEmailName(email_contact)</a>
+<li><a href='#SDP_RemoveEmailContact-description--email_contact-'>SDP_RemoveEmailContact(description, email_contact)</a>
+<li><a href='#SDP_GetPhoneContacts-description-'>SDP_GetPhoneContacts(description)</a>
+<li><a href='#SDP_GetNextPhoneContact-phone_contact-'>SDP_GetNextPhoneContact(phone_contact)</a>
+<li><a href='#SDP_GetPreviousPhoneContact-phone_contact-'>SDP_GetPreviousPhoneContact(phone_contact)</a>
+<li><a href='#SDP_GetPhoneNumber-phone_contact-'>SDP_GetPhoneNumber(phone_contact)</a>
+<li><a href='#SDP_GetPhoneName-phone_contact-'>SDP_GetPhoneName(phone_contact)</a>
+<li><a href='#SDP_RemovePhoneContact-description--phone_contact-'>SDP_RemovePhoneContact(description, phone_contact)</a>
+<li><a href='#SDP_GetConnection-description-'>SDP_GetConnection(description)</a>
+<li><a href='#SDP_GetConnectionNetworkType-connection-'>SDP_GetConnectionNetworkType(connection)</a>
+<li><a href='#SDP_GetConnectionAddressType-connection-'>SDP_GetConnectionAddressType(connection)</a>
+<li><a href='#SDP_GetConnectionAddress-connection-'>SDP_GetConnectionAddress(connection)</a>
+<li><a href='#SDP_GetConnectionTTL-connection-'>SDP_GetConnectionTTL(connection)</a>
+<li><a href='#SDP_GetTotalConnectionAddresses-connection-'>SDP_GetTotalConnectionAddresses(connection)</a>
+<li><a href='#SDP_GetBandwidth-description-'>SDP_GetBandwidth(description)</a>
+<li><a href='#SDP_GetBandwidthModifier-bandwidth-'>SDP_GetBandwidthModifier(bandwidth)</a>
+<li><a href='#SDP_GetBandwidthValue-bandwidth-'>SDP_GetBandwidthValue(bandwidth)</a>
+<li><a href='#SDP_GetSessionPlayTimes-description-'>SDP_GetSessionPlayTimes(description)</a>
+<li><a href='#SDP_GetNextSessionPlayTime-session_play_time-'>SDP_GetNextSessionPlayTime(session_play_time)</a>
+<li><a href='#SDP_GetPreviousSessionPlayTime-session_play_time-'>SDP_GetPreviousSessionPlayTime(session_play_time)</a>
+<li><a href='#SDP_GetStartTime-session_play_time-'>SDP_GetStartTime(session_play_time)</a>
+<li><a href='#SDP_GetEndTime-session_play_time-'>SDP_GetEndTime(session_play_time)</a>
+<li><a href='#SDP_GetRepeatTimes-session_play_time-'>SDP_GetRepeatTimes(session_play_time)</a>
+<li><a href='#SDP_GetNextRepeatTime-repeat_time-'>SDP_GetNextRepeatTime(repeat_time)</a>
+<li><a href='#SDP_GetPreviousRepeatTime-repeat_time-'>SDP_GetPreviousRepeatTime(repeat_time)</a>
+<li><a href='#SDP_GetRepeatInterval-repeat_time-'>SDP_GetRepeatInterval(repeat_time)</a>
+<li><a href='#SDP_GetActiveDuration-repeat_time-'>SDP_GetActiveDuration(repeat_time)</a>
+<li><a href='#SDP_GetRepeatOffsets-repeat_time-'>SDP_GetRepeatOffsets(repeat_time)</a>
+<li><a href='#SDP_GetTotalRepeatOffsets-repeat_time-'>SDP_GetTotalRepeatOffsets(repeat_time)</a>
+<li><a href='#SDP_RemoveRepeatTime-session_play_times--repeat_time-'>SDP_RemoveRepeatTime(session_play_times, repeat_time)</a>
+<li><a href='#SDP_RemoveSessionPlayTime-description--session_play_time-'>SDP_RemoveSessionPlayTime(description, session_play_time)</a>
+<li><a href='#SDP_GetZoneAdjustments-description-'>SDP_GetZoneAdjustments(description)</a>
+<li><a href='#SDP_GetNextZoneAdjustment-zone_adjustment-'>SDP_GetNextZoneAdjustment(zone_adjustment)</a>
+<li><a href='#SDP_GetPreviousZoneAdjustment-zone_adjustment-'>SDP_GetPreviousZoneAdjustment(zone_adjustment)</a>
+<li><a href='#SDP_GetZoneAdjustmentTime-zone_adjustment-'>SDP_GetZoneAdjustmentTime(zone_adjustment)</a>
+<li><a href='#SDP_GetZoneAdjustmentOffset-zone_adjustment-'>SDP_GetZoneAdjustmentOffset(zone_adjustment)</a>
+<li><a href='#SDP_RemoveZoneAdjustment-description--zone_adjustment-'>SDP_RemoveZoneAdjustment(description, zone_adjustment)</a>
+<li><a href='#SDP_GetEncryption-description-'>SDP_GetEncryption(description)</a>
+<li><a href='#SDP_GetEncryptionMethod-encryption-'>SDP_GetEncryptionMethod(encryption)</a>
+<li><a href='#SDP_GetEncryptionKey-encryption-'>SDP_GetEncryptionKey(encryption)</a>
+<li><a href='#SDP_GetAttributes-description-'>SDP_GetAttributes(description)</a>
+<li><a href='#SDP_GetNextAttribute-attribute-'>SDP_GetNextAttribute(attribute)</a>
+<li><a href='#SDP_GetPreviousAttribute-attribute-'>SDP_GetPreviousAttribute(attribute)</a>
+<li><a href='#SDP_GetAttributeName-attribute-'>SDP_GetAttributeName(attribute)</a>
+<li><a href='#SDP_GetAttributeValue-attribute-'>SDP_GetAttributeValue(attribute)</a>
+<li><a href='#SDP_RemoveAttribute-description--attribute-'>SDP_RemoveAttribute(description, attribute)</a>
+<li><a href='#SDP_GetMediaDescriptions-description-'>SDP_GetMediaDescriptions(description)</a>
+<li><a href='#SDP_GetNextMediaDescription-media_description-'>SDP_GetNextMediaDescription(media_description)</a>
+<li><a href='#SDP_GetMediaType-media_description-'>SDP_GetMediaType(media_description)</a>
+<li><a href='#SDP_GetMediaPort-media_description-'>SDP_GetMediaPort(media_description)</a>
+<li><a href='#SDP_GetTotalMediaPorts-media_description-'>SDP_GetTotalMediaPorts(media_description)</a>
+<li><a href='#SDP_GetMediaTransportProtocol-media_description-'>SDP_GetMediaTransportProtocol(media_description)</a>
+<li><a href='#SDP_GetMediaFormats-media_description-'>SDP_GetMediaFormats(media_description)</a>
+<li><a href='#SDP_GetMediaInformation-media_description-'>SDP_GetMediaInformation(media_description)</a>
+<li><a href='#SDP_GetMediaConnection-media_description-'>SDP_GetMediaConnection(media_description)</a>
+<li><a href='#SDP_GetMediaBandwidth-media_description-'>SDP_GetMediaBandwidth(media_description)</a>
+<li><a href='#SDP_GetMediaEncryption-media_description-'>SDP_GetMediaEncryption(media_description)</a>
+<li><a href='#SDP_GetMediaAttributes-media_description-'>SDP_GetMediaAttributes(media_description)</a>
+<li><a href='#SDP_RemoveMediaDescription-description--media_description-'>SDP_RemoveMediaDescription(description, media_description)</a>
+</ul><li><a href='#DESTRUCTOR-FUNCTIONS'>DESTRUCTOR FUNCTIONS</a>
+
+<ul>
+<li><a href='#SDP_DestroyDescriptions-descriptions-'>SDP_DestroyDescriptions(descriptions)</a>
+<li><a href='#SDP_DestroyDescription-description-'>SDP_DestroyDescription(description)</a>
+<li><a href='#SDP_DestroyOwner-owner-'>SDP_DestroyOwner(owner)</a>
+<li><a href='#SDP_DestroyEmailContacts-description-'>SDP_DestroyEmailContacts(description)</a>
+<li><a href='#SDP_DestroyEmailContact-email_contact-'>SDP_DestroyEmailContact(email_contact)</a>
+<li><a href='#SDP_DestroyPhoneContacts-description-'>SDP_DestroyPhoneContacts(description)</a>
+<li><a href='#SDP_DestroyPhoneContact-phone_contact-'>SDP_DestroyPhoneContact(phone_contact)</a>
+<li><a href='#SDP_DestroyConnection-connection-'>SDP_DestroyConnection(connection)</a>
+<li><a href='#SDP_DestroyBandwidth-bandwidth-'>SDP_DestroyBandwidth(bandwidth)</a>
+<li><a href='#SDP_DestroySessionPlayTimes-description-'>SDP_DestroySessionPlayTimes(description)</a>
+<li><a href='#SDP_DestroySessionPlayTime-session_play_time-'>SDP_DestroySessionPlayTime(session_play_time)</a>
+<li><a href='#SDP_DestroyRepeatTimes-session_play_time-'>SDP_DestroyRepeatTimes(session_play_time)</a>
+<li><a href='#SDP_DestroyRepeatTime-repeat_time-'>SDP_DestroyRepeatTime(repeat_time)</a>
+<li><a href='#SDP_DestroyZoneAdjustments-description-'>SDP_DestroyZoneAdjustments(description)</a>
+<li><a href='#SDP_DestroyZoneAdjustment-zone_adjustment-'>SDP_DestroyZoneAdjustment(zone_adjustment)</a>
+<li><a href='#SDP_DestroyEncryption-encryption-'>SDP_DestroyEncryption(encryption)</a>
+<li><a href='#SDP_DestroyAttributes-description-'>SDP_DestroyAttributes(description)</a>
+<li><a href='#SDP_DestroyAttribute-attribute-'>SDP_DestroyAttribute(attribute)</a>
+<li><a href='#SDP_DestroyMediaDescriptions-description-'>SDP_DestroyMediaDescriptions(description)</a>
+<li><a href='#SDP_DestroyMediaDescription-media_description-'>SDP_DestroyMediaDescription(media_description)</a>
+<li><a href='#SDP_DestroyMediaAttributes-media_description-'>SDP_DestroyMediaAttributes(media_description)</a>
+</ul><li><a href='#BUGS'>BUGS</a>
+<li><a href='#COPYRIGHT'>COPYRIGHT</a>
+
+</ul>
+</div>
+
+<div class='pod'><div>
+<a name='NAME'></a><h1>NAME</h1>
+
+<p>SinisterSdpDescriptions - Routines to manipulate descriptions.</p>
+<a name='SYNOPSIS'></a><h1>SYNOPSIS</h1>
+
+<pre> #include &lt;SDP/SDP_Description.h&gt;
+ 
+ int main(void)
+ {
+ 	SDP_Description *description = SDP_NewDescription();
+ 	SDP_SetProtocolVersion(description, 1);
+ 	SDP_SetSessionName(description, "Session Name");
+ 	...
+ }
+
+</pre>
+<a name='DESCRIPTION'></a><h1>DESCRIPTION</h1>
+
+<p>This document describes how to use <font face='Courier New'>SDP_Description</font> structs.</p>
+<p>These structs are returned by the SinisterSdp parser functions and manpulated
+using a series of Get/Set, Add/Remove, and New/Destroy routines.
+You'll probably only end up using the Get routines and maybe a few of the Set
+routines, but the others are always there if you need them.</p>
+<p>The functions that return "const char *" return pointers to internal string
+buffers. If you need to modify them, then use strdup() or something similar to
+copy them, then modify the copy.</p>
+<a name='FUNCTIONS'></a><h1>FUNCTIONS</h1>
+
+<p>The following routines are available:</p>
+<a name='CONSTRUCTOR-FUNCTIONS'></a><h1>CONSTRUCTOR FUNCTIONS</h1>
+
+<p>These functions create and return new structs to encapsulate some portion of an
+SDP description.</p>
+<a name='SDP_NewDescription--'></a><h2>SDP_NewDescription()</h2>
+
+<pre> SDP_Description *SDP_NewDescription(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_Description</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Description struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewOwner--'></a><h2>SDP_NewOwner()</h2>
+
+<pre> SDP_Owner *SDP_NewOwner(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_Owner</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_Owner</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Owner struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewEmailContact--'></a><h2>SDP_NewEmailContact()</h2>
+
+<pre> SDP_EmailContact *SDP_NewEmailContact(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_EmailContact</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_EmailContact</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_EmailContact struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewPhoneContact--'></a><h2>SDP_NewPhoneContact()</h2>
+
+<pre> SDP_PhoneContact *SDP_NewPhoneContact(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_PhoneContact</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_PhoneContact</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_PhoneContact struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewConnection--'></a><h2>SDP_NewConnection()</h2>
+
+<pre> SDP_Connection *SDP_NewConnection(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_Connection</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_Connection</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Connection struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewBandwidth--'></a><h2>SDP_NewBandwidth()</h2>
+
+<pre> SDP_Bandwidth *SDP_NewBandwidth(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_Bandwidth</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_Bandwidth</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Bandwidth struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewSessionPlayTime--'></a><h2>SDP_NewSessionPlayTime()</h2>
+
+<pre> SDP_SessionPlayTime *SDP_NewSessionPlayTime(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_SessionPlayTime</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_SessionPlayTime struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewRepeatTime--'></a><h2>SDP_NewRepeatTime()</h2>
+
+<pre> SDP_RepeatTime *SDP_NewRepeatTime(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_RepeatTime</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_RepeatTime struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewZoneAdjustment--'></a><h2>SDP_NewZoneAdjustment()</h2>
+
+<pre> SDP_ZoneAdjustment *SDP_NewZoneAdjustment(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_ZoneAdjustment</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_ZoneAdjustment</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_ZoneAdjustment struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewEncryption--'></a><h2>SDP_NewEncryption()</h2>
+
+<pre> SDP_Encryption *SDP_NewEncryption(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_Encryption</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_Encryption</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Encryption struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewAttribute--'></a><h2>SDP_NewAttribute()</h2>
+
+<pre> SDP_Attribute *SDP_NewAttribute(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_Attribute</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_Attribute</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Attribute struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_NewMediaDescription--'></a><h2>SDP_NewMediaDescription()</h2>
+
+<pre> SDP_MediaDescription *SDP_NewMediaDescription(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_MediaDescription</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_MediaDescription struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='-SET--ACCESSOR-FUNCTIONS'></a><h1>"SET" ACCESSOR FUNCTIONS</h1>
+
+<p>These functions enable you to set values within structs that encapsulates
+portions of an SDP description.</p>
+<a name='SDP_SetProtocolVersion-description--version-'></a><h2>SDP_SetProtocolVersion(description, version)</h2>
+
+<pre> void SDP_SetProtocolVersion(
+ 	SDP_Description *   description,
+ 	int                 version
+ );
+
+</pre>
+<p>This function sets the protocol version within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='version'></a><b>version</b></li>
+<p>The version.</p>
+</ul>
+</ul>
+<a name='SDP_SetOwner-description--username--session_id--session_version--network_type--address_type--address-'></a><h2>SDP_SetOwner(description, username, session_id, session_version, network_type, address_type, address)</h2>
+
+<pre> int SDP_SetOwner(
+ 	SDP_Description *   description,
+ 	const char *        username,
+ 	const char *        session_id,
+ 	const char *        session_version,
+ 	const char *        network_type,
+ 	const char *        address_type,
+ 	const char *        address
+ );
+
+</pre>
+<p>This function sets the owner within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='username'></a><b>username</b></li>
+<p>A pointer to a string containing the username.</p>
+<li><a name='session_id'></a><b>session_id</b></li>
+<p>A pointer to a string containing the session id.</p>
+<li><a name='session_version'></a><b>session_version</b></li>
+<p>A pointer to a string containing the session version.</p>
+<li><a name='network_type'></a><b>network_type</b></li>
+<p>A pointer to a string containing the network type.</p>
+<li><a name='address_type'></a><b>address_type</b></li>
+<p>A pointer to a string containing the address type.</p>
+<li><a name='address'></a><b>address</b></li>
+<p>A pointer to a string containing the address.</p>
+</ul>
+</ul>
+<a name='SDP_SetUsername-owner--username-'></a><h2>SDP_SetUsername(owner, username)</h2>
+
+<pre> int SDP_SetUsername(
+ 	SDP_Owner *    owner,
+ 	const char *   username
+ );
+
+</pre>
+<p>This function sets the username within an <font face='Courier New'>SDP_Owner</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the username.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Owner</font> struct.</p>
+<li><a name='username'></a><b>username</b></li>
+<p>A pointer to a string containing the username.</p>
+</ul>
+</ul>
+<a name='SDP_SetSessionID-owner--session_id-'></a><h2>SDP_SetSessionID(owner, session_id)</h2>
+
+<pre> int SDP_SetSessionID(
+ 	SDP_Owner *    owner,
+ 	const char *   session_id
+ );
+
+</pre>
+<p>This function sets the session iD within an <font face='Courier New'>SDP_Owner</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session iD.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Owner</font> struct.</p>
+<li><a name='session_id'></a><b>session_id</b></li>
+<p>A pointer to a string containing the session id.</p>
+</ul>
+</ul>
+<a name='SDP_SetSessionVersion-owner--session_version-'></a><h2>SDP_SetSessionVersion(owner, session_version)</h2>
+
+<pre> int SDP_SetSessionVersion(
+ 	SDP_Owner *    owner,
+ 	const char *   session_version
+ );
+
+</pre>
+<p>This function sets the session version within an <font face='Courier New'>SDP_Owner</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session version.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Owner</font> struct.</p>
+<li><a name='session_version'></a><b>session_version</b></li>
+<p>A pointer to a string containing the session version.</p>
+</ul>
+</ul>
+<a name='SDP_SetOwnerNetworkType-owner--network_type-'></a><h2>SDP_SetOwnerNetworkType(owner, network_type)</h2>
+
+<pre> int SDP_SetOwnerNetworkType(
+ 	SDP_Owner *    owner,
+ 	const char *   network_type
+ );
+
+</pre>
+<p>This function sets the owner network type within an <font face='Courier New'>SDP_Owner</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner network type.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Owner</font> struct.</p>
+<li><a name='network_type'></a><b>network_type</b></li>
+<p>A pointer to a string containing the network type.</p>
+</ul>
+</ul>
+<a name='SDP_SetOwnerAddressType-owner--address_type-'></a><h2>SDP_SetOwnerAddressType(owner, address_type)</h2>
+
+<pre> int SDP_SetOwnerAddressType(
+ 	SDP_Owner *    owner,
+ 	const char *   address_type
+ );
+
+</pre>
+<p>This function sets the owner address type within an <font face='Courier New'>SDP_Owner</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner address type.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Owner</font> struct.</p>
+<li><a name='address_type'></a><b>address_type</b></li>
+<p>A pointer to a string containing the address type.</p>
+</ul>
+</ul>
+<a name='SDP_SetOwnerAddress-owner--address-'></a><h2>SDP_SetOwnerAddress(owner, address)</h2>
+
+<pre> int SDP_SetOwnerAddress(
+ 	SDP_Owner *    owner,
+ 	const char *   address
+ );
+
+</pre>
+<p>This function sets the owner address within an <font face='Courier New'>SDP_Owner</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner address.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Owner</font> struct.</p>
+<li><a name='address'></a><b>address</b></li>
+<p>A pointer to a string containing the address.</p>
+</ul>
+</ul>
+<a name='SDP_SetSessionName-description--session_name-'></a><h2>SDP_SetSessionName(description, session_name)</h2>
+
+<pre> int SDP_SetSessionName(
+ 	SDP_Description *   description,
+ 	const char *        session_name
+ );
+
+</pre>
+<p>This function sets the session name within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session name.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='session_name'></a><b>session_name</b></li>
+<p>A pointer to a string containing the session name.</p>
+</ul>
+</ul>
+<a name='SDP_SetSessionInformation-description--session_information-'></a><h2>SDP_SetSessionInformation(description, session_information)</h2>
+
+<pre> int SDP_SetSessionInformation(
+ 	SDP_Description *   description,
+ 	const char *        session_information
+ );
+
+</pre>
+<p>This function sets the session information within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session information.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='session_information'></a><b>session_information</b></li>
+<p>A pointer to a string containing the session information.</p>
+</ul>
+</ul>
+<a name='SDP_SetURI-description--uri-'></a><h2>SDP_SetURI(description, uri)</h2>
+
+<pre> int SDP_SetURI(
+ 	SDP_Description *   description,
+ 	const char *        uri
+ );
+
+</pre>
+<p>This function sets the URI within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the URI.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='uri'></a><b>uri</b></li>
+<p>A pointer to a string containing the uri.</p>
+</ul>
+</ul>
+<a name='SDP_AddEmailContact-description--email_contact-'></a><h2>SDP_AddEmailContact(description, email_contact)</h2>
+
+<pre> void SDP_AddEmailContact(
+ 	SDP_Description *    description,
+ 	SDP_EmailContact *   email_contact
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_EmailContact</font> struct to the email contact
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the email contact linked list.</p>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_EmailContact</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewEmailContact-description--address--name-'></a><h2>SDP_AddNewEmailContact(description, address, name)</h2>
+
+<pre> int SDP_AddNewEmailContact(
+ 	SDP_Description *   description,
+ 	const char *        address,
+ 	const char *        name
+ );
+
+</pre>
+<p>This function creates and adds a new email contact to the
+email contact linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the email contact.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the email contact linked list.</p>
+<li><a name='address'></a><b>address</b></li>
+<p>A pointer to a string containing the address.</p>
+<li><a name='name'></a><b>name</b></li>
+<p>A pointer to a string containing the name.</p>
+</ul>
+</ul>
+<a name='SDP_SetEmailAddress-email_contact--address-'></a><h2>SDP_SetEmailAddress(email_contact, address)</h2>
+
+<pre> int SDP_SetEmailAddress(
+ 	SDP_EmailContact *   email_contact,
+ 	const char *         address
+ );
+
+</pre>
+<p>This function sets the email address within an <font face='Courier New'>SDP_EmailContact</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the email address.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_EmailContact</font> struct.</p>
+<li><a name='address'></a><b>address</b></li>
+<p>A pointer to a string containing the address.</p>
+</ul>
+</ul>
+<a name='SDP_SetEmailName-email_contact--name-'></a><h2>SDP_SetEmailName(email_contact, name)</h2>
+
+<pre> int SDP_SetEmailName(
+ 	SDP_EmailContact *   email_contact,
+ 	const char *         name
+ );
+
+</pre>
+<p>This function sets the email name within an <font face='Courier New'>SDP_EmailContact</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the email name.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_EmailContact</font> struct.</p>
+<li><a name='name'></a><b>name</b></li>
+<p>A pointer to a string containing the name.</p>
+</ul>
+</ul>
+<a name='SDP_AddPhoneContact-description--phone_contact-'></a><h2>SDP_AddPhoneContact(description, phone_contact)</h2>
+
+<pre> void SDP_AddPhoneContact(
+ 	SDP_Description *    description,
+ 	SDP_PhoneContact *   phone_contact
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_PhoneContact</font> struct to the phone contact
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the phone contact linked list.</p>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_PhoneContact</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewPhoneContact-description--number--name-'></a><h2>SDP_AddNewPhoneContact(description, number, name)</h2>
+
+<pre> int SDP_AddNewPhoneContact(
+ 	SDP_Description *   description,
+ 	const char *        number,
+ 	const char *        name
+ );
+
+</pre>
+<p>This function creates and adds a new phone contact to the
+phone contact linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the phone contact.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the phone contact linked list.</p>
+<li><a name='number'></a><b>number</b></li>
+<p>A pointer to a string containing the number.</p>
+<li><a name='name'></a><b>name</b></li>
+<p>A pointer to a string containing the name.</p>
+</ul>
+</ul>
+<a name='SDP_SetPhoneNumber-phone_contact--number-'></a><h2>SDP_SetPhoneNumber(phone_contact, number)</h2>
+
+<pre> int SDP_SetPhoneNumber(
+ 	SDP_PhoneContact *   phone_contact,
+ 	const char *         number
+ );
+
+</pre>
+<p>This function sets the phone number within an <font face='Courier New'>SDP_PhoneContact</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the phone number.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_PhoneContact</font> struct.</p>
+<li><a name='number'></a><b>number</b></li>
+<p>A pointer to a string containing the number.</p>
+</ul>
+</ul>
+<a name='SDP_SetPhoneName-phone_contact--name-'></a><h2>SDP_SetPhoneName(phone_contact, name)</h2>
+
+<pre> int SDP_SetPhoneName(
+ 	SDP_PhoneContact *   phone_contact,
+ 	const char *        name
+ );
+
+</pre>
+<p>This function sets the phone name within an <font face='Courier New'>SDP_PhoneContact</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the phone name.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_PhoneContact</font> struct.</p>
+<li><a name='name'></a><b>name</b></li>
+<p>A pointer to a string containing the name.</p>
+</ul>
+</ul>
+<a name='SDP_SetConnection-description--network_type--address_type--address--ttl--total_addresses-'></a><h2>SDP_SetConnection(description, network_type, address_type, address, ttl, total_addresses)</h2>
+
+<pre> int SDP_SetConnection(
+ 	SDP_Description *   description,
+ 	const char *        network_type,
+ 	const char *        address_type,
+ 	const char *        address,
+ 	int                 ttl,
+ 	int                 total_addresses
+ );
+
+</pre>
+<p>This function sets the connection within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='network_type'></a><b>network_type</b></li>
+<p>A pointer to a string containing the network type.</p>
+<li><a name='address_type'></a><b>address_type</b></li>
+<p>A pointer to a string containing the address type.</p>
+<li><a name='address'></a><b>address</b></li>
+<p>A pointer to a string containing the address.</p>
+<li><a name='ttl'></a><b>ttl</b></li>
+<p>The ttl.</p>
+<li><a name='total_addresses'></a><b>total_addresses</b></li>
+<p>The total addresses.</p>
+</ul>
+</ul>
+<a name='SDP_SetConnectionNetworkType-connection--network_type-'></a><h2>SDP_SetConnectionNetworkType(connection, network_type)</h2>
+
+<pre> int SDP_SetConnectionNetworkType(
+ 	SDP_Connection *   connection,
+ 	const char *       network_type
+ );
+
+</pre>
+<p>This function sets the connection network type within an <font face='Courier New'>SDP_Connection</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection network type.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Connection</font> struct.</p>
+<li><a name='network_type'></a><b>network_type</b></li>
+<p>A pointer to a string containing the network type.</p>
+</ul>
+</ul>
+<a name='SDP_SetConnectionAddressType-connection--address_type-'></a><h2>SDP_SetConnectionAddressType(connection, address_type)</h2>
+
+<pre> int SDP_SetConnectionAddressType(
+ 	SDP_Connection *   connection,
+ 	const char *       address_type
+ );
+
+</pre>
+<p>This function sets the connection address type within an <font face='Courier New'>SDP_Connection</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection address type.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Connection</font> struct.</p>
+<li><a name='address_type'></a><b>address_type</b></li>
+<p>A pointer to a string containing the address type.</p>
+</ul>
+</ul>
+<a name='SDP_SetConnectionAddress-connection--address-'></a><h2>SDP_SetConnectionAddress(connection, address)</h2>
+
+<pre> int SDP_SetConnectionAddress(
+ 	SDP_Connection *   connection,
+ 	const char *       address
+ );
+
+</pre>
+<p>This function sets the connection address within an <font face='Courier New'>SDP_Connection</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection address.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Connection</font> struct.</p>
+<li><a name='address'></a><b>address</b></li>
+<p>A pointer to a string containing the address.</p>
+</ul>
+</ul>
+<a name='SDP_SetConnectionTTL-connection--ttl-'></a><h2>SDP_SetConnectionTTL(connection, ttl)</h2>
+
+<pre> void SDP_SetConnectionTTL(
+ 	SDP_Connection *   connection,
+ 	int                ttl
+ );
+
+</pre>
+<p>This function sets the connection tTL within an <font face='Courier New'>SDP_Connection</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Connection</font> struct.</p>
+<li><a name='ttl'></a><b>ttl</b></li>
+<p>The ttl.</p>
+</ul>
+</ul>
+<a name='SDP_SetTotalConnectionAddresses-connection--total_addresses-'></a><h2>SDP_SetTotalConnectionAddresses(connection, total_addresses)</h2>
+
+<pre> void SDP_SetTotalConnectionAddresses(
+ 	SDP_Connection *   connection,
+ 	int                total_addresses
+ );
+
+</pre>
+<p>This function sets the total connection addresses within an <font face='Courier New'>SDP_Connection</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Connection</font> struct.</p>
+<li><a name='total_addresses'></a><b>total_addresses</b></li>
+<p>The total addresses.</p>
+</ul>
+</ul>
+<a name='SDP_SetBandwidth-description--modifier--value-'></a><h2>SDP_SetBandwidth(description, modifier, value)</h2>
+
+<pre> int SDP_SetBandwidth(
+ 	SDP_Description *   description,
+ 	const char *        modifier,
+ 	long                value
+ );
+
+</pre>
+<p>This function sets the bandwidth within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the bandwidth.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='modifier'></a><b>modifier</b></li>
+<p>A pointer to a string containing the modifier.</p>
+<li><a name='value'></a><b>value</b></li>
+<p>The value.</p>
+</ul>
+</ul>
+<a name='SDP_SetBandwidthModifier-bandwidth--modifier-'></a><h2>SDP_SetBandwidthModifier(bandwidth, modifier)</h2>
+
+<pre> int SDP_SetBandwidthModifier(
+ 	SDP_Bandwidth *   bandwidth,
+ 	const char *      modifier
+ );
+
+</pre>
+<p>This function sets the bandwidth modifier within an <font face='Courier New'>SDP_Bandwidth</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the bandwidth modifier.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='bandwidth'></a><b>bandwidth</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Bandwidth</font> struct.</p>
+<li><a name='modifier'></a><b>modifier</b></li>
+<p>A pointer to a string containing the modifier.</p>
+</ul>
+</ul>
+<a name='SDP_SetBandwidthValue-bandwidth--value-'></a><h2>SDP_SetBandwidthValue(bandwidth, value)</h2>
+
+<pre> void SDP_SetBandwidthValue(
+ 	SDP_Bandwidth *   bandwidth,
+ 	long              value
+ );
+
+</pre>
+<p>This function sets the bandwidth value within an <font face='Courier New'>SDP_Bandwidth</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='bandwidth'></a><b>bandwidth</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Bandwidth</font> struct.</p>
+<li><a name='value'></a><b>value</b></li>
+<p>The value.</p>
+</ul>
+</ul>
+<a name='SDP_AddSessionPlayTime-description--session_play_time-'></a><h2>SDP_AddSessionPlayTime(description, session_play_time)</h2>
+
+<pre> void SDP_AddSessionPlayTime(
+ 	SDP_Description *       description,
+ 	SDP_SessionPlayTime *   session_play_time
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_SessionPlayTime</font> struct to the session play time
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the session play time linked list.</p>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewSessionPlayTime-description--start_time--end_time-'></a><h2>SDP_AddNewSessionPlayTime(description, start_time, end_time)</h2>
+
+<pre> int SDP_AddNewSessionPlayTime(
+ 	SDP_Description *   description,
+ 	time_t              start_time,
+ 	time_t              end_time
+ );
+
+</pre>
+<p>This function creates and adds a new session play time to the
+session play time linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the session play time.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the session play time linked list.</p>
+<li><a name='start_time'></a><b>start_time</b></li>
+<p>The start time.</p>
+<li><a name='end_time'></a><b>end_time</b></li>
+<p>The end time.</p>
+</ul>
+</ul>
+<a name='SDP_SetStartTime-session_play_time--start_time-'></a><h2>SDP_SetStartTime(session_play_time, start_time)</h2>
+
+<pre> void SDP_SetStartTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	time_t                  start_time
+ );
+
+</pre>
+<p>This function sets the start time within an <font face='Courier New'>SDP_SessionPlayTime</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+<li><a name='start_time'></a><b>start_time</b></li>
+<p>The start time.</p>
+</ul>
+</ul>
+<a name='SDP_SetEndTime-session_play_time--end_time-'></a><h2>SDP_SetEndTime(session_play_time, end_time)</h2>
+
+<pre> void SDP_SetEndTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	time_t                  end_time
+ );
+
+</pre>
+<p>This function sets the end time within an <font face='Courier New'>SDP_SessionPlayTime</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+<li><a name='end_time'></a><b>end_time</b></li>
+<p>The end time.</p>
+</ul>
+</ul>
+<a name='SDP_AddRepeatTime-session_play_time--repeat_time-'></a><h2>SDP_AddRepeatTime(session_play_time, repeat_time)</h2>
+
+<pre> void SDP_AddRepeatTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	SDP_RepeatTime *        repeat_time
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_RepeatTime</font> struct to the repeat time
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct containing the repeat time linked list.</p>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_RepeatTime</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewRepeatTime-session_play_time--repeat_interval--active_duration--repeat_offsets--total_offsets-'></a><h2>SDP_AddNewRepeatTime(session_play_time, repeat_interval, active_duration, repeat_offsets, total_offsets)</h2>
+
+<pre> int SDP_AddNewRepeatTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	unsigned long           repeat_interval,
+ 	unsigned long           active_duration,
+ 	const unsigned long     repeat_offsets[],
+ 	int                     total_offsets
+ );
+
+</pre>
+<p>This function creates and adds a new repeat time to the
+repeat time linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the repeat time.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct containing the repeat time linked list.</p>
+<li><a name='repeat_interval'></a><b>repeat_interval</b></li>
+<p>The repeat interval.</p>
+<li><a name='active_duration'></a><b>active_duration</b></li>
+<p>The active duration.</p>
+<li><a name='repeat_offsets'></a><b>repeat_offsets</b></li>
+<p>The repeat offsets.</p>
+<li><a name='total_offsets'></a><b>total_offsets</b></li>
+<p>The total offsets.</p>
+</ul>
+</ul>
+<a name='SDP_SetRepeatInterval-repeat_time--repeat_interval-'></a><h2>SDP_SetRepeatInterval(repeat_time, repeat_interval)</h2>
+
+<pre> void SDP_SetRepeatInterval(
+ 	SDP_RepeatTime *   repeat_time,
+ 	unsigned long      repeat_interval
+ );
+
+</pre>
+<p>This function sets the repeat interval within an <font face='Courier New'>SDP_RepeatTime</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<li><a name='repeat_interval'></a><b>repeat_interval</b></li>
+<p>The repeat interval.</p>
+</ul>
+</ul>
+<a name='SDP_SetActiveDuration-repeat_time--active_duration-'></a><h2>SDP_SetActiveDuration(repeat_time, active_duration)</h2>
+
+<pre> void SDP_SetActiveDuration(
+ 	SDP_RepeatTime *   repeat_time,
+ 	unsigned long      active_duration
+ );
+
+</pre>
+<p>This function sets the active duration within an <font face='Courier New'>SDP_RepeatTime</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<li><a name='active_duration'></a><b>active_duration</b></li>
+<p>The active duration.</p>
+</ul>
+</ul>
+<a name='SDP_SetRepeatOffsets-repeat_time--repeat_offsets--total_offsets-'></a><h2>SDP_SetRepeatOffsets(repeat_time, repeat_offsets, total_offsets)</h2>
+
+<pre> int SDP_SetRepeatOffsets(
+ 	SDP_RepeatTime *      repeat_time,
+ 	const unsigned long   repeat_offsets[],
+ 	int                   total_offsets
+ );
+
+</pre>
+<p>This function sets the repeat offsets within an <font face='Courier New'>SDP_RepeatTime</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the repeat offsets.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<li><a name='repeat_offsets'></a><b>repeat_offsets</b></li>
+<p>The repeat offsets.</p>
+<li><a name='total_offsets'></a><b>total_offsets</b></li>
+<p>The total offsets.</p>
+</ul>
+</ul>
+<a name='SDP_AddZoneAdjustment-description--zone_adjustment-'></a><h2>SDP_AddZoneAdjustment(description, zone_adjustment)</h2>
+
+<pre> void SDP_AddZoneAdjustment(
+ 	SDP_Description *      description,
+ 	SDP_ZoneAdjustment *   zone_adjustment
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_ZoneAdjustment</font> struct to the zone adjustment
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the zone adjustment linked list.</p>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_ZoneAdjustment</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewZoneAdjustment-description--time--offset-'></a><h2>SDP_AddNewZoneAdjustment(description, time, offset)</h2>
+
+<pre> int SDP_AddNewZoneAdjustment(
+ 	SDP_Description *   description,
+ 	time_t              time,
+ 	long                offset
+ );
+
+</pre>
+<p>This function creates and adds a new zone adjustment to the
+zone adjustment linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the zone adjustment.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the zone adjustment linked list.</p>
+<li><a name='time'></a><b>time</b></li>
+<p>The time.</p>
+<li><a name='offset'></a><b>offset</b></li>
+<p>The offset.</p>
+</ul>
+</ul>
+<a name='SDP_SetZoneAdjustmentTime-zone_adjustment--time-'></a><h2>SDP_SetZoneAdjustmentTime(zone_adjustment, time)</h2>
+
+<pre> void SDP_SetZoneAdjustmentTime(
+ 	SDP_ZoneAdjustment *   zone_adjustment,
+ 	time_t                 time
+ );
+
+</pre>
+<p>This function sets the zone adjustment time within an <font face='Courier New'>SDP_ZoneAdjustment</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_ZoneAdjustment</font> struct.</p>
+<li><a name='time'></a><b>time</b></li>
+<p>The time.</p>
+</ul>
+</ul>
+<a name='SDP_SetZoneAdjustmentOffset-zone_adjustment--offset-'></a><h2>SDP_SetZoneAdjustmentOffset(zone_adjustment, offset)</h2>
+
+<pre> void SDP_SetZoneAdjustmentOffset(
+ 	SDP_ZoneAdjustment *   zone_adjustment,
+ 	long                   offset
+ );
+
+</pre>
+<p>This function sets the zone adjustment offset within an <font face='Courier New'>SDP_ZoneAdjustment</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_ZoneAdjustment</font> struct.</p>
+<li><a name='offset'></a><b>offset</b></li>
+<p>The offset.</p>
+</ul>
+</ul>
+<a name='SDP_SetEncryption-description--method--key-'></a><h2>SDP_SetEncryption(description, method, key)</h2>
+
+<pre> int SDP_SetEncryption(
+ 	SDP_Description *   description,
+ 	const char *        method,
+ 	const char *        key
+ );
+
+</pre>
+<p>This function sets the encryption within an <font face='Courier New'>SDP_Description</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the encryption.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct.</p>
+<li><a name='method'></a><b>method</b></li>
+<p>A pointer to a string containing the method.</p>
+<li><a name='key'></a><b>key</b></li>
+<p>A pointer to a string containing the key.</p>
+</ul>
+</ul>
+<a name='SDP_SetEncryptionMethod-encryption--method-'></a><h2>SDP_SetEncryptionMethod(encryption, method)</h2>
+
+<pre> int SDP_SetEncryptionMethod(
+ 	SDP_Encryption *   encryption,
+ 	const char *       method
+ );
+
+</pre>
+<p>This function sets the encryption method within an <font face='Courier New'>SDP_Encryption</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the encryption method.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='encryption'></a><b>encryption</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Encryption</font> struct.</p>
+<li><a name='method'></a><b>method</b></li>
+<p>A pointer to a string containing the method.</p>
+</ul>
+</ul>
+<a name='SDP_SetEncryptionKey-encryption--key-'></a><h2>SDP_SetEncryptionKey(encryption, key)</h2>
+
+<pre> int SDP_SetEncryptionKey(
+ 	SDP_Encryption *   encryption,
+ 	const char *       key
+ );
+
+</pre>
+<p>This function sets the encryption key within an <font face='Courier New'>SDP_Encryption</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the encryption key.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='encryption'></a><b>encryption</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Encryption</font> struct.</p>
+<li><a name='key'></a><b>key</b></li>
+<p>A pointer to a string containing the key.</p>
+</ul>
+</ul>
+<a name='SDP_AddAttribute-description--attribute-'></a><h2>SDP_AddAttribute(description, attribute)</h2>
+
+<pre> void SDP_AddAttribute(
+ 	SDP_Description *   description,
+ 	SDP_Attribute *     attribute
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_Attribute</font> struct to the attribute
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the attribute linked list.</p>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Attribute</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewAttribute-description--name--value-'></a><h2>SDP_AddNewAttribute(description, name, value)</h2>
+
+<pre> int SDP_AddNewAttribute(
+ 	SDP_Description *   description,
+ 	const char *        name,
+ 	const char *        value
+ );
+
+</pre>
+<p>This function creates and adds a new attribute to the
+attribute linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the attribute.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the attribute linked list.</p>
+<li><a name='name'></a><b>name</b></li>
+<p>A pointer to a string containing the name.</p>
+<li><a name='value'></a><b>value</b></li>
+<p>A pointer to a string containing the value.</p>
+</ul>
+</ul>
+<a name='SDP_SetAttributeName-attribute--name-'></a><h2>SDP_SetAttributeName(attribute, name)</h2>
+
+<pre> int SDP_SetAttributeName(
+ 	SDP_Attribute *   attribute,
+ 	const char *      name
+ );
+
+</pre>
+<p>This function sets the attribute name within an <font face='Courier New'>SDP_Attribute</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the attribute name.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Attribute</font> struct.</p>
+<li><a name='name'></a><b>name</b></li>
+<p>A pointer to a string containing the name.</p>
+</ul>
+</ul>
+<a name='SDP_SetAttributeValue-attribute--value-'></a><h2>SDP_SetAttributeValue(attribute, value)</h2>
+
+<pre> int SDP_SetAttributeValue(
+ 	SDP_Attribute *   attribute,
+ 	const char *      value
+ );
+
+</pre>
+<p>This function sets the attribute value within an <font face='Courier New'>SDP_Attribute</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the attribute value.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Attribute</font> struct.</p>
+<li><a name='value'></a><b>value</b></li>
+<p>A pointer to a string containing the value.</p>
+</ul>
+</ul>
+<a name='SDP_AddMediaDescription-description--media_description-'></a><h2>SDP_AddMediaDescription(description, media_description)</h2>
+
+<pre> void SDP_AddMediaDescription(
+ 	SDP_Description *        description,
+ 	SDP_MediaDescription *   media_description
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_MediaDescription</font> struct to the media description
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the media description linked list.</p>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewMediaDescription-description--media_type--port--total_ports--transport_protocol--formats--media_information-'></a><h2>SDP_AddNewMediaDescription(description, media_type, port, total_ports, transport_protocol, formats, media_information)</h2>
+
+<pre> int SDP_AddNewMediaDescription(
+ 	SDP_Description *   description,
+ 	const char *        media_type,
+ 	unsigned short      port,
+ 	unsigned short      total_ports,
+ 	const char *        transport_protocol,
+ 	const char *        formats,
+ 	const char *        media_information
+ );
+
+</pre>
+<p>This function creates and adds a new media description to the
+media description linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the media description.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct containing the media description linked list.</p>
+<li><a name='media_type'></a><b>media_type</b></li>
+<p>A pointer to a string containing the media type.</p>
+<li><a name='port'></a><b>port</b></li>
+<p>The port.</p>
+<li><a name='total_ports'></a><b>total_ports</b></li>
+<p>The total ports.</p>
+<li><a name='transport_protocol'></a><b>transport_protocol</b></li>
+<p>A pointer to a string containing the transport protocol.</p>
+<li><a name='formats'></a><b>formats</b></li>
+<p>A pointer to a string containing the formats.</p>
+<li><a name='media_information'></a><b>media_information</b></li>
+<p>A pointer to a string containing the media information.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaType-media_description--media_type-'></a><h2>SDP_SetMediaType(media_description, media_type)</h2>
+
+<pre> int SDP_SetMediaType(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             media_type
+ );
+
+</pre>
+<p>This function sets the media type within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media type.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='media_type'></a><b>media_type</b></li>
+<p>A pointer to a string containing the media type.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaPort-media_description--port-'></a><h2>SDP_SetMediaPort(media_description, port)</h2>
+
+<pre> void SDP_SetMediaPort(
+ 	SDP_MediaDescription *   media_description,
+ 	unsigned short           port
+ );
+
+</pre>
+<p>This function sets the media port within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='port'></a><b>port</b></li>
+<p>The port.</p>
+</ul>
+</ul>
+<a name='SDP_SetTotalMediaPorts-media_description--total_ports-'></a><h2>SDP_SetTotalMediaPorts(media_description, total_ports)</h2>
+
+<pre> void SDP_SetTotalMediaPorts(
+ 	SDP_MediaDescription *   media_description,
+ 	unsigned short           total_ports
+ );
+
+</pre>
+<p>This function sets the total media ports within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='total_ports'></a><b>total_ports</b></li>
+<p>The total ports.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaTransportProtocol-media_description--transport_protocol-'></a><h2>SDP_SetMediaTransportProtocol(media_description, transport_protocol)</h2>
+
+<pre> int SDP_SetMediaTransportProtocol(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             transport_protocol
+ );
+
+</pre>
+<p>This function sets the media transport protocol within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media transport protocol.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='transport_protocol'></a><b>transport_protocol</b></li>
+<p>A pointer to a string containing the transport protocol.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaFormats-media_description--formats-'></a><h2>SDP_SetMediaFormats(media_description, formats)</h2>
+
+<pre> int SDP_SetMediaFormats(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             formats
+ );
+
+</pre>
+<p>This function sets the media formats within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media formats.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='formats'></a><b>formats</b></li>
+<p>A pointer to a string containing the formats.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaInformation-media_description--media_information-'></a><h2>SDP_SetMediaInformation(media_description, media_information)</h2>
+
+<pre> int SDP_SetMediaInformation(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             media_information
+ );
+
+</pre>
+<p>This function sets the media information within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media information.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='media_information'></a><b>media_information</b></li>
+<p>A pointer to a string containing the media information.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaConnection-media_description--network_type--address_type--address--ttl--total_addresses-'></a><h2>SDP_SetMediaConnection(media_description, network_type, address_type, address, ttl, total_addresses)</h2>
+
+<pre> int SDP_SetMediaConnection(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             network_type,
+ 	const char *             address_type,
+ 	const char *             address,
+ 	int                      ttl,
+ 	int                      total_addresses
+ );
+
+</pre>
+<p>This function sets the media connection within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media connection.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='network_type'></a><b>network_type</b></li>
+<p>A pointer to a string containing the network type.</p>
+<li><a name='address_type'></a><b>address_type</b></li>
+<p>A pointer to a string containing the address type.</p>
+<li><a name='address'></a><b>address</b></li>
+<p>A pointer to a string containing the address.</p>
+<li><a name='ttl'></a><b>ttl</b></li>
+<p>The ttl.</p>
+<li><a name='total_addresses'></a><b>total_addresses</b></li>
+<p>The total addresses.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaBandwidth-media_description--modifier--value-'></a><h2>SDP_SetMediaBandwidth(media_description, modifier, value)</h2>
+
+<pre> int SDP_SetMediaBandwidth(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             modifier,
+ 	long                     value
+ );
+
+</pre>
+<p>This function sets the media bandwidth within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media bandwidth.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='modifier'></a><b>modifier</b></li>
+<p>A pointer to a string containing the modifier.</p>
+<li><a name='value'></a><b>value</b></li>
+<p>The value.</p>
+</ul>
+</ul>
+<a name='SDP_SetMediaEncryption-media_description--method--key-'></a><h2>SDP_SetMediaEncryption(media_description, method, key)</h2>
+
+<pre> int SDP_SetMediaEncryption(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             method,
+ 	const char *             key
+ );
+
+</pre>
+<p>This function sets the media encryption within an <font face='Courier New'>SDP_MediaDescription</font>
+struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>It returns true if no error occurs, false otherwise. For extended error
+information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media encryption.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<li><a name='method'></a><b>method</b></li>
+<p>A pointer to a string containing the method.</p>
+<li><a name='key'></a><b>key</b></li>
+<p>A pointer to a string containing the key.</p>
+</ul>
+</ul>
+<a name='SDP_AddMediaAttribute-media_description--attribute-'></a><h2>SDP_AddMediaAttribute(media_description, attribute)</h2>
+
+<pre> void SDP_AddMediaAttribute(
+ 	SDP_MediaDescription *   media_description,
+ 	SDP_Attribute *          attribute
+ );
+
+</pre>
+<p>This function adds an <font face='Courier New'>SDP_Attribute</font> struct to the media attribute
+linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct containing the media attribute linked list.</p>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Attribute</font> struct to add.</p>
+</ul>
+</ul>
+<a name='SDP_AddNewMediaAttribute-media_description--name--value-'></a><h2>SDP_AddNewMediaAttribute(media_description, name, value)</h2>
+
+<pre> int SDP_AddNewMediaAttribute(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             name,
+ 	const char *             value
+ );
+
+</pre>
+<p>This function creates and adds a new media attribute to the
+media attribute linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The possible error codes
+returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the media attribute.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct containing the media attribute linked list.</p>
+<li><a name='name'></a><b>name</b></li>
+<p>A pointer to a string containing the name.</p>
+<li><a name='value'></a><b>value</b></li>
+<p>A pointer to a string containing the value.</p>
+</ul>
+</ul>
+<a name='-GET--ACCESSOR-FUNCTIONS'></a><h1>"GET" ACCESSOR FUNCTIONS</h1>
+
+<p>These functions enable you to retrieve values from structs that encapsulates
+portions of an SDP description.</p>
+<a name='SDP_GetNextDescription-description-'></a><h2>SDP_GetNextDescription(description)</h2>
+
+<pre> #define SDP_GetNextDescription SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_Description</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_Description</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_Description</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPreviousDescription-description-'></a><h2>SDP_GetPreviousDescription(description)</h2>
+
+<pre> #define SDP_GetPreviousDescription SDP_GetPrevious
+
+</pre>
+<p>Gets the previous <font face='Courier New'>SDP_Description</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the previous <font face='Courier New'>SDP_Description</font> struct in the linked list, or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_Description</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetProtocolVersion-description-'></a><h2>SDP_GetProtocolVersion(description)</h2>
+
+<pre> int SDP_GetProtocolVersion(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the protocol version from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The protocol version.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the protocol version from.</p>
+</ul>
+</ul>
+<a name='SDP_GetOwner-description-'></a><h2>SDP_GetOwner(description)</h2>
+
+<pre> SDP_Owner *SDP_GetOwner(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the owner from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the owner.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the owner from.</p>
+</ul>
+</ul>
+<a name='SDP_GetUsername-owner-'></a><h2>SDP_GetUsername(owner)</h2>
+
+<pre> const char *SDP_GetUsername(SDP_Owner *owner);
+
+</pre>
+<p>This function retrieves the username from an <font face='Courier New'>SDP_Owner</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the username.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>The <font face='Courier New'>SDP_Owner</font> struct to retrieve the username from.</p>
+</ul>
+</ul>
+<a name='SDP_GetSessionID-owner-'></a><h2>SDP_GetSessionID(owner)</h2>
+
+<pre> const char *SDP_GetSessionID(SDP_Owner *owner);
+
+</pre>
+<p>This function retrieves the session iD from an <font face='Courier New'>SDP_Owner</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the session iD.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>The <font face='Courier New'>SDP_Owner</font> struct to retrieve the session iD from.</p>
+</ul>
+</ul>
+<a name='SDP_GetSessionVersion-owner-'></a><h2>SDP_GetSessionVersion(owner)</h2>
+
+<pre> const char *SDP_GetSessionVersion(SDP_Owner *owner);
+
+</pre>
+<p>This function retrieves the session version from an <font face='Courier New'>SDP_Owner</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the session version.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>The <font face='Courier New'>SDP_Owner</font> struct to retrieve the session version from.</p>
+</ul>
+</ul>
+<a name='SDP_GetOwnerNetworkType-owner-'></a><h2>SDP_GetOwnerNetworkType(owner)</h2>
+
+<pre> const char *SDP_GetOwnerNetworkType(SDP_Owner *owner);
+
+</pre>
+<p>This function retrieves the owner network type from an <font face='Courier New'>SDP_Owner</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the owner network type.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>The <font face='Courier New'>SDP_Owner</font> struct to retrieve the owner network type from.</p>
+</ul>
+</ul>
+<a name='SDP_GetOwnerAddressType-owner-'></a><h2>SDP_GetOwnerAddressType(owner)</h2>
+
+<pre> const char *SDP_GetOwnerAddressType(SDP_Owner *owner);
+
+</pre>
+<p>This function retrieves the owner address type from an <font face='Courier New'>SDP_Owner</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the owner address type.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>The <font face='Courier New'>SDP_Owner</font> struct to retrieve the owner address type from.</p>
+</ul>
+</ul>
+<a name='SDP_GetOwnerAddress-owner-'></a><h2>SDP_GetOwnerAddress(owner)</h2>
+
+<pre> const char *SDP_GetOwnerAddress(SDP_Owner *owner);
+
+</pre>
+<p>This function retrieves the owner address from an <font face='Courier New'>SDP_Owner</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the owner address.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>The <font face='Courier New'>SDP_Owner</font> struct to retrieve the owner address from.</p>
+</ul>
+</ul>
+<a name='SDP_GetSessionName-description-'></a><h2>SDP_GetSessionName(description)</h2>
+
+<pre> const char *SDP_GetSessionName(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the session name from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the session name.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the session name from.</p>
+</ul>
+</ul>
+<a name='SDP_GetSessionInformation-description-'></a><h2>SDP_GetSessionInformation(description)</h2>
+
+<pre> const char *SDP_GetSessionInformation(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the session information from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the session information.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the session information from.</p>
+</ul>
+</ul>
+<a name='SDP_GetURI-description-'></a><h2>SDP_GetURI(description)</h2>
+
+<pre> const char *SDP_GetURI(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the URI from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the URI.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the URI from.</p>
+</ul>
+</ul>
+<a name='SDP_GetEmailContacts-description-'></a><h2>SDP_GetEmailContacts(description)</h2>
+
+<pre> SDP_EmailContact *SDP_GetEmailContacts(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the email contacts from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the email contacts.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the email contacts from.</p>
+</ul>
+</ul>
+<a name='SDP_GetNextEmailContact-email_contact-'></a><h2>SDP_GetNextEmailContact(email_contact)</h2>
+
+<pre> #define SDP_GetNextEmailContact SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_EmailContact</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_EmailContact</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_EmailContact</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPreviousEmailContact-email_contact-'></a><h2>SDP_GetPreviousEmailContact(email_contact)</h2>
+
+<pre> #define SDP_GetPreviousEmailContact SDP_GetPrevious
+
+</pre>
+<p>Gets the previous <font face='Courier New'>SDP_EmailContact</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the previous <font face='Courier New'>SDP_EmailContact</font> struct in the linked list, or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_EmailContact</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetEmailAddress-email_contact-'></a><h2>SDP_GetEmailAddress(email_contact)</h2>
+
+<pre> const char *SDP_GetEmailAddress(SDP_EmailContact *email_contact);
+
+</pre>
+<p>This function retrieves the email address from an <font face='Courier New'>SDP_EmailContact</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the email address.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>The <font face='Courier New'>SDP_EmailContact</font> struct to retrieve the email address from.</p>
+</ul>
+</ul>
+<a name='SDP_GetEmailName-email_contact-'></a><h2>SDP_GetEmailName(email_contact)</h2>
+
+<pre> const char *SDP_GetEmailName(SDP_EmailContact *email_contact);
+
+</pre>
+<p>This function retrieves the email name from an <font face='Courier New'>SDP_EmailContact</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the email name.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>The <font face='Courier New'>SDP_EmailContact</font> struct to retrieve the email name from.</p>
+</ul>
+</ul>
+<a name='SDP_RemoveEmailContact-description--email_contact-'></a><h2>SDP_RemoveEmailContact(description, email_contact)</h2>
+
+<pre> void SDP_RemoveEmailContact(
+ 	SDP_Description *    description,
+ 	SDP_EmailContact *   email_contact
+ );
+
+</pre>
+<p>This removes (but does not destroy) the specified <font face='Courier New'>SDP_EmailContact</font>
+struct from the email contact list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct  containing the list.</p>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_EmailContact</font> you want removed from the list.</p>
+</ul>
+</ul>
+<a name='SDP_GetPhoneContacts-description-'></a><h2>SDP_GetPhoneContacts(description)</h2>
+
+<pre> SDP_PhoneContact *SDP_GetPhoneContacts(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the phone contacts from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the phone contacts.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the phone contacts from.</p>
+</ul>
+</ul>
+<a name='SDP_GetNextPhoneContact-phone_contact-'></a><h2>SDP_GetNextPhoneContact(phone_contact)</h2>
+
+<pre> #define SDP_GetNextPhoneContact SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_PhoneContact</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_PhoneContact</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_PhoneContact</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPreviousPhoneContact-phone_contact-'></a><h2>SDP_GetPreviousPhoneContact(phone_contact)</h2>
+
+<pre> #define SDP_GetPreviousPhoneContact SDP_GetPrevious
+
+</pre>
+<p>Gets the previous <font face='Courier New'>SDP_PhoneContact</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the previous <font face='Courier New'>SDP_PhoneContact</font> struct in the linked list, or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_PhoneContact</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPhoneNumber-phone_contact-'></a><h2>SDP_GetPhoneNumber(phone_contact)</h2>
+
+<pre> const char *SDP_GetPhoneNumber(SDP_PhoneContact *phone_contact);
+
+</pre>
+<p>This function retrieves the phone number from an <font face='Courier New'>SDP_PhoneContact</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the phone number.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>The <font face='Courier New'>SDP_PhoneContact</font> struct to retrieve the phone number from.</p>
+</ul>
+</ul>
+<a name='SDP_GetPhoneName-phone_contact-'></a><h2>SDP_GetPhoneName(phone_contact)</h2>
+
+<pre> const char *SDP_GetPhoneName(SDP_PhoneContact *phone_contact);
+
+</pre>
+<p>This function retrieves the phone name from an <font face='Courier New'>SDP_PhoneContact</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the phone name.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>The <font face='Courier New'>SDP_PhoneContact</font> struct to retrieve the phone name from.</p>
+</ul>
+</ul>
+<a name='SDP_RemovePhoneContact-description--phone_contact-'></a><h2>SDP_RemovePhoneContact(description, phone_contact)</h2>
+
+<pre> void SDP_RemovePhoneContact(
+ 	SDP_Description *    description,
+ 	SDP_PhoneContact *   phone_contact
+ );
+
+</pre>
+<p>This removes (but does not destroy) the specified <font face='Courier New'>SDP_PhoneContact</font>
+struct from the phone contact list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct  containing the list.</p>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_PhoneContact</font> you want removed from the list.</p>
+</ul>
+</ul>
+<a name='SDP_GetConnection-description-'></a><h2>SDP_GetConnection(description)</h2>
+
+<pre> SDP_Connection *SDP_GetConnection(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the connection from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the connection.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the connection from.</p>
+</ul>
+</ul>
+<a name='SDP_GetConnectionNetworkType-connection-'></a><h2>SDP_GetConnectionNetworkType(connection)</h2>
+
+<pre> const char *SDP_GetConnectionNetworkType(SDP_Connection *connection);
+
+</pre>
+<p>This function retrieves the connection network type from an <font face='Courier New'>SDP_Connection</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the connection network type.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>The <font face='Courier New'>SDP_Connection</font> struct to retrieve the connection network type from.</p>
+</ul>
+</ul>
+<a name='SDP_GetConnectionAddressType-connection-'></a><h2>SDP_GetConnectionAddressType(connection)</h2>
+
+<pre> const char *SDP_GetConnectionAddressType(SDP_Connection *connection);
+
+</pre>
+<p>This function retrieves the connection address type from an <font face='Courier New'>SDP_Connection</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the connection address type.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>The <font face='Courier New'>SDP_Connection</font> struct to retrieve the connection address type from.</p>
+</ul>
+</ul>
+<a name='SDP_GetConnectionAddress-connection-'></a><h2>SDP_GetConnectionAddress(connection)</h2>
+
+<pre> const char *SDP_GetConnectionAddress(SDP_Connection *connection);
+
+</pre>
+<p>This function retrieves the connection address from an <font face='Courier New'>SDP_Connection</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the connection address.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>The <font face='Courier New'>SDP_Connection</font> struct to retrieve the connection address from.</p>
+</ul>
+</ul>
+<a name='SDP_GetConnectionTTL-connection-'></a><h2>SDP_GetConnectionTTL(connection)</h2>
+
+<pre> int SDP_GetConnectionTTL(SDP_Connection *connection);
+
+</pre>
+<p>This function retrieves the connection tTL from an <font face='Courier New'>SDP_Connection</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The connection tTL.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>The <font face='Courier New'>SDP_Connection</font> struct to retrieve the connection tTL from.</p>
+</ul>
+</ul>
+<a name='SDP_GetTotalConnectionAddresses-connection-'></a><h2>SDP_GetTotalConnectionAddresses(connection)</h2>
+
+<pre> int SDP_GetTotalConnectionAddresses(SDP_Connection *connection);
+
+</pre>
+<p>This function retrieves the total connection addresses from an <font face='Courier New'>SDP_Connection</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The total connection addresses.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>The <font face='Courier New'>SDP_Connection</font> struct to retrieve the total connection addresses from.</p>
+</ul>
+</ul>
+<a name='SDP_GetBandwidth-description-'></a><h2>SDP_GetBandwidth(description)</h2>
+
+<pre> SDP_Bandwidth *SDP_GetBandwidth(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the bandwidth from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the bandwidth.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the bandwidth from.</p>
+</ul>
+</ul>
+<a name='SDP_GetBandwidthModifier-bandwidth-'></a><h2>SDP_GetBandwidthModifier(bandwidth)</h2>
+
+<pre> const char *SDP_GetBandwidthModifier(SDP_Bandwidth *bandwidth);
+
+</pre>
+<p>This function retrieves the bandwidth modifier from an <font face='Courier New'>SDP_Bandwidth</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the bandwidth modifier.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='bandwidth'></a><b>bandwidth</b></li>
+<p>The <font face='Courier New'>SDP_Bandwidth</font> struct to retrieve the bandwidth modifier from.</p>
+</ul>
+</ul>
+<a name='SDP_GetBandwidthValue-bandwidth-'></a><h2>SDP_GetBandwidthValue(bandwidth)</h2>
+
+<pre> long SDP_GetBandwidthValue(SDP_Bandwidth *bandwidth);
+
+</pre>
+<p>This function retrieves the bandwidth value from an <font face='Courier New'>SDP_Bandwidth</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The bandwidth value.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='bandwidth'></a><b>bandwidth</b></li>
+<p>The <font face='Courier New'>SDP_Bandwidth</font> struct to retrieve the bandwidth value from.</p>
+</ul>
+</ul>
+<a name='SDP_GetSessionPlayTimes-description-'></a><h2>SDP_GetSessionPlayTimes(description)</h2>
+
+<pre> SDP_SessionPlayTime *SDP_GetSessionPlayTimes(
+ 	SDP_Description *description
+ );
+
+</pre>
+<p>This function retrieves the session play times from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the session play times.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the session play times from.</p>
+</ul>
+</ul>
+<a name='SDP_GetNextSessionPlayTime-session_play_time-'></a><h2>SDP_GetNextSessionPlayTime(session_play_time)</h2>
+
+<pre> #define SDP_GetNextSessionPlayTime SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_SessionPlayTime</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_SessionPlayTime</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPreviousSessionPlayTime-session_play_time-'></a><h2>SDP_GetPreviousSessionPlayTime(session_play_time)</h2>
+
+<pre> #define SDP_GetPreviousSessionPlayTime SDP_GetPrevious
+
+</pre>
+<p>Gets the previous <font face='Courier New'>SDP_SessionPlayTime</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the previous <font face='Courier New'>SDP_SessionPlayTime</font> struct in the linked list, or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetStartTime-session_play_time-'></a><h2>SDP_GetStartTime(session_play_time)</h2>
+
+<pre> time_t SDP_GetStartTime(SDP_SessionPlayTime *session_play_time);
+
+</pre>
+<p>This function retrieves the start time from an <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The start time.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>The <font face='Courier New'>SDP_SessionPlayTime</font> struct to retrieve the start time from.</p>
+</ul>
+</ul>
+<a name='SDP_GetEndTime-session_play_time-'></a><h2>SDP_GetEndTime(session_play_time)</h2>
+
+<pre> time_t SDP_GetEndTime(SDP_SessionPlayTime *session_play_time);
+
+</pre>
+<p>This function retrieves the end time from an <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The end time.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>The <font face='Courier New'>SDP_SessionPlayTime</font> struct to retrieve the end time from.</p>
+</ul>
+</ul>
+<a name='SDP_GetRepeatTimes-session_play_time-'></a><h2>SDP_GetRepeatTimes(session_play_time)</h2>
+
+<pre> SDP_RepeatTime *SDP_GetRepeatTimes(
+ 	SDP_SessionPlayTime *session_play_time
+ );
+
+</pre>
+<p>This function retrieves the repeat times from an <font face='Courier New'>SDP_SessionPlayTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the repeat times.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>The <font face='Courier New'>SDP_SessionPlayTime</font> struct to retrieve the repeat times from.</p>
+</ul>
+</ul>
+<a name='SDP_GetNextRepeatTime-repeat_time-'></a><h2>SDP_GetNextRepeatTime(repeat_time)</h2>
+
+<pre> #define SDP_GetNextRepeatTime SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_RepeatTime</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_RepeatTime</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPreviousRepeatTime-repeat_time-'></a><h2>SDP_GetPreviousRepeatTime(repeat_time)</h2>
+
+<pre> #define SDP_GetPreviousRepeatTime SDP_GetPrevious
+
+</pre>
+<p>Gets the previous <font face='Courier New'>SDP_RepeatTime</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the previous <font face='Courier New'>SDP_RepeatTime</font> struct in the linked list, or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetRepeatInterval-repeat_time-'></a><h2>SDP_GetRepeatInterval(repeat_time)</h2>
+
+<pre> unsigned long SDP_GetRepeatInterval(SDP_RepeatTime *repeat_time);
+
+</pre>
+<p>This function retrieves the repeat interval from an <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The repeat interval.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>The <font face='Courier New'>SDP_RepeatTime</font> struct to retrieve the repeat interval from.</p>
+</ul>
+</ul>
+<a name='SDP_GetActiveDuration-repeat_time-'></a><h2>SDP_GetActiveDuration(repeat_time)</h2>
+
+<pre> unsigned long SDP_GetActiveDuration(SDP_RepeatTime *repeat_time);
+
+</pre>
+<p>This function retrieves the active duration from an <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The active duration.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>The <font face='Courier New'>SDP_RepeatTime</font> struct to retrieve the active duration from.</p>
+</ul>
+</ul>
+<a name='SDP_GetRepeatOffsets-repeat_time-'></a><h2>SDP_GetRepeatOffsets(repeat_time)</h2>
+
+<pre> unsigned long *SDP_GetRepeatOffsets(SDP_RepeatTime *repeat_time);
+
+</pre>
+<p>This function retrieves the repeat offsets from an <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the repeat offsets.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>The <font face='Courier New'>SDP_RepeatTime</font> struct to retrieve the repeat offsets from.</p>
+</ul>
+</ul>
+<a name='SDP_GetTotalRepeatOffsets-repeat_time-'></a><h2>SDP_GetTotalRepeatOffsets(repeat_time)</h2>
+
+<pre> int SDP_GetTotalRepeatOffsets(SDP_RepeatTime *repeat_time);
+
+</pre>
+<p>This function retrieves the total repeat offsets from an <font face='Courier New'>SDP_RepeatTime</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The total repeat offsets.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>The <font face='Courier New'>SDP_RepeatTime</font> struct to retrieve the total repeat offsets from.</p>
+</ul>
+</ul>
+<a name='SDP_RemoveRepeatTime-session_play_times--repeat_time-'></a><h2>SDP_RemoveRepeatTime(session_play_times, repeat_time)</h2>
+
+<pre> void SDP_RemoveRepeatTime(
+ 	SDP_SessionPlayTime *   session_play_times,
+ 	SDP_RepeatTime *        repeat_time
+ );
+
+</pre>
+<p>This removes (but does not destroy) the specified <font face='Courier New'>SDP_RepeatTime</font>
+struct from the repeat time list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_times'></a><b>session_play_times</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct  containing the list.</p>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_RepeatTime</font> you want removed from the list.</p>
+</ul>
+</ul>
+<a name='SDP_RemoveSessionPlayTime-description--session_play_time-'></a><h2>SDP_RemoveSessionPlayTime(description, session_play_time)</h2>
+
+<pre> void SDP_RemoveSessionPlayTime(
+ 	SDP_Description *       description,
+ 	SDP_SessionPlayTime *   session_play_time
+ );
+
+</pre>
+<p>This removes (but does not destroy) the specified <font face='Courier New'>SDP_SessionPlayTime</font>
+struct from the session play time list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct  containing the list.</p>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> you want removed from the list.</p>
+</ul>
+</ul>
+<a name='SDP_GetZoneAdjustments-description-'></a><h2>SDP_GetZoneAdjustments(description)</h2>
+
+<pre> SDP_ZoneAdjustment *SDP_GetZoneAdjustments(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the zone adjustments from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the zone adjustments.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the zone adjustments from.</p>
+</ul>
+</ul>
+<a name='SDP_GetNextZoneAdjustment-zone_adjustment-'></a><h2>SDP_GetNextZoneAdjustment(zone_adjustment)</h2>
+
+<pre> #define SDP_GetNextZoneAdjustment SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_ZoneAdjustment</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_ZoneAdjustment</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_ZoneAdjustment</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPreviousZoneAdjustment-zone_adjustment-'></a><h2>SDP_GetPreviousZoneAdjustment(zone_adjustment)</h2>
+
+<pre> #define SDP_GetPreviousZoneAdjustment SDP_GetPrevious
+
+</pre>
+<p>Gets the previous <font face='Courier New'>SDP_ZoneAdjustment</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the previous <font face='Courier New'>SDP_ZoneAdjustment</font> struct in the linked list, or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_ZoneAdjustment</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetZoneAdjustmentTime-zone_adjustment-'></a><h2>SDP_GetZoneAdjustmentTime(zone_adjustment)</h2>
+
+<pre> time_t SDP_GetZoneAdjustmentTime(SDP_ZoneAdjustment *zone_adjustment);
+
+</pre>
+<p>This function retrieves the zone adjustment time from an <font face='Courier New'>SDP_ZoneAdjustment</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The zone adjustment time.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>The <font face='Courier New'>SDP_ZoneAdjustment</font> struct to retrieve the zone adjustment time from.</p>
+</ul>
+</ul>
+<a name='SDP_GetZoneAdjustmentOffset-zone_adjustment-'></a><h2>SDP_GetZoneAdjustmentOffset(zone_adjustment)</h2>
+
+<pre> long SDP_GetZoneAdjustmentOffset(SDP_ZoneAdjustment *zone_adjustment);
+
+</pre>
+<p>This function retrieves the zone adjustment offset from an <font face='Courier New'>SDP_ZoneAdjustment</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The zone adjustment offset.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>The <font face='Courier New'>SDP_ZoneAdjustment</font> struct to retrieve the zone adjustment offset from.</p>
+</ul>
+</ul>
+<a name='SDP_RemoveZoneAdjustment-description--zone_adjustment-'></a><h2>SDP_RemoveZoneAdjustment(description, zone_adjustment)</h2>
+
+<pre> void SDP_RemoveZoneAdjustment(
+ 	SDP_Description *      description,
+ 	SDP_ZoneAdjustment *   zone_adjustment
+ );
+
+</pre>
+<p>This removes (but does not destroy) the specified <font face='Courier New'>SDP_ZoneAdjustment</font>
+struct from the zone adjustment list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct  containing the list.</p>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_ZoneAdjustment</font> you want removed from the list.</p>
+</ul>
+</ul>
+<a name='SDP_GetEncryption-description-'></a><h2>SDP_GetEncryption(description)</h2>
+
+<pre> SDP_Encryption *SDP_GetEncryption(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the encryption from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the encryption.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the encryption from.</p>
+</ul>
+</ul>
+<a name='SDP_GetEncryptionMethod-encryption-'></a><h2>SDP_GetEncryptionMethod(encryption)</h2>
+
+<pre> const char *SDP_GetEncryptionMethod(SDP_Encryption *encryption);
+
+</pre>
+<p>This function retrieves the encryption method from an <font face='Courier New'>SDP_Encryption</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the encryption method.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='encryption'></a><b>encryption</b></li>
+<p>The <font face='Courier New'>SDP_Encryption</font> struct to retrieve the encryption method from.</p>
+</ul>
+</ul>
+<a name='SDP_GetEncryptionKey-encryption-'></a><h2>SDP_GetEncryptionKey(encryption)</h2>
+
+<pre> const char *SDP_GetEncryptionKey(SDP_Encryption *encryption);
+
+</pre>
+<p>This function retrieves the encryption key from an <font face='Courier New'>SDP_Encryption</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the encryption key.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='encryption'></a><b>encryption</b></li>
+<p>The <font face='Courier New'>SDP_Encryption</font> struct to retrieve the encryption key from.</p>
+</ul>
+</ul>
+<a name='SDP_GetAttributes-description-'></a><h2>SDP_GetAttributes(description)</h2>
+
+<pre> SDP_Attribute *SDP_GetAttributes(SDP_Description *description);
+
+</pre>
+<p>This function retrieves the attributes from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the attributes.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the attributes from.</p>
+</ul>
+</ul>
+<a name='SDP_GetNextAttribute-attribute-'></a><h2>SDP_GetNextAttribute(attribute)</h2>
+
+<pre> #define SDP_GetNextAttribute SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_Attribute</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_Attribute</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_Attribute</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetPreviousAttribute-attribute-'></a><h2>SDP_GetPreviousAttribute(attribute)</h2>
+
+<pre> #define SDP_GetPreviousAttribute SDP_GetPrevious
+
+</pre>
+<p>Gets the previous <font face='Courier New'>SDP_Attribute</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the previous <font face='Courier New'>SDP_Attribute</font> struct in the linked list, or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_Attribute</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetAttributeName-attribute-'></a><h2>SDP_GetAttributeName(attribute)</h2>
+
+<pre> const char *SDP_GetAttributeName(SDP_Attribute *attribute);
+
+</pre>
+<p>This function retrieves the attribute name from an <font face='Courier New'>SDP_Attribute</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the attribute name.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>The <font face='Courier New'>SDP_Attribute</font> struct to retrieve the attribute name from.</p>
+</ul>
+</ul>
+<a name='SDP_GetAttributeValue-attribute-'></a><h2>SDP_GetAttributeValue(attribute)</h2>
+
+<pre> const char *SDP_GetAttributeValue(SDP_Attribute *attribute);
+
+</pre>
+<p>This function retrieves the attribute value from an <font face='Courier New'>SDP_Attribute</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the attribute value.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>The <font face='Courier New'>SDP_Attribute</font> struct to retrieve the attribute value from.</p>
+</ul>
+</ul>
+<a name='SDP_RemoveAttribute-description--attribute-'></a><h2>SDP_RemoveAttribute(description, attribute)</h2>
+
+<pre> void SDP_RemoveAttribute(
+ 	SDP_Description *   description,
+ 	SDP_Attribute *     attribute
+ );
+
+</pre>
+<p>This removes (but does not destroy) the specified <font face='Courier New'>SDP_Attribute</font>
+struct from the attribute list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct  containing the list.</p>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Attribute</font> you want removed from the list.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaDescriptions-description-'></a><h2>SDP_GetMediaDescriptions(description)</h2>
+
+<pre> SDP_MediaDescription *SDP_GetMediaDescriptions(
+ 	SDP_Description *description
+ );
+
+</pre>
+<p>This function retrieves the media descriptions from an <font face='Courier New'>SDP_Description</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the media descriptions.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>The <font face='Courier New'>SDP_Description</font> struct to retrieve the media descriptions from.</p>
+</ul>
+</ul>
+<a name='SDP_GetNextMediaDescription-media_description-'></a><h2>SDP_GetNextMediaDescription(media_description)</h2>
+
+<pre> #define SDP_GetNextMediaDescription SDP_GetNext
+
+</pre>
+<p>Gets the next <font face='Courier New'>SDP_MediaDescription</font> struct from the linked list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the next <font face='Courier New'>SDP_MediaDescription</font> struct in the linked list or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to a <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaType-media_description-'></a><h2>SDP_GetMediaType(media_description)</h2>
+
+<pre> const char *SDP_GetMediaType(SDP_MediaDescription *media_description);
+
+</pre>
+<p>This function retrieves the media type from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the media type.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media type from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaPort-media_description-'></a><h2>SDP_GetMediaPort(media_description)</h2>
+
+<pre> unsigned short SDP_GetMediaPort(SDP_MediaDescription *media_description);
+
+</pre>
+<p>This function retrieves the media port from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The media port.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media port from.</p>
+</ul>
+</ul>
+<a name='SDP_GetTotalMediaPorts-media_description-'></a><h2>SDP_GetTotalMediaPorts(media_description)</h2>
+
+<pre> unsigned short SDP_GetTotalMediaPorts(
+ 	SDP_MediaDescription *media_description
+ );
+
+</pre>
+<p>This function retrieves the total media ports from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The total media ports.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the total media ports from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaTransportProtocol-media_description-'></a><h2>SDP_GetMediaTransportProtocol(media_description)</h2>
+
+<pre> const char *SDP_GetMediaTransportProtocol(
+ 	SDP_MediaDescription *media_description
+ );
+
+</pre>
+<p>This function retrieves the media transport protocol from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the media transport protocol.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media transport protocol from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaFormats-media_description-'></a><h2>SDP_GetMediaFormats(media_description)</h2>
+
+<pre> const char *SDP_GetMediaFormats(SDP_MediaDescription *media_description);
+
+</pre>
+<p>This function retrieves the media formats from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the media formats.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media formats from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaInformation-media_description-'></a><h2>SDP_GetMediaInformation(media_description)</h2>
+
+<pre> const char *SDP_GetMediaInformation(
+ 	SDP_MediaDescription *media_description
+ );
+
+</pre>
+<p>This function retrieves the media information from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the string containing the media information.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media information from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaConnection-media_description-'></a><h2>SDP_GetMediaConnection(media_description)</h2>
+
+<pre> SDP_Connection *SDP_GetMediaConnection(
+ 	SDP_MediaDescription *media_description
+ );
+
+</pre>
+<p>This function retrieves the media connection from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the media connection.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media connection from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaBandwidth-media_description-'></a><h2>SDP_GetMediaBandwidth(media_description)</h2>
+
+<pre> SDP_Bandwidth *SDP_GetMediaBandwidth(
+ 	SDP_MediaDescription *media_description
+ );
+
+</pre>
+<p>This function retrieves the media bandwidth from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the media bandwidth.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media bandwidth from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaEncryption-media_description-'></a><h2>SDP_GetMediaEncryption(media_description)</h2>
+
+<pre> SDP_Encryption *SDP_GetMediaEncryption(
+ 	SDP_MediaDescription *media_description
+ );
+
+</pre>
+<p>This function retrieves the media encryption from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the media encryption.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media encryption from.</p>
+</ul>
+</ul>
+<a name='SDP_GetMediaAttributes-media_description-'></a><h2>SDP_GetMediaAttributes(media_description)</h2>
+
+<pre> SDP_Attribute *SDP_GetMediaAttributes(
+ 	SDP_MediaDescription *media_description
+ );
+
+</pre>
+<p>This function retrieves the media attributes from an <font face='Courier New'>SDP_MediaDescription</font> struct.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the media attributes.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>The <font face='Courier New'>SDP_MediaDescription</font> struct to retrieve the media attributes from.</p>
+</ul>
+</ul>
+<a name='SDP_RemoveMediaDescription-description--media_description-'></a><h2>SDP_RemoveMediaDescription(description, media_description)</h2>
+
+<pre> void SDP_RemoveMediaDescription(
+ 	SDP_Description *        description,
+ 	SDP_MediaDescription *   media_description
+ );
+
+</pre>
+<p>This removes (but does not destroy) the specified <font face='Courier New'>SDP_MediaDescription</font>
+struct from the media description list.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct  containing the list.</p>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> you want removed from the list.</p>
+</ul>
+</ul>
+<a name='DESTRUCTOR-FUNCTIONS'></a><h1>DESTRUCTOR FUNCTIONS</h1>
+
+<p>These functions destroy dynamically allocated structures.</p>
+<a name='SDP_DestroyDescriptions-descriptions-'></a><h2>SDP_DestroyDescriptions(descriptions)</h2>
+
+<pre> void SDP_DestroyDescriptions(SDP_Description *descriptions);
+
+</pre>
+<p>This function destroys a descriptions linked list from an
+<font face='Courier New'>SDP_Description</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the descriptions linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='descriptions'></a><b>descriptions</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy the descriptions from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyDescription-description-'></a><h2>SDP_DestroyDescription(description)</h2>
+
+<pre> void SDP_DestroyDescription(SDP_Description *description);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_Description</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyOwner-owner-'></a><h2>SDP_DestroyOwner(owner)</h2>
+
+<pre> void SDP_DestroyOwner(SDP_Owner *owner);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_Owner</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='owner'></a><b>owner</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Owner</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyEmailContacts-description-'></a><h2>SDP_DestroyEmailContacts(description)</h2>
+
+<pre> void SDP_DestroyEmailContacts(SDP_Description *description);
+
+</pre>
+<p>This function destroys a email contacts linked list from an
+<font face='Courier New'>SDP_Description</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the email contacts linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy the email contacts from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyEmailContact-email_contact-'></a><h2>SDP_DestroyEmailContact(email_contact)</h2>
+
+<pre> void SDP_DestroyEmailContact(SDP_EmailContact *email_contact);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_EmailContact</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='email_contact'></a><b>email_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_EmailContact</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyPhoneContacts-description-'></a><h2>SDP_DestroyPhoneContacts(description)</h2>
+
+<pre> void SDP_DestroyPhoneContacts(SDP_Description *description);
+
+</pre>
+<p>This function destroys a phone contacts linked list from an
+<font face='Courier New'>SDP_Description</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the phone contacts linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy the phone contacts from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyPhoneContact-phone_contact-'></a><h2>SDP_DestroyPhoneContact(phone_contact)</h2>
+
+<pre> void SDP_DestroyPhoneContact(SDP_PhoneContact *phone_contact);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_PhoneContact</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='phone_contact'></a><b>phone_contact</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_PhoneContact</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyConnection-connection-'></a><h2>SDP_DestroyConnection(connection)</h2>
+
+<pre> void SDP_DestroyConnection(SDP_Connection *connection);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_Connection</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='connection'></a><b>connection</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Connection</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyBandwidth-bandwidth-'></a><h2>SDP_DestroyBandwidth(bandwidth)</h2>
+
+<pre> void SDP_DestroyBandwidth(SDP_Bandwidth *bandwidth);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_Bandwidth</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='bandwidth'></a><b>bandwidth</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Bandwidth</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroySessionPlayTimes-description-'></a><h2>SDP_DestroySessionPlayTimes(description)</h2>
+
+<pre> void SDP_DestroySessionPlayTimes(SDP_Description *description);
+
+</pre>
+<p>This function destroys a session play times linked list from an
+<font face='Courier New'>SDP_Description</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the session play times linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy the session play times from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroySessionPlayTime-session_play_time-'></a><h2>SDP_DestroySessionPlayTime(session_play_time)</h2>
+
+<pre> void SDP_DestroySessionPlayTime(SDP_SessionPlayTime *session_play_time);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_SessionPlayTime</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyRepeatTimes-session_play_time-'></a><h2>SDP_DestroyRepeatTimes(session_play_time)</h2>
+
+<pre> void SDP_DestroyRepeatTimes(SDP_SessionPlayTime *session_play_time);
+
+</pre>
+<p>This function destroys a repeat times linked list from an
+<font face='Courier New'>SDP_SessionPlayTime</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the repeat times linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='session_play_time'></a><b>session_play_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_SessionPlayTime</font> struct to destroy the repeat times from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyRepeatTime-repeat_time-'></a><h2>SDP_DestroyRepeatTime(repeat_time)</h2>
+
+<pre> void SDP_DestroyRepeatTime(SDP_RepeatTime *repeat_time);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_RepeatTime</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='repeat_time'></a><b>repeat_time</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_RepeatTime</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyZoneAdjustments-description-'></a><h2>SDP_DestroyZoneAdjustments(description)</h2>
+
+<pre> void SDP_DestroyZoneAdjustments(SDP_Description *description);
+
+</pre>
+<p>This function destroys a zone adjustments linked list from an
+<font face='Courier New'>SDP_Description</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the zone adjustments linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy the zone adjustments from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyZoneAdjustment-zone_adjustment-'></a><h2>SDP_DestroyZoneAdjustment(zone_adjustment)</h2>
+
+<pre> void SDP_DestroyZoneAdjustment(SDP_ZoneAdjustment *zone_adjustment);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_ZoneAdjustment</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='zone_adjustment'></a><b>zone_adjustment</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_ZoneAdjustment</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyEncryption-encryption-'></a><h2>SDP_DestroyEncryption(encryption)</h2>
+
+<pre> void SDP_DestroyEncryption(SDP_Encryption *encryption);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_Encryption</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='encryption'></a><b>encryption</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Encryption</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyAttributes-description-'></a><h2>SDP_DestroyAttributes(description)</h2>
+
+<pre> void SDP_DestroyAttributes(SDP_Description *description);
+
+</pre>
+<p>This function destroys an attributes linked list from an
+<font face='Courier New'>SDP_Description</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the attributes linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy the attributes from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyAttribute-attribute-'></a><h2>SDP_DestroyAttribute(attribute)</h2>
+
+<pre> void SDP_DestroyAttribute(SDP_Attribute *attribute);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_Attribute</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='attribute'></a><b>attribute</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Attribute</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyMediaDescriptions-description-'></a><h2>SDP_DestroyMediaDescriptions(description)</h2>
+
+<pre> void SDP_DestroyMediaDescriptions(SDP_Description *description);
+
+</pre>
+<p>This function destroys a media descriptions linked list from an
+<font face='Courier New'>SDP_Description</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the media descriptions linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='description'></a><b>description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Description</font> struct to destroy the media descriptions from.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyMediaDescription-media_description-'></a><h2>SDP_DestroyMediaDescription(media_description)</h2>
+
+<pre> void SDP_DestroyMediaDescription(SDP_MediaDescription *media_description);
+
+</pre>
+<p>This function destroys a <font face='Courier New'>SDP_MediaDescription</font> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct to destroy.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyMediaAttributes-media_description-'></a><h2>SDP_DestroyMediaAttributes(media_description)</h2>
+
+<pre> void SDP_DestroyMediaAttributes(SDP_MediaDescription *media_description);
+
+</pre>
+<p>This function destroys a media attributes linked list from an
+<font face='Courier New'>SDP_MediaDescription</font> struct, releasing its memory back to the operating system.
+Do not try to use any items from the media attributes linked list after destroying it.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='media_description'></a><b>media_description</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_MediaDescription</font> struct to destroy the media attributes from.</p>
+</ul>
+</ul>
+<a name='BUGS'></a><h1>BUGS</h1>
+
+<p>Bugs in this package can be reported and monitored using sourceforge.net:
+<a href='http://sourceforge.net/tracker/?atid=644250' target='_blank'>http://sourceforge.net/tracker/?atid=644250</a>&amp;group_id=106387&amp;func=browse</p>
+<p>You can also email me directly:
+&lt;william_g_davis at users dot sourceforge dot net&gt;.</p>
+<a name='COPYRIGHT'></a><h1>COPYRIGHT</h1>
+
+<p>Copyright 2004 by William G. Davis.</p>
+<p>This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.</p>
+<p>This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+
+<div></div></body></html>

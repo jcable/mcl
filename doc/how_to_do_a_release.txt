@@ -1,0 +1,256 @@
+$Id: how_to_do_a_release.txt,v 1.11 2004/12/08 11:41:19 roca Exp $
+
+		-------------------
+		HOW TO DO A RELEASE
+		-------------------
+
+
+
+COMMON METHODOLOGY
+------------------
+
+LDPC part:
+----------
+
+0- make sure the whole directory is up to date
+	cd ldpc
+	cvs update .
+   If ever there is a conflict or a source file has been updated, the WHOLE
+   project must be completely validated
+
+1- check doc/RELEASE_NOTE
+   check src/ldpc_fec.cpp, LDPCFecSession::MoreAbout() and update the
+	version number/date
+
+2- do a cvs commit -m"release xxx" . at the highest level (ldpc dir)
+
+3- do a cvs tag "release-1-3" . at the highest level (ldpc dir)
+
+4- clean everything
+   This must be done both with a linux, freebsd and solaris workstation
+	cd ldpc
+	make cleanall
+   Make sure that the bin directories have been completely cleaned
+   (several subdir may have been created during tests)
+
+5- check there is no core file and remove them if any
+	cd ldpc
+	find . -name *core* -print -exec rm {} \;
+
+6- copy the complete distrib to ~/distrib and change directory name to
+   reflect version number
+	mkdir ~/distrib
+	cp -R ldpc ~/distrib
+	cd ~/distrib
+	mv ldpc ldpc_v1.3
+
+7- remove confidential and unnessary directories and files
+	cd ../ldpc/
+	rm -rf test
+	rm -rf common
+	
+8- remove all *.ncb and *.suo files specific to Visual.Net in ldpc
+    directorie.
+
+9- remove the windows binaries in
+	cd /bin/win32
+	rm *
+	rm tmp/*
+
+10- remove the CVS entries
+	find . -name CVS -print -exec rm -rf {} \;
+    remove CVS backup file versions when there's a conflict
+	find . -name ".#*" -print -exec rm {} \;
+    remove VI temp files:
+	find . -name *.cpp~ -print -exec rm {} \;
+	find . -name *.h~ -print -exec rm {} \;
+	find . -name *.txt~ -print -exec rm {} \;
+	find . -name Makefile~ -print -exec rm {} \;
+	find . -name "*.TXT~" -print -exec rm {} \;
+
+11- genereate doxygen pages and copy LDPCFecSession man page to ldpc/man;
+    remove generated doxygen pages
+	cd doc/doxygen
+	doxygen
+	cp man/man3/LDPCFecSession.3 ../../man
+	rm -rf html
+	rm -rf man
+    remove all code fragments from the man/LDPCFecSession.3 man page
+
+12- edit all Makefiles and remove the "dependancy" section... Remove whatever
+    FOLLOWS the following three lines:
+	# Dependencies automatically created by makedepend
+	#
+	# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+13- create the source archives
+	tar cvzf ldpc_v1.3_src.tgz ldpc_v1.3
+    and the same for ldpc. Then:
+	zip -r ldpc_v1.3_src.zip ldpc_v1.3
+
+
+MCLv3/LDPC part:
+----------------
+
+0- make sure the whole directory is up to date
+	cd mclv3
+	cvs update .
+   If ever there is a conflict or a source file has been updated, the WHOLE
+   project must be completely validated (chec/checkall run and
+   interoperability tests performed)!
+
+1- check src/common/mcl_version.h
+	the version number and date must be ok
+
+2- check doc/RELEASE_NOTE and add both a column in the table and section
+   for the new release if not already done
+
+3- check src/alc/mcl_profile.h
+   By default there must be:
+
+    * LCT_SCHED1 set
+    * VIRTUAL_TX_MEM set and VIRTUAL_TX_MAX_PHY_MEM_SIZE set to 100MB
+    * VIRTUAL_RX_MEM set and VIRTUAL_RX_MAX_PHY_MEM_SIZE set to 100MB
+    * ANTICIPATED_TX_FOR_PUSH set
+    * #define ANTICIPATED_TX_FOR_PUSH_AGGRESSIVENESS 4      /* default */
+    * RSE_FEC set
+    * LDPC_FEC set
+
+   There must NOT be:
+
+    * SIMUL_LOSSES must not be set
+    * LCT_SCHED2 should not be set
+    * LCT_SCHED3 should not be set
+    * POSTPONE_FEC_DECODING should not be set
+
+3'- check src/alc/mcl_rx.cpp
+  The // #define REMOVE_PHY_LAYER_DUPLICATES must NOT be defined
+  (specific to INRIA)
+
+4- build everything under linux, solaris and windows and do the following
+   tests:
+	- run checkall on the linux and solaris hosts
+	- run wincheck on the windows host
+	- perform a simple FCAST transfer (1) from linux to solaris,
+	  (2) from solaris to linux, (3) from linux to windows, and
+	  finally (4) from windows to linux
+	- check interoperability with TUT Flute. This will usually
+	  require to use -singlelayer mode (to avoid using different
+	  congestion control protocols) and a small object (to always
+	  use Reed-Solomon). Test both directions.
+
+5- do a cvs commit -m"release xxx" . at the highest level (mcl dir)
+
+6- do a cvs tag "release-2-1" . at the highest level (mcl dir)
+
+7- clean everything
+   This must be done both with a linux and solaris workstation
+	cd mcl
+	make cleanall
+   Make sure that the bin directories have been completely cleaned
+   (several subdir may have been created during tests)
+   Do the same in the ldpc dir.
+
+8- check there is no core file and remove them if any
+	cd mcl
+	find . -name *core* -print -exec rm {} \;
+   Do the same in the ldpc dir.
+
+9- copy the complete distrib to ~/distrib and change directory name to
+   reflect version number
+	mkdir ~/distrib
+	cp -R mclv3 ~/distrib
+	cp -R ldpc ~/distrib
+	cd ~/distrib
+	mv mclv3 mcl_v2.99.1
+	mv ldpc ldpc_v1.1
+	ln -s ldpc_v1.1 ldpc
+
+10- remove confidential directories and files
+	cd mcl_v2.99.1
+	rm -rf test
+	rm -rf bench
+	rm doc/how_to_do_a_release.txt
+    And for ldpc:
+	cd ../ldpc/
+	rm -rf test
+
+11- remove all *.ncb and *.suo files specific to Visual .Net in both
+    the mcl and ldpc directories.
+	find . -name *.ncb -print -exec rm {} \;
+	find . -name *.suo -print -exec rm {} \;
+    Remove all pchdir directories specific to Insure.
+	cd src/alc;
+	rm -rf pchdir
+
+12- remove the windows binaries in
+	cd check/alc/wincheck/bin
+	rm *
+	rm tmp/*
+
+13- remove the CVS entries
+	find . -name CVS -print -exec rm -rf {} \;
+
+14- compile the html version of man pages
+	cd man
+	make html
+    Be carefull not to include .ps.gz versions! Remove them if any.
+    ** Copy fcast.man.1.html to bin/win32 and rename it to fcast.html **
+
+15- check all Makefiles (in particular src/Makefile and fcast/Makefile) and
+   make sure by default they will compile in optimised mode. It looks like:
+	CFLAGS   = -O -g ${OSFLAGS}
+
+16- edit all Makefiles and remove the "dependancy" section... Remove whatever
+    FOLLOWS the following three lines:
+	# Dependencies automatically created by makedepend
+	#
+	# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+17- create the source archives
+	tar cvzf mcl_v2.99.1_src.tgz mcl_v2.99.1
+    and the same for ldpc. Then:
+	zip -r mcl_v2.99.1_src.zip mcl_v2.99.1
+
+
+FOR THE BINARY VERSIONS
+-----------------------
+
+We first modify the source distrib directory prepared above, and then
+create copies.
+
+1- Binaries must be compiled in optimized mode...
+   edit the src/Makefile and fcast/Makefile in the source distrib done
+   previously and make sure it uses:
+	CFLAGS   = -O -g ${OSFLAGS}
+
+2- Now copy the complete source distrib done previously and use directory
+   names that reflect version number/target OS
+	cd /tmp
+	cp -R mcl_v2.1 mcl_v2.1_linux_bin
+	cp -R mcl_v2.1 mcl_v2.1_solaris_bin
+	cp -R mcl_v2.1 mcl_v2.1_win32_bin
+
+3- Compile anything under the various OS
+
+4- Strip the binaries (ie. remove their symbol tables):
+	cd bin/linux
+	strip fcast flute robcast_*
+   and:
+	cd bin/solaris
+	strip fcast flute robcast_client robcast_server
+   DO NOT strip libmclalc.a ! (required to compile check/alc/test*.c)
+
+5- Binary versions only include the following directories:
+	bin/
+	check/	(with source code!)
+	doc/
+	man/
+   Keep the top level Makefile.common file
+				(required to compile check/alc/test*.c)
+   Keep the src/common/mcl_lib_api.h file
+				(required to compile check/alc/test*.c)
+   Keep the src/alc/mcl_lib_alc_api.h file
+				(required to compile check/alc/test*.c)
+   Other directories must be removed from the source distrib done previously.
+

@@ -1,0 +1,834 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Pod::HtmlEasy/0.06 Perl/5.006001 []">
+<title>SinisterSdpParser.pod</title>
+<style type="text/css">
+<!--
+
+BODY {
+  background: white;
+  color: black;
+  font-family: arial,sans-serif;
+  margin: 0;
+  padding: 1ex;
+}
+TABLE {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-width: 0;
+  color: inherit;
+}
+IMG { border: 0; }
+FORM { margin: 0; }
+input { margin: 2px; }
+A.fred {
+  text-decoration: none;
+}
+A:link, A:visited {
+  background: transparent;
+  color: #006699;
+}
+TD {
+  margin: 0;
+  padding: 0;
+}
+DIV {
+  border-width: 0;
+}
+DT {
+  margin-top: 1em;
+}
+TH {
+  background: #bbbbbb;
+  color: inherit;
+  padding: 0.4ex 1ex;
+  text-align: left;
+}
+TH A:link, TH A:visited {
+  background: transparent;
+  color: black;
+}
+A.m:link, A.m:visited {
+  background: #006699;
+  color: white;
+  font: bold 10pt Arial,Helvetica,sans-serif;
+  text-decoration: none;
+}
+A.o:link, A.o:visited {
+  background: #006699;
+  color: #ccffcc;
+  font: bold 10pt Arial,Helvetica,sans-serif;
+  text-decoration: none;
+}
+A.o:hover {
+  background: transparent;
+  color: #ff6600;
+  text-decoration: underline;
+}
+A.m:hover {
+  background: transparent;
+  color: #ff6600;
+  text-decoration: underline;
+}
+table.dlsip     {
+  background: #dddddd;
+  border: 0.4ex solid #dddddd;
+}
+.pod PRE     {
+  background: #eeeeee;
+  border: 1px solid #888888;
+  color: black;
+  padding-top: 1em;
+  white-space: pre;
+}
+.pod H1      {
+  background: transparent;
+  color: #006699;
+  font-size: large;
+}
+.pod H2      {
+  background: transparent;
+  color: #006699;
+  font-size: medium;
+}
+.pod IMG     {
+  vertical-align: top;
+}
+.pod .toc A  {
+  text-decoration: none;
+}
+.pod .toc LI {
+  line-height: 1.2em;
+  list-style-type: none;
+}
+
+--></style>
+</head>
+<body alink="#FF0000" bgcolor="#FFFFFF" link="#000000" text="#000000" vlink="#000066"><a name='_top'></a>
+
+<div class="toc">
+<ul>
+<li><a href='#NAME'>NAME</a>
+<li><a href='#SYNOPSIS'>SYNOPSIS</a>
+<li><a href='#DESCRIPTION'>DESCRIPTION</a>
+<li><a href='#FUNCTIONS'>FUNCTIONS</a>
+
+<ul>
+<li><a href='#SDP_NewParser--'>SDP_NewParser()</a>
+<li><a href='#SDP_Parse-parser--string-'>SDP_Parse(parser, string)</a>
+<li><a href='#SDP_ParseFile-parser--filename-'>SDP_ParseFile(parser, filename)</a>
+<li><a href='#SDP_DestroyParser-parser-'>SDP_DestroyParser(parser)</a>
+<li><a href='#SDP_EventStreamParse-parser--string-'>SDP_EventStreamParse(parser, string)</a>
+<li><a href='#SDP_EventStreamParseFile-parser--filename-'>SDP_EventStreamParseFile(parser, filename)</a>
+<li><a href='#SDP_SetStartHandler-parser--handler-'>SDP_SetStartHandler(parser, handler)</a>
+<li><a href='#SDP_SetStartDescriptionHandler-parser--handler-'>SDP_SetStartDescriptionHandler(parser, handler)</a>
+<li><a href='#SDP_SetFieldHandler-parser--handler-'>SDP_SetFieldHandler(parser, handler)</a>
+<li><a href='#SDP_SetEndDescriptionHandler-parser--handler-'>SDP_SetEndDescriptionHandler(parser, handler)</a>
+<li><a href='#SDP_SetEndHandler-parser--handler-'>SDP_SetEndHandler(parser, handler)</a>
+<li><a href='#SDP_SetUserData-parser--user_data-'>SDP_SetUserData(parser, user_data)</a>
+<li><a href='#SDP_GetStartHandler-parser-'>SDP_GetStartHandler(parser)</a>
+<li><a href='#SDP_GetStartDescriptionHandler-parser-'>SDP_GetStartDescriptionHandler(parser)</a>
+<li><a href='#SDP_GetFieldHandler-parser-'>SDP_GetFieldHandler(parser)</a>
+<li><a href='#SDP_GetEndDescriptionHandler-parser-'>SDP_GetEndDescriptionHandler(parser)</a>
+<li><a href='#SDP_GetEndHandler-parser-'>SDP_GetEndHandler(parser)</a>
+<li><a href='#SDP_GetUserData-parser-'>SDP_GetUserData(parser)</a>
+<li><a href='#SDP_GetCurrentLineNumber-parser-'>SDP_GetCurrentLineNumber(parser)</a>
+<li><a href='#SDP_GetCurrentDescriptionNumber-parser-'>SDP_GetCurrentDescriptionNumber(parser)</a>
+<li><a href='#SDP_GetCurrentFieldType-parser-'>SDP_GetCurrentFieldType(parser)</a>
+<li><a href='#SDP_GetCurrentField-parser-'>SDP_GetCurrentField(parser)</a>
+<li><a href='#SDP_FieldEncountered-parser--field_type-'>SDP_FieldEncountered(parser, field_type)</a>
+</ul><li><a href='#BUGS'>BUGS</a>
+<li><a href='#COPYRIGHT'>COPYRIGHT</a>
+
+</ul>
+</div>
+
+<div class='pod'><div>
+<a name='NAME'></a><h1>NAME</h1>
+
+<p>SinisterSdpParser - The SDP parser routines</p>
+<a name='SYNOPSIS'></a><h1>SYNOPSIS</h1>
+
+<pre> #include &lt;SDP/SDP_Parser.h&gt;
+ 
+ int main(void)
+ {
+ 	SDP_Parser *parser;
+ 	SDP_Description *description;
+ 
+ 	parser = SDP_NewParser();
+ 	description = SDP_ParseFile(parser, 'description.sdp');
+ 
+	...
+ }
+
+</pre>
+<a name='DESCRIPTION'></a><h1>DESCRIPTION</h1>
+
+<p>The SinisterSdp parser is a standards compliant (RFC 2327) SDP parser that can
+parse SDP descriptions from multiple types of sreams. The parsed descriptions
+and their fields are encapsulated by structures and functions that operate on
+them, which are described in
+<i><a href="SinisterSdpDescriptions.html.html">SinisterSdpDescriptions.html</a></i>.</p>
+<p>The parser performs some basic validation on the descriptions it parses,
+ensuring required sub fields are present, for example, or that the fields are
+not horribly out of order. These non fatal parser errors can be caught and
+handled dynamically using a non-fatal error handler as described in
+<i><a href="SinisterSdpError.html.html">SinisterSdpError.html</a></i>.</p>
+<p>Also exposed here in the API is the lower-level event stream parser. This
+simple parser alows you to register handlers for certain events (like
+encountering the start of a description, encountering a field, encountering the
+end of a description) and build your own custom SDP parser.</p>
+<a name='FUNCTIONS'></a><h1>FUNCTIONS</h1>
+
+<p>The following functions are available:</p>
+<a name='SDP_NewParser--'></a><h2>SDP_NewParser()</h2>
+
+<pre> SDP_Parser *SDP_NewParser(void);
+
+</pre>
+<p>This function creates a new <font face='Courier New'>SDP_Parser</font> struct. All of the other parser
+functions take a pointer to this struct as their first argument.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the newly created
+<font face='Courier New'>SDP_Parser</font> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call <font face='Courier New'>SDP_GetLastError()</font>. The
+possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Parser struct.
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<p>None.</p>
+</ul>
+<a name='SDP_Parse-parser--string-'></a><h2>SDP_Parse(parser, string)</h2>
+
+<pre> SDP_Description *SDP_Parse(
+ 	SDP_Parser *   parser,
+ 	const char *   string
+ );
+
+</pre>
+<p>This function parses one or more SDP session descriptions from a string into
+a linked list of <font face='Courier New'>SDP_Description</font> stucts, each of which encapsulate a single
+session description.</p>
+<p>You can retrieve and modify the various parts of the description encapsulated
+by an <font face='Courier New'>SDP_Description</font> struct with the routines outlined in
+<i><a href="SinisterSdpDescriptions.html.html">SinisterSdpDescriptions.html</a></i>.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the first and probably only
+<font face='Courier New'>SDP_Description</font> struct in the linked list. If an error occurs, it returns a
+NULL pointer instead. For extended error information call
+<font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the description(s).
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_MALFORMED_V_FIELD      = The "v" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_O_FIELD      = The "o" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_E_FIELD      = An "e" field was malformed and
+                                  could not be parsed. 
+ SDP_ERR_MALFORMED_P_FIELD      = A "p" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_C_FIELD      = A "c" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_B_FIELD      = A "b" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_T_FIELD      = The "t" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_R_FIELD      = An "r" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_Z_FIELD      = The "z" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_K_FIELD      = A "k" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_A_FIELD      = An "a" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_M_FIELD      = An "m" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FIELDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='string'></a><b>string</b></li>
+<p>A pointer to the string to parse.</p>
+</ul>
+</ul>
+<a name='SDP_ParseFile-parser--filename-'></a><h2>SDP_ParseFile(parser, filename)</h2>
+
+<pre> SDP_Description *SDP_Parse(
+ 	SDP_Parser *   parser,
+ 	const char *   filename
+ );
+
+</pre>
+<p>This function parses one or more SDP session descriptions from a file into
+a linked list of <font face='Courier New'>SDP_Description</font> stucts, each of which encapsulate a single
+session description.</p>
+<p>You can retrieve and modify the various parts of the description encapsulated
+by an <font face='Courier New'>SDP_Description</font> struct with the routines outlined in
+<i><a href="SinisterSdpDescriptions.html">SinisterSdpDescriptions</a></i>.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If no error occurs, it returns a pointer to the first and probably only
+<font face='Courier New'>SDP_Description</font> struct in the linked list. If an error occurs, it returns a
+NULL pointer instead. For extended error information call
+<font face='Courier New'>SDP_GetLastError()</font>. The possible error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the description(s).
+ SDP_ERR_FILE_OPEN_FAILED       = Couldn't open the file you
+                                  specified.
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_MALFORMED_V_FIELD      = The "v" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_O_FIELD      = The "o" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_E_FIELD      = An "e" field was malformed and
+                                  could not be parsed. 
+ SDP_ERR_MALFORMED_P_FIELD      = A "p" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_C_FIELD      = A "c" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_B_FIELD      = A "b" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_T_FIELD      = The "t" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_R_FIELD      = An "r" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_Z_FIELD      = The "z" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_K_FIELD      = A "k" field was malformed and could
+                                  not be parsed.
+ SDP_ERR_MALFORMED_A_FIELD      = An "a" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_MALFORMED_M_FIELD      = An "m" field was malformed and
+                                  could not be parsed.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FIELDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='filename'></a><b>filename</b></li>
+<p>A pointer to a string containing the name of the file to parse.</p>
+</ul>
+</ul>
+<a name='SDP_DestroyParser-parser-'></a><h2>SDP_DestroyParser(parser)</h2>
+
+<pre> void SDP_Parse(SDP_Parser *parser);
+
+</pre>
+<p>This function destroys an <font face='Courier New'>SDP_Parser</font> struct, freeing any memory associated
+with it. Call this when you are finished with it and don't need to do any more
+parsing.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_EventStreamParse-parser--string-'></a><h2>SDP_EventStreamParse(parser, string)</h2>
+
+<pre> int SDP_EventStreamParse(
+ 	SDP_Parser *   parser,
+ 	const char *   string
+ );
+
+</pre>
+<p>This function provides access to the lower-level event stream parser. It parses
+the string as an event stream and calls various event handlers as it goes. It
+also passes on a pointer to some piece of data if you supply one.</p>
+<p>The handlers you can register are:</p>
+<pre> 1) a start handler to be invoked before the parser starts parsing;
+
+ 2) a start-of-description handler to be invoked when the current field
+    denotes the start of an SDP description (a "v" field);
+ 
+ 3) a field handler to be invoked for each field;
+
+ 4) an end-of-description handler to be invoked when the current field
+    denotes the end of a description (a subsequint "v" field or the end
+    of the stream);
+
+ 5) and then an end handler to be invoked when it stops parsing.
+
+</pre>
+<p>The end handler (if registered) will be invoked when parsing stops regardless
+of whether or not it stops after successfully parsing the stream or stops
+because of an error (this is to enable you to do any neccessary cleanup). As
+a convience, the return value detailed below will also be passed on to the
+end handler.</p>
+<p>You can register a non-fatal error handler to catch parser errors and decide
+dynamically whether or not you want it to keep parsing. See
+<i><a href="SinisterSdpErrorHandling.html">SinisterSdpErrorHandling</a></i> for more information on this.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>This function returns true if it is able to successfully parse the string,
+false otherwise. Call <font face='Courier New'>SDP_GetLastError()</font> for extened error information.
+Among the error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the fields.
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FEILDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='string'></a><b>string</b></li>
+<p>A pointer to the string to parse.</p>
+</ul>
+</ul>
+<a name='SDP_EventStreamParseFile-parser--filename-'></a><h2>SDP_EventStreamParseFile(parser, filename)</h2>
+
+<pre> int SDP_EventStreamParseFile(
+ 	SDP_Parser *   parser,
+ 	const char *   filename
+ );
+
+</pre>
+<p>This function works just like <font face='Courier New'>SDP_EventStreamParse</font> except instead of a
+string to parse, it takes the name of a file, opens it, and then parses the
+file as an event stream.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>This function returns true if it is able to successfully parse the file,
+false otherwise. Call <font face='Courier New'>SDP_GetLastError()</font> for extened error information.
+Among the error codes returned are:</p>
+<pre> SDP_ERR_OUT_OF_MEMORY          = There's not enough memory available
+                                  to parse the fields.
+ SDP_ERR_FILE_OPEN_FAILED       = Couldn't open the file you
+                                  specified.
+ SDP_ERR_MALFORMED_LINE         = A line wasn't in the proper
+                                  "x=value" format.
+ SDP_ERR_INVALID_TYPE_CHARACTER = A field was encountered with an
+                                  unknown type character.
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS = A unique field (e.g., "o") was
+                                  encountered more than once in a
+                                  single session description.
+ SDP_ERR_FEILDS_OUT_OF_SEQUENCE = Some fields were out of sequence
+                                  (e.g., a "r" field before its "t"
+				  field).
+
+</pre>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='filename'></a><b>filename</b></li>
+<p>A pointer to a string containing the name of the file to parse.</p>
+</ul>
+</ul>
+<a name='SDP_SetStartHandler-parser--handler-'></a><h2>SDP_SetStartHandler(parser, handler)</h2>
+
+<pre> void SDP_SetStartHandler(
+ 	SDP_Parser *       parser,
+ 	SDP_StartHandler   handler
+ );
+
+</pre>
+<p>This function registers a start handler to be invoked when parsing starts.</p>
+<p>Here is a prototype for a sample handler:</p>
+<pre> int sample_start_handler(
+ 	SDP_Parser *   parser,
+ 	void *         user_data
+ );
+
+</pre>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='handler'></a><b>handler</b></li>
+<p>A pointer to the start handler function to register.</p>
+</ul>
+</ul>
+<a name='SDP_SetStartDescriptionHandler-parser--handler-'></a><h2>SDP_SetStartDescriptionHandler(parser, handler)</h2>
+
+<pre> void SDP_SetStartDescriptionHandler(
+ 	SDP_Parser *                  parser,
+ 	SDP_StartDescriptionHandler   handler
+ );
+
+</pre>
+<p>This function registers a start-of-description handler to be invoked when a
+"v" field is encoutered (designating the start of a new description).</p>
+<p>Here is the prototype for a sample handler:</p>
+<pre> int sample_start_of_description_handler(
+ 	SDP_Parser *   parser,
+ 	int            current_description_number,
+ 	void *         user_data
+ );
+
+</pre>
+<p>The second argument passed to the handler is the number of the description
+(e.g., 1 for the first description encountered, 2 for the second, 3 for the
+third, etc.)</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='handler'></a><b>handler</b></li>
+<p>A pointer to the start of description handler function to register.</p>
+</ul>
+</ul>
+<a name='SDP_SetFieldHandler-parser--handler-'></a><h2>SDP_SetFieldHandler(parser, handler)</h2>
+
+<pre> void SDP_SetFieldHandler(
+ 	SDP_Parser *       parser,
+ 	SDP_FieldHandler   handler
+ );
+
+</pre>
+<p>This function registers a field handler to be invoked for each SDP field
+encountered.</p>
+<p>Here is the prototype of a sample handler:</p>
+<pre> int sample_field_handler(
+ 	SDP_Parser *   parser,
+ 	char           type,
+ 	const char *   value,
+ 	void *         user_data
+ );
+
+</pre>
+<p>The second argument passed in is the type character for the field (e.g., "v",
+"o", "t", "r", "m"). The third is a pointer to a string containing the field's
+value.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='handler'></a><b>handler</b></li>
+<p>A pointer to the field handler function to register.</p>
+</ul>
+</ul>
+<a name='SDP_SetEndDescriptionHandler-parser--handler-'></a><h2>SDP_SetEndDescriptionHandler(parser, handler)</h2>
+
+<pre> void SDP_SetEndDescriptionHandler(
+ 	SDP_Parser *                parser,
+ 	SDP_EndDescriptionHandler   handler
+ );
+
+</pre>
+<p>This function registers an end-of-description handler to be invoked when the
+end of an SDP description is encountered (either by reaching the end of the
+stream or by encountering another "v" field, which denotes the start of the
+next description).</p>
+<p>Here is the prototype for a sample handler:</p>
+<pre> int sample_end_description_handler(
+ 	struct _SDP_Parser *   parser,
+ 	int                    current_description_number,
+ 	void *                 user_data
+ );
+
+</pre>
+<p>The second argument passed in is the same as that for the start-of-description
+handler, the number of the current description.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='handler'></a><b>handler</b></li>
+<p>A pointer to the end-of-description handler function to register.</p>
+</ul>
+</ul>
+<a name='SDP_SetEndHandler-parser--handler-'></a><h2>SDP_SetEndHandler(parser, handler)</h2>
+
+<pre> void SDP_SetEndHandler(
+ 	SDP_Parser *     parser,
+ 	SDP_EndHandler   handler
+ );
+
+</pre>
+<p>This function registers an end handler to be invoked when parsing stops.</p>
+<p>Here is the prototype of a sample handler:</p>
+<pre> void sample_end_handler(
+ 	SDP_Parser *   parser,
+ 	int            result,
+ 	void *         user_data
+ );
+
+</pre>
+<p>The second argument passed in is same thing returned by either of the
+<font face='Courier New'>SDP_EventStreamParse()</font> or <font face='Courier New'>SDP_EventStreamParseFile()</font> functions, the
+result of parsing, true or false indicating success or failure.</p>
+<p>Note the "void" return type.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='handler'></a><b>handler</b></li>
+<p>A pointer to the end handler function to register.</p>
+</ul>
+</ul>
+<a name='SDP_SetUserData-parser--user_data-'></a><h2>SDP_SetUserData(parser, user_data)</h2>
+
+<pre> void SDP_SetUserData(
+ 	SDP_Parser *   parser,
+ 	void *         user_data
+ );
+
+</pre>
+<p>This function takes a pointer to some piece of data you want each of the above
+mentioned handlers to get passed.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>None.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='user_data'></a><b>user_data</b></li>
+<p>A pointer to some piece of data.</p>
+</ul>
+</ul>
+<a name='SDP_GetStartHandler-parser-'></a><h2>SDP_GetStartHandler(parser)</h2>
+
+<pre> SDP_StartHandler SDP_GetStartHandler(SDP_Parser *parser);
+
+</pre>
+<p>This function retrieves the current start handler.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If a start handler function was register, then it returns a pointer to it.
+Otherwise, a NULL pointer is returned instead.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetStartDescriptionHandler-parser-'></a><h2>SDP_GetStartDescriptionHandler(parser)</h2>
+
+<pre> SDP_StartDescriptionHandler SDP_GetStartDescriptionHandler(
+ 	SDP_Parser *parser
+ );
+
+</pre>
+<p>This function retrieves the current start-of-description handler.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If a start-of-description handler function was register, then it returns a
+pointer to it. Otherwise, a NULL pointer is returned instead.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetFieldHandler-parser-'></a><h2>SDP_GetFieldHandler(parser)</h2>
+
+<pre> SDP_FieldHandler SDP_GetFieldHandler(SDP_Parser *parser);
+
+</pre>
+<p>This function retrieves the curreent field handler.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If a field handler function was register, then it returns a pointer to it.
+Otherwise, a NULL pointer is returned instead.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetEndDescriptionHandler-parser-'></a><h2>SDP_GetEndDescriptionHandler(parser)</h2>
+
+<pre> SDP_EndDescriptionHandler SDP_GetEndDescriptionHandler(SDP_Parser *parser);
+
+</pre>
+<p>This function retrieves the current end-of-description handler.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If an end-of-description handler function was register, then it returns a
+pointer to it. Otherwise, a NULL pointer is returned instead.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetEndHandler-parser-'></a><h2>SDP_GetEndHandler(parser)</h2>
+
+<pre> SDP_EndHandler SDP_GetEndHandler(SDP_Parser *parser);
+
+</pre>
+<p>This function retrieves the current end handler.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>If an end-of-description handler function was register, then it returns a
+pointer to it. Otherwise, a NULL pointer is returned instead.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetUserData-parser-'></a><h2>SDP_GetUserData(parser)</h2>
+
+<pre> void *SDP_GetUserData(SDP_Parser *parser);
+
+</pre>
+<p>This function retrieves your current user data.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to the piece of data or NULL if there is none.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetCurrentLineNumber-parser-'></a><h2>SDP_GetCurrentLineNumber(parser)</h2>
+
+<pre> int SDP_GetCurrentLineNumber(SDP_Parser *parser);
+
+</pre>
+<p>This function returns the number of the current line in the stream being parsed
+(for example, 1 for the first line, 2 for the second, etc.).</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The line number.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetCurrentDescriptionNumber-parser-'></a><h2>SDP_GetCurrentDescriptionNumber(parser)</h2>
+
+<pre> int SDP_GetCurrentDescriptionNumber(SDP_Parser *parser);
+
+</pre>
+<p>This function returns the number of the current description being parsed (e.g.,
+1 for the first description, 2 for the second, etc.).</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The description number.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetCurrentFieldType-parser-'></a><h2>SDP_GetCurrentFieldType(parser)</h2>
+
+<pre> char SDP_GetCurrentFieldType(SDP_Parser *parser);
+
+</pre>
+<p>This function returns the character of the current SDP field (for example, "v",
+"o", "t", "r", "m", etc.).</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The field type character.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_GetCurrentField-parser-'></a><h2>SDP_GetCurrentField(parser)</h2>
+
+<pre> char *SDP_GetCurrentField(SDP_Parser *parser);
+
+</pre>
+<p>This function retrieves the current field value.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>A pointer to a string containing the current field value.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+</ul>
+</ul>
+<a name='SDP_FieldEncountered-parser--field_type-'></a><h2>SDP_FieldEncountered(parser, field_type)</h2>
+
+<pre> int SDP_FieldEncountered(
+ 	SDP_Parser *   parser,
+ 	char           field_type
+ );
+
+</pre>
+<p>This function can be used to tell you if a particular field has been
+encountered yet for the current description being parsed.</p>
+<ul>
+<li><a name='Return-Value'></a><b>Return Value</b></li>
+<p>The number of times the field has been encountered.</p>
+<li><a name='Parameters'></a><b>Parameters</b></li>
+<ul>
+<li><a name='parser'></a><b>parser</b></li>
+<p>A pointer to the <font face='Courier New'>SDP_Parser</font> struct.</p>
+<li><a name='field_type'></a><b>field_type</b></li>
+<p>The field type character.</p>
+</ul>
+</ul>
+<a name='BUGS'></a><h1>BUGS</h1>
+
+<p>Bugs in this package can be reported and monitored using sourceforge.net:
+<a href='http://sourceforge.net/tracker/?atid=644250' target='_blank'>http://sourceforge.net/tracker/?atid=644250</a>&amp;group_id=106387&amp;func=browse</p>
+<p>You can also email me directly:
+&lt;william_g_davis at users dot sourceforge dot net&gt;.</p>
+<a name='COPYRIGHT'></a><h1>COPYRIGHT</h1>
+
+<p>Copyright 2004 by William G. Davis.</p>
+<p>This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.</p>
+<p>This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+
+<div></div></body></html>

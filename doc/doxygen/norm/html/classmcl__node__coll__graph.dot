@@ -1,0 +1,13 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize=10,labelfontname="Helvetica",labelfontsize=10];
+  node [fontname="Helvetica",fontsize=10,shape=record];
+  Node99 [label="mcl_node",height=0.2,width=0.4,color="white", fillcolor="black", style="filled" fontcolor="white"];
+  Node100 -> Node99 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="n_stats",fontname="Helvetica"];
+  Node100 [label="node_stats_t",height=0.2,width=0.4,color="black",URL="$structnode__stats__t.html"];
+  Node101 -> Node99 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="r_stats",fontname="Helvetica"];
+  Node101 [label="receiver_stats_t",height=0.2,width=0.4,color="black",URL="$structreceiver__stats__t.html"];
+  Node102 -> Node99 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="s_stats",fontname="Helvetica"];
+  Node102 [label="source_stats_t",height=0.2,width=0.4,color="black",URL="$structsource__stats__t.html"];
+  Node99 -> Node99 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="prev\nnext",fontname="Helvetica"];
+}

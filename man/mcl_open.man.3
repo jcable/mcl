@@ -1,0 +1,102 @@
+.\" Copyright (c) 1999-2003 INRIA - Universite Paris 6 - All rights reserved
+.\" (main author: Vincent Roca - vincent.roca@inrialpes.fr)
+.\" 
+.\"  This program is free software; you can redistribute it and/or
+.\"  modify it under the terms of the GNU General Public License
+.\"  as published by the Free Software Foundation; either version 2
+.\"  of the License, or (at your option) any later version.
+.\" 
+.\"  This program is distributed in the hope that it will be useful,
+.\"  but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"  GNU General Public License for more details.
+.\"
+.\"  You should have received a copy of the GNU General Public License
+.\"  along with this program; if not, write to the Free Software
+.\"  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+.\"  USA.
+
+
+.TH MCL_OPEN "3" "" "MCLv3 Reference Manual"
+
+
+.SH NAME
+
+mcl_open \- open an MCL (MultiCast Library) session
+
+
+.SH SYNOPSIS
+
+.sp
+\fB #include "../src/common/mcl_lib_api.h"\fI
+
+\fB int mcl_open  (const char* \fImode\fB);\fI
+.fi
+
+.SH DESCRIPTION
+
+Mode can be
+.I "w"
+to open an MCL sending session (i.e. to be a source),
+.I "r"
+to open an MCL receiving session (i.e. to receive data).
+Two other mode,
+.I "wr"
+and
+.I "rw"
+exist in cases where you want to do both. The order is important.
+In
+.I "wr"
+mode, the session is essentially a sending session, while in
+.I "rw"
+mode the session is essentially a receiving session.
+Their use is still a bit experimental.
+
+
+.SH RETURN VALUE
+
+On success returns an MCL identifier, that will be used thenafter
+in all mcl functions, on error a negative (< 0) value.
+Note that the MCL identifier is unique in the system file descriptor
+space to avoid any possible confusion.
+
+
+.SH EXAMPLE
+
+Here is a simple example to open an MCL session as a source.
+
+.nf
+        int     id;
+
+        if ((id = mcl_open("w")) < 0) {
+                printf("ERROR: mcl_open failed\n");
+                exit(-1);
+        }
+.fi
+
+
+.SH COPYRIGHTS
+
+.nf
+Copyright (c) 1999-2003 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - vincent.roca@inrialpes.fr)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+.fi
+
+
+.SH SEE ALSO
+
+.BR MCL
+documentation
+
+
+.SH AUTHORS
+
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+
+$Id: mcl_open.man.3,v 1.2 2003/11/28 10:05:31 roca Exp $

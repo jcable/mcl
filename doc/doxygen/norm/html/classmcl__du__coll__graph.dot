@@ -1,0 +1,16 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize=10,labelfontname="Helvetica",labelfontsize=10];
+  node [fontname="Helvetica",fontsize=10,shape=record];
+  Node58 [label="mcl_du",height=0.2,width=0.4,color="white", fillcolor="black", style="filled" fontcolor="white"];
+  Node59 -> Node58 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="pkt",fontname="Helvetica"];
+  Node59 [label="mcl_rx_pkt",height=0.2,width=0.4,color="black",URL="$classmcl__rx__pkt.html"];
+  Node58 -> Node58 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="prev\nnext\ntx_next\ntx_prev",fontname="Helvetica"];
+  Node60 -> Node58 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="block",fontname="Helvetica"];
+  Node60 [label="mcl_block",height=0.2,width=0.4,color="black",URL="$classmcl__block.html"];
+  Node61 -> Node60 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="adu",fontname="Helvetica"];
+  Node61 [label="mcl_adu",height=0.2,width=0.4,color="red",URL="$classmcl__adu.html"];
+  Node61 -> Node61 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="prev\nnext",fontname="Helvetica"];
+  Node60 -> Node61 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="block_head",fontname="Helvetica"];
+  Node58 -> Node60 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="du_head\nfec_du_head",fontname="Helvetica"];
+}

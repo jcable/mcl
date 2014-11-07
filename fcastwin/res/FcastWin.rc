@@ -1,0 +1,315 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Français (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)\r\n"
+    "LANGUAGE 12, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""FcastWin.rc2""  // ressources non modifiées par Microsoft Visual C++ \r\n"
+    "#include ""afxres.rc""         // Composants standard\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "FcastWin.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 247, 243
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "À propos de FcastWin"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,107,7,20,20
+    CTEXT           "FcastWin Multicast File Transfert Tool 1.1\nMultiCast Library (MCL)\n\nmain author/contact: vincent.roca@inrialpes.fr",
+                    IDC_STATIC,34,36,178,49,SS_NOPREFIX
+    CTEXT           "Copyright (c) 1999-2002 INRIA - Univ. Paris 6 - All rights reserved",
+                    IDC_STATIC,16,206,216,8
+    DEFPUSHBUTTON   "OK",IDOK,104,223,38,13,WS_GROUP
+    EDITTEXT        IDC_EDIT_CREDITS,7,79,233,122,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | 
+                    WS_VSCROLL
+END
+
+IDD_FCASTWIN_DIALOG DIALOGEX 0, 0, 332, 326
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_MINIMIZEBOX | 
+    WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "WinFCAST 1.1"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_IEXPLORE,"{8856F961-340A-11D0-A96B-00C04FD705A2}",
+                    WS_TABSTOP,8,21,11,9
+    CONTROL         "",IDC_TABCTRL,"SysTabControl32",TCS_TOOLTIPS | 
+                    WS_TABSTOP,3,1,325,13
+    GROUPBOX        "",IDC_STATIC,3,9,325,313
+    GROUPBOX        "Multicast Group (or unicast IP)",IDC_ZONE_ADDR,8,21,203,
+                    54,0,WS_EX_TRANSPARENT
+    LTEXT           "Address:",IDC_STATIC_ADDR,16,45,29,8,0,
+                    WS_EX_TRANSPARENT
+    CONTROL         "",IDC_IPADDR,"SysIPAddress32",WS_TABSTOP,46,43,99,12
+    LTEXT           "Port:",IDC_STATIC_PORT,153,45,15,8
+    EDITTEXT        IDC_PORT,171,43,30,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    GROUPBOX        "Output",IDC_ZONE_OUTPUT,217,21,106,54
+    RTEXT           "Verbosity level [0-5] :",IDC_STATIC_TRACELVL,222,31,70,
+                    8
+    EDITTEXT        IDC_EDIT_TRACELVL,293,29,14,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    RTEXT           "Statistic level [0-2] :",IDC_STATIC_STATLVL,226,46,66,8
+    EDITTEXT        IDC_EDIT_STATLVL,293,44,14,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Silent mode",IDC_CHECK_SILENT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,237,60,53,10
+    GROUPBOX        "File(s) to send",IDC_ZONE_PATH,8,79,315,49
+    LTEXT           "Path:",IDC_STATIC_PATH,24,94,16,8
+    EDITTEXT        IDC_EDIT_PATH_SEND,44,93,182,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse",IDC_BUTTON_BROWSE,229,92,28,13
+    CONTROL         "Directory send (recursive)",IDC_CHECK_RECURSIVE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,42,110,135,10
+    CONTROL         "Set number of layers to",IDC_CHECK_NLAYER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,144,88,10
+    EDITTEXT        IDC_EDIT_NLVL,108,143,14,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Enable demux. LCT TSI value:",IDC_CHECK_DEMUX,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,173,112,10
+    EDITTEXT        IDC_EDIT_TSI,130,172,31,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "Temp Directory :",IDC_STATIC_TMPDIR,25,190,54,8
+    EDITTEXT        IDC_EDIT_TMPDIR,79,188,82,14,ES_AUTOHSCROLL
+    LTEXT           "Profile:",IDC_STATIC_PROFILE,191,144,24,8
+    COMBOBOX        IDC_COMBO_PROFILE,218,141,66,29,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Optimization:",IDC_STATIC_OPTIMIZE,191,179,41,8
+    COMBOBOX        IDC_COMBO_OPTIMIZE,236,177,47,30,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Interface:",IDC_STATIC_IF,191,194,34,8
+    COMBOBOX        IDC_COMBO_IF,228,192,71,25,CBS_DROPDOWN | CBS_SORT | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Options",IDC_ZONE_OPT,8,133,315,138
+    CONTROL         "Set packets TTL to",IDC_CHECK_TTL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,213,71,10
+    EDITTEXT        IDC_EDIT_TTL,91,211,21,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Continuous delivery mode (""On demand"")",
+                    IDC_CHECK_CONT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,
+                    232,148,10
+    CONTROL         "Repeat mode : send",IDC_CHECK_REPEAT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,251,76,10
+    EDITTEXT        IDC_EDIT_NREPEAT,97,250,21,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "times",IDC_STATIC_REPEAT,123,252,18,9
+    CONTROL         "Set FEC Ratio to:",IDC_CHECK_FEC,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,191,214,69,10
+    EDITTEXT        IDC_EDIT_FEC,261,212,16,12,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Huge files mode",IDC_CHECK_HUGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,191,232,67,10
+    DEFPUSHBUTTON   "Send or Receive",IDC_START,263,300,62,19
+    GROUPBOX        "Options",IDC_ZONE_OPTRCV,8,133,315,75
+    EDITTEXT        IDC_EDIT_CMDLINE,55,278,238,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Update",IDC_BTN_UPDATE,295,278,30,12
+    LTEXT           "Fcast params:",IDC_STATIC_CMDLINE,7,280,46,8
+    EDITTEXT        IDC_EDIT_PATH_RECV,41,93,185,12,ES_AUTOHSCROLL
+    LTEXT           "Overwrite existing files:",IDC_STATIC_OVERWRITE,24,111,
+                    77,8
+    COMBOBOX        IDC_COMBO_OVERWRITE,101,108,40,30,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_STATUS,5,298,256,21,ES_MULTILINE | ES_READONLY | 
+                    NOT WS_BORDER
+    EDITTEXT        IDC_EDIT_DSIZE,227,157,23,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_BW,294,157,25,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Bandwidth:",IDC_STATIC_BW,258,159,35,8
+    LTEXT           "Datagram size:",IDC_STATIC_DSIZE,191,155,32,15,0,
+                    WS_EX_RIGHT
+    CONTROL         "single layer mode",IDC_CHECK_SINGLELAYER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,158,88,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040c04e4"
+        BEGIN
+            VALUE "CompanyName", "TODO: <Nom de la société>"
+            VALUE "FileDescription", "TODO: <Description du fichier>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "FcastWin.exe"
+            VALUE "LegalCopyright", "TODO: (c) <Nom de la société>. Tous droits réservés."
+            VALUE "OriginalFilename", "FcastWin.exe"
+            VALUE "ProductName", "TODO: <Nom du produit>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x40c, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 240
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 236
+    END
+
+    IDD_FCASTWIN_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 328
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 322
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+IDR_MANIFEST            RT_MANIFEST             "FcastWin.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_FCASTWIN_DIALOG DLGINIT
+BEGIN
+    IDC_IEXPLORE, 0x376, 160, 0
+0x0000, 0x0000, 0x004c, 0x0000, 0x01c2, 0x0000, 0x018d, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x004c, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 
+0x0000, 0xd0e0, 0x0057, 0x3573, 0x11cf, 0x69ae, 0x0008, 0x2e2b, 0x6212, 
+0x0008, 0x0000, 0x0000, 0x0000, 0x004c, 0x0000, 0x1401, 0x0002, 0x0000, 
+0x0000, 0x00c0, 0x0000, 0x0000, 0x4600, 0x0080, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&À propos de FcastWin..."
+END
+
+#endif    // Français (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+LANGUAGE 12, 1
+#pragma code_page(1252)
+#include "FcastWin.rc2"  // ressources non modifiées par Microsoft Visual C++ 
+#include "afxres.rc"         // Composants standard
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

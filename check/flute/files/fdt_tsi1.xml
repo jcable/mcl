@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<FDT-Instance Expires="3326002938">
+	<File TOI="1"
+		Content-Location="file://demeter/./CVS/Root"
+		Content-Length="21"
+		Content-MD5="vW195qN9FM/SSjvYfiUS3A=="/>
+	<File TOI="2"
+		Content-Location="file://demeter/./CVS/Repository"
+		Content-Length="24"
+		Content-MD5="HknTD4b0bHzbf1NANh84Tg=="/>
+	<File TOI="3"
+		Content-Location="file://demeter/./CVS/Entries"
+		Content-Length="22"
+		Content-MD5="2oSsx0dp6+6bQeIwjFbF/g=="/>
+	<File TOI="4"
+		Content-Location="file://demeter/./send/CVS/Root"
+		Content-Length="21"
+		Content-MD5="vW195qN9FM/SSjvYfiUS3A=="/>
+	<File TOI="5"
+		Content-Location="file://demeter/./send/CVS/Repository"
+		Content-Length="29"
+		Content-MD5="HmLfZ0rYFPiOunKKjGwBdA=="/>
+	<File TOI="6"
+		Content-Location="file://demeter/./send/CVS/Entries"
+		Content-Length="153"
+		Content-MD5="vrXUFkB7cDc96PhKDhzUtw=="/>
+	<File TOI="7"
+		Content-Location="file://demeter/./send/2_Bytes_File"
+		Content-Length="2"
+		Content-MD5="JqsNuQ1y4orQuh4i7lEFEA=="/>
+	<File TOI="8"
+		Content-Location="file://demeter/./send/3_Bytes_File"
+		Content-Length="3"
+		Content-MD5="62V1b4ttDo06G/NIxFha+g=="/>
+	<File TOI="9"
+		Content-Location="file://demeter/./send/4_Bytes_File"
+		Content-Length="4"
+		Content-MD5="RaYtPV0+lGJQkEaXSGWRvA=="/>
+	<File TOI="10"
+		Content-Location="file://demeter/./send/Other_Files/CVS/Root"
+		Content-Length="21"
+		Content-MD5="vW195qN9FM/SSjvYfiUS3A=="/>
+	<File TOI="11"
+		Content-Location="file://demeter/./send/Other_Files/CVS/Repository"
+		Content-Length="41"
+		Content-MD5="PCEEHc4dzF5SMTM3lrAptA=="/>
+	<File TOI="12"
+		Content-Location="file://demeter/./send/Other_Files/CVS/Entries"
+		Content-Length="94"
+		Content-MD5="7KcZW69nVaOiyWgMf9sLlQ=="/>
+	<File TOI="13"
+		Content-Location="file://demeter/./send/Other_Files/i-am-a-BIG.file"
+		Content-Length="220000"
+		Content-MD5="Zn/bPfHHC5OwKTkc2zWXJQ=="/>
+	<File TOI="14"
+		Content-Location="file://demeter/./send/Other_Files/i-am-a.file"
+		Content-Length="2686"
+		Content-MD5="kzhf3QHWN2d7G8XUugc+Qg=="/>
+	<File TOI="15"
+		Content-Location="file://demeter/./send/fdt_tsi1.xml"
+		Content-Length="334"
+		Content-MD5="pukZM6zvAuXxnMljoR6ANg=="/>
+</FDT-Instance>

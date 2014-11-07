@@ -1,0 +1,193 @@
+.\" Copyright (c) 1999-2003 INRIA - Universite Paris 6 - All rights reserved
+.\" (main author: Vincent Roca - vincent.roca@inrialpes.fr)
+.\" 
+.\"  This program is free software; you can redistribute it and/or
+.\"  modify it under the terms of the GNU General Public License
+.\"  as published by the Free Software Foundation; either version 2
+.\"  of the License, or (at your option) any later version.
+.\" 
+.\"  This program is distributed in the hope that it will be useful,
+.\"  but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"  GNU General Public License for more details.
+.\"
+.\"  You should have received a copy of the GNU General Public License
+.\"  along with this program; if not, write to the Free Software
+.\"  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+.\"  USA.
+
+
+.TH MCL_RECV "3" "" "MCLv3 Reference Manual"
+
+
+.SH NAME
+
+mcl_recv - mcl_recvfrom - mcl_recvmsg - receive data from an MCL (MultiCast Library) session
+
+
+.SH SYNOPSIS
+
+.sp
+\fB #include "../src/common/mcl_lib_api.h"\fI
+
+\fB int mcl_recv  (int \fIid\fB, char *\fIbuf\fB, int \fIbuflen\fB);\fI
+
+\fB int mcl_recvfrom (int \fIid\fB, char *\fIbuf\fB, int \fIbuflen\fB, struct sockaddr *\fIsaddr\fB, int *\fIsaddr_len\fB);\fI
+
+\fB int mcl_recvmsg (int \fIid\fB, struct mcl_msghdr *\fImsg\fB, mcl_msgflag \fIflags\fB);\fI
+.fi
+
+
+.SH DESCRIPTION
+
+Receives data from an MCL session, retrieving the source address in
+case of the 
+.I mcl_recvfrom()
+call.
+These three calls are blocking (synchronous), until data is available
+or an event occurs.
+
+The
+.I mcl_recvmsg()
+call enables scattering and offers many possibilities not offered by
+the other two functions.
+For instance a peek flag is available to avoid that data copied to
+the application buffer be removed from the reception object list.
+Further calls to
+.I mcl_recv*
+functions will therefore return the same data.
+Another flag enables the receiving application to know the amount of
+data available without reading anything. A further call to
+.I mcl_recv*
+functions will return the same object (whose length is now known).
+Usefull to allocate a buffer of the right size.
+The following struture is used for scatter:
+
+.nf
+/**
+ * Flags that can be used by the mcl_sndmsg/mcl_recvmsg
+ * functions.
+ */
+enum mcl_msgflag {
+        MCL_MSG_DEFAULT = 0,/* This flag is the default behavior */
+                        /* copyh data and remove it from the */
+                        /* received and decoded object list */
+        MCL_MSG_PEEK,   /* This flag causes the receive operation */
+                        /* to return data from the beginning of the */
+                        /* receive queue without removing that data */
+                        /* from the queue. Thus, a subsequent */
+                        /* receive call will return the same data. */
+        MCL_MSG_CHECK_IF_DATA_IS_AVAILABLE
+                        /* This flag causes the receive application */
+                        /* to return the amount of data available for */
+                        /* a future read. Usefull to have an idea of */
+                        /* the buffer size required for a future */
+                        /* read. */
+};
+
+
+/**
+ * Structure for scatter/gather I/O, and used by the
+ * mcl_sndmsg/mcl_recvmsg functions.
+ */
+struct mcl_iovec {
+        int   iov_type;    /* type of storage (file or buffer) */
+        void  *iov_base;   /* pointer to buffer storage area */ 
+        int   iov_fd;      /* file descriptor to be used as */
+                           /* storage area */
+        int   iov_offset;  /* offset from iov_base (only significant */
+                           /* in case of file storage type) */
+        int   iov_len;     /* length of data */
+};
+
+#define MCL_IOV_TYPE_BUFFER     0
+#define MCL_IOV_TYPE_FILE       1
+
+/**
+ * Message control structure used by mcl_sndmsg/mcl_recvmsg
+ * functions.
+ */
+struct mcl_msghdr {
+        void            *msg_name;      /* optional address */
+        int             msg_namelen;    /* size of address */
+        struct mcl_iovec *msg_iov;      /* scatter/gather array */
+        int             msg_iovlen;     /* # elements in msg_iov */
+        //void          *msg_control;   /* ancillary data, see below */
+        //int           msg_controllen; /* ancillary data buffer len */
+        //int           msg_flags;      /* flags on received message */
+};
+.fi
+
+
+Calling 
+.I mcl_recv()
+or
+.I mcl_recvfrom()
+with an identifier that does not refer to an MCL session leads to calling the 
+.I recv()
+or
+.I recvfrom()
+system call with the same parameters.
+
+
+.SH RETURN VALUE
+
+Returns the number of bytes received, or a negative (< 0) value in case of
+error.
+Note that issuing an
+.I mcl_recv()
+or
+.I mcl_recvfrom()
+on a session that is closed by the source, or where all objects
+have been received and returned to the application, triggers an
+error. This is the usual way of detecting the "end of session"
+(see example below).
+
+
+.SH EXAMPLE
+
+Here is a simple example (receiving side):
+
+.nf
+        int     id;
+        int     len;
+        char    buf[BUFLEN];
+
+        while ((len = mcl_recv(id, buf, BUFLEN)) > 0) {
+                <do what needs to be done with data...>
+        }
+        /* session closed by source */
+        mcl_close(id);
+.fi
+
+
+.SH COPYRIGHTS
+
+.nf
+Copyright (c) 1999-2003 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - vincent.roca@inrialpes.fr)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+.fi
+
+
+.SH SEE ALSO
+
+.I MCL
+documentation,
+.I recv()
+or
+.I recvfrom()
+man pages
+
+
+
+.SH AUTHORS
+
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+
+$Id: mcl_recv.man.3,v 1.3 2004/08/06 07:16:26 roca Exp $

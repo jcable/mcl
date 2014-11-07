@@ -1,0 +1,194 @@
+####### OS Dependant Definitions ######
+
+# they are defined in the following file...
+# edit Rules.make as appropriate
+include ../Makefile.common
+
+
+# libraries required
+ifeq (${OS},linux)
+	# Linux version
+	# add MPATROL support if required
+	#
+	BINDIR = ../bin/linux
+	LDPC_BINDIR = ../../ldpc/bin/linux
+	XERCES_DIR = ../../xerces-c
+	# Static version, usefull to avoid that clients have to
+	# install libgdome2 on their host
+	#LIBRARIES = -lc -lm -lpthread -lglib -lgdome -lxml2 -lssl -static
+	# Shared version (default)
+	LIBRARIES = -lc -lm -lpthread -lssl
+	# added -I/usr/local/include for libgdome header files
+	ADD_INCLUDES = -I/usr/local/include/ -I${XERCES_DIR}/include
+endif
+
+ifeq (${OS},solaris)
+	# Solaris version:
+	# Warning: SUN recommends to have -lucb at the end of list,
+	# in order to priviledge SUN's libs to the BSD compatibility
+	# lib (libucb).
+	# CC requires: -mt -lpthread for multithreaded applications
+	#
+	BINDIR = ../bin/solaris
+	LDPC_BINDIR = ../../ldpc/bin/solaris
+	XERCES_DIR = ../../xerces-c	
+	LIBRARIES = -lc -lm -lsocket -lnsl -lposix4 -mt -lpthread -L/usr/ucblib -lucb 
+	ADD_INCLUDES = -I/usr/local/include/
+endif
+
+ifeq (${OS},freebsd)
+	# FreeBSD version:
+	# CC requires: -mt -lpthread for multithreaded applications
+	#
+	BINDIR = ../bin/freebsd
+	LDPC_BINDIR = ../../ldpc/bin/freebsd
+	XERCES_DIR = ../../xerces-c	
+	LIBRARIES = -lm -pthread -L/usr/local/lib
+	# added -I/usr/local/include for libgdome header files
+	ADD_INCLUDES = -I/usr/local/include/
+endif
+
+
+###### Other variables ######
+
+# Local CFLAGS.
+
+# gcc version
+#CFLAGS  = -g -pg -O ${OSFLAGS} -D${RM_PROTOCOL} ${ADD_INCLUDES}
+#CFLAGS  = -g -O -DDEBUG ${OSFLAGS} -D${RM_PROTOCOL} ${ADD_INCLUDES}
+CFLAGS  = -O ${OSFLAGS} -D${RM_PROTOCOL} ${ADD_INCLUDES}
+
+# add purify linker for memory debug (Solaris only).
+# Purify 4.0 Solaris 2, Copyright (C) 1992-1996 Pure Software Inc.
+#
+#CCLINK_PURE = purify $(CC)
+CCLINK_PURE = purify  -cache-dir=/tmp $(CC)
+
+# add quantify linker for profiling (Solaris only).
+CCLINK_QUANTIFY = quantify $(CC)
+
+# list of source and object files
+SRCFILES = fdt.cpp filemanage.cpp flute.cpp fsend.cpp frecv.cpp display.cpp flute_md5.cpp flute_lock.cpp
+OFILES	 = ${SRCFILES:.cpp=.o}
+
+###### choose between the static / dynamic (default) versions ######
+
+dynamic: LIBRARIES := ${LIBRARIES} -lxerces-c
+
+###### ALC ######
+
+# Compile either with ALC or NORM support.
+# The RM_PROTOCOL and MCL_LIBRARY variables are target-specific.
+# In case of ALC, you may have to add libldpc.a depending on what
+# FEC codec is used by MCL
+RM_PROTOCOL = ALC
+
+# Edit the following two lines as appropriate, according to the FEC
+# codec in use: if LDPC is used, then add the libbdpc.a library.
+# If only RSE is used and if you don't have the LDPC archive, then
+# remove the libbdpc.a library.
+MCL_LIBRARY = ${BINDIR}/libmclalc.a ${LDPC_BINDIR}/libldpc.a
+XERCES_LIBRARY = ${XERCES_DIR}/lib/libxerces-c.a
+TARGET_FLUTE = ${BINDIR}/flute
+
+
+###### Dependancies ######
+
+all:	dynamic
+
+#${TARGET_FLUTE}:	${OFILES} ${MCL_LIBRARY}
+
+# Rule for C++ .cpp extension
+.cpp.o:
+	$(CC) -c $(CFLAGS) -o $*.o $*.cpp
+
+dynamic:	${OFILES} ${MCL_LIBRARY}
+	@echo "** Compiling flute-ALC using the MCL library..."
+	${CC} ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FLUTE}
+
+
+static: ${OFILES} ${MCL_LIBRARY}
+	@echo "** Compiling flute-ALC using the MCL library..."
+	@for f in ${XERCES_DIR}/lib/libxerces-c.a; do \
+		if [ -f "$${f}" ] ; then \
+			echo "libxerces-c.a already exists"; \
+		else \
+			${AR} -rcsv ${XERCES_DIR}/lib/libxerces-c.a ${XERCES_DIR}/obj/${OS}/*.o; \
+			${RANLIB} ${XERCES_DIR}/lib/libxerces-c.a; \
+		fi \
+	done	
+	${CC} ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} ${XERCES_LIBRARY} -o ${TARGET_FLUTE}
+
+
+#pure:	${OFILES} ${MCL_LIBRARY}
+#	@echo "** Compiling flute using the MCL library..."
+#	${CCLINK_PURE} ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FLUTE}
+
+#quantify:	${OFILES} ${MCL_LIBRARY}
+#	@echo "** Compiling flute using the MCL library..."
+#	${CCLINK_QUANTIFY} ${CFLAGS} ${OFILES} ${LIBRARIES} ${MCL_LIBRARY} -o ${TARGET_FLUTE}
+
+clean :
+	@for f in core ${OFILES} *_pure* *.pure_* .pur* *purify* ; do \
+		if [ -f "$${f}" ] ; then \
+			rm "$${f}"; \
+		fi \
+	done
+
+cleanall_alc : clean
+	@for f in ${BINDIR}/flute; do \
+		if [ -f "$${f}" ] ; then \
+			rm $${f} ; \
+		fi \
+	done
+
+
+cleanall_norm : clean
+	@for f in ${BINDIR}/fluten; do \
+		if [ -f "$${f}" ] ; then \
+			rm $${f} ; \
+		fi \
+	done
+
+
+cleanall : clean
+	@for f in ${BINDIR}/flute ${BINDIR}/fluten; do \
+		if [ -f "$${f}" ] ; then \
+			rm $${f} ; \
+		fi \
+	done
+
+depend :
+	# Use -Y to prevent including the system header files that won't
+	# change. Send all error messages to /dev/null
+	${DEPEND} -- ${CFLAGS} -Y -- ${SRCFILES} 2>/dev/null
+
+
+# Dependencies automatically created by makedepend (see depend target above).
+#
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+fdt.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+fdt.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h fsend.h
+fdt.o: frecv.h fdt.h display.h flute_lock.h
+filemanage.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+filemanage.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h
+filemanage.o: fsend.h frecv.h fdt.h display.h flute_lock.h
+flute.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+flute.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h
+flute.o: fsend.h frecv.h fdt.h display.h flute_lock.h
+fsend.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+fsend.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h
+fsend.o: fsend.h frecv.h fdt.h display.h flute_lock.h
+frecv.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+frecv.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h
+frecv.o: fsend.h frecv.h fdt.h display.h flute_lock.h
+display.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+display.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h
+display.o: fsend.h frecv.h fdt.h display.h flute_lock.h
+flute_md5.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+flute_md5.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h
+flute_md5.o: fsend.h frecv.h fdt.h display.h flute_lock.h
+flute_lock.o: flute.h ../src/common/mcl_lib_api.h ../src/common/mcl_types.h
+flute_lock.o: ../src/alc/mcl_lib_api_alc.h macros.h filemanage.h flute_md5.h
+flute_lock.o: fsend.h frecv.h fdt.h display.h flute_lock.h

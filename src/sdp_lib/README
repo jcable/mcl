@@ -1,0 +1,45 @@
+SinisterSdp - An open source Session Description Protocol library.
+------------------------------------------------------------------
+
+INTRODUCTION
+
+SinisterSdp is an open source ANSI C library that parses and generates Session
+Description Protocol session descriptions for multimedia streaming and VoIP
+(Voice over Internet Protocol). The Session Description Protocol is described
+in RFC 2327 (http://www.ietf.org/rfc/rfc2327.txt).
+
+INSTALLATION
+
+To install, go to the ./src subdirectory and run the following commands:
+
+ $ make
+ $ make install
+ $ make clean
+
+The makefile takes a few options, most notably: LIBRARY_DESTINATION and
+HEADER_DESTINATION. The first is the path to the directory where the resulting
+*.a archive will go, and the second is the path to where the main SinisterSdp.h
+header file will go and where a ./SDP sub directory will be created to store
+the rest of the header files.
+
+There are several more options too. Read the Makefile for details.
+
+There is also an alternate target you can specify to just build the generator
+by itself if you need only that. (The parser utilizes the generator, so you can
+build the generator without the parser but not the other way around).
+
+GETTING STARTED
+
+See the SinisterSdp.html file for info on how to get started.
+
+COPYRIGHT
+
+Copyright 2004 by William G. Davis.
+
+This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.

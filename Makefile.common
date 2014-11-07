@@ -1,0 +1,123 @@
+# $Id: Makefile.common,v 1.12 2005/03/23 14:05:00 roca Exp $
+#
+# Makefile common declarations
+# Edit as appropriate...
+#
+
+# WARNING: "ifeq" is a GNU gmake instruction!
+# On solaris 2.X, using /usr/ccs/bin/make instead creates an error:
+# "Unexpected end of line seen"
+
+###### OS Dependant Variables ######
+
+# edit as appropriate...
+
+# Which OS ?
+#
+# automatic system detection...
+# NB: command shell replaces back quotes of script shells
+#
+SYSTEM = $(shell uname -s)
+ifeq (${SYSTEM},Linux)
+	OS = linux
+endif
+ifeq (${SYSTEM},SunOS)
+	OS = solaris
+endif
+ifeq (${SYSTEM},FreeBSD)
+	OS = freebsd
+endif
+ifeq (${SYSTEM},AIX)
+	OS = aix
+endif
+ifeq (${SYSTEM},HP-UX)
+	OS = hp-ux
+endif
+ifeq (${SYSTEM},IRIX64)
+	OS = irix
+endif
+#
+# and the old way (e.g. if the above lines do not work!)
+#
+#OS = linux
+#OS = solaris
+#OS = freebsd
+#OS = aix
+#OS = hp-ux
+#OS = irix
+
+
+# OS specific variables and tools
+#
+ifeq (${OS},linux)
+	OSFLAGS = -DLINUX
+	# Which compiler?
+	# NB: use -Wall for compilation warnings with gcc
+	#
+	CC = g++ -Wall
+	LD = g++ -Wall
+	# IA-64
+	#CC = ecc -Wall
+	#LD = ecc -Wall
+	# INSURE
+	#CC = /softs/stow/insure++-6.1.3/bin.linux2/insure
+	#LD = /softs/stow/insure++-6.1.3/bin.linux2/insure
+	#CC = /softs/stow/insure++-7.0/bin.linux2/insure
+	#LD = /softs/stow/insure++-7.0/bin.linux2/insure
+	# ARM
+	#CC = /usr/local/arm/bin/arm-linux-g++
+	#LD = /usr/local/arm/bin/arm-linux-g++	
+endif
+ifeq (${OS},solaris)
+	# NB: __EXTENSIONS__ needed by Solaris 2.5.1
+	# OSFLAGS = -DSOLARIS -D__EXTENSIONS__
+	OSFLAGS = -DSOLARIS
+	# Which compiler?
+	# Prefer SUN's compiler (gcc created problems with readdir
+	# because of confusions with the UCB readdir version)
+	#
+	CC = /opt/SUNWspro/bin/CC
+	LD = /opt/SUNWspro/bin/CC 
+	#CC = g++
+	#LD = g++
+endif
+ifeq (${OS},freebsd)
+	OSFLAGS = -DFREEBSD -I/usr/include/g++ -I/usr/include/c++/3.3
+	# Which compiler?
+	# NB: use -Wall for compilation warnings with gcc
+	#
+	CC = g++ -Wall
+	LD = g++ -Wall
+endif
+ifeq (${OS},AIX)
+	OSFLAGS = -DAIX
+	# Which compiler?
+	# NB: use -Wall for compilation warnings with gcc
+	#
+	CC = g++ -Wall
+	LD = g++ -Wall
+endif
+ifeq (${OS},HP-UX)
+	OSFLAGS = -DHP-UX
+	# Which compiler?
+	# NB: use -Wall for compilation warnings with gcc
+	#
+	CC = g++ -Wall
+	LD = g++ -Wall
+endif
+ifeq (${OS},IRIX)
+	OSFLAGS = -DIRIX
+	# Which compiler?
+	# NB: use -Wall for compilation warnings with gcc
+	#
+	CC = g++ -Wall
+	LD = g++ -Wall
+endif
+
+# Which associated tools ?
+AR = ar
+#AR = /usr/local/arm/bin/arm-linux-ar
+RANLIB = ranlib
+#RANLIB = /usr/local/arm/bin/arm-linux-ranlib
+DEPEND = makedepend
+

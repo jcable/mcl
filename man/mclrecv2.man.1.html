@@ -1,0 +1,228 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of MCLRECV2</TITLE>
+</HEAD><BODY>
+<H1>MCLRECV2</H1>
+Section: Misc. Reference Manual Pages (1)<BR>Updated: <BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<P>
+<P>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<P>
+mclrecv2 - receives a single file using the MultiCast Library (MCL)
+<P>
+<P>
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<B>mclrecv2</B>
+
+
+[<B>-h</B>[<B>elp</B>]]
+[<B>-a address</B>[<B>/port</B>]
+[<B>-l nb_of_layers</B>]
+[<B>-p rx_profile</B>]
+[<B>-v verbosity_level</B>]
+[<B>-m stripping_mode_flag</B>]
+
+<P>
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+<B>mclrecv2</B>
+
+is meant to easily test all the advanced features of the MultiCast library
+(MCL).
+It is a simplified multicast file transfer tool that is used along with
+<B>mclsend2 .</B>
+
+Compared to the
+<B>fcast</B>
+
+multicast file transfer tool, it has limited possibilities (e.g. there
+is no recursive mode, no attribute is communicated along with the file,
+there is no checksum).
+Less efforts have also been spent on the tool conviviality (e.g.
+concerning the argument names).
+But
+<B>mclsend2 /</B>
+
+<B>mclrecv2</B>
+
+are extremely valuable to test and compare many advanced features of the
+MCL library as the user controls many (usually hidden) parameters.
+<P>
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<P>
+The following arguments can be provided.
+<P>
+<DL COMPACT>
+<DT><B>-a address[/port]</B>
+
+<DD>
+Specifies the unicast or multicast address of the base layer (and its UDP
+port number).
+<I>(communicated to MCL)</I>
+
+If no
+<B>-a</B>
+
+and/or
+<B>/port</B>
+
+argument is provided, then the default target address and port number of
+MCL are used.
+With multicast addresses, the address and port number of layers 1 and above
+are derived from that of the base layer by MCL (usually by incrementing the
+address and port).
+<I>(communicated to MCL)</I>
+
+<P>
+<DT><B>-h[elp]</B>
+
+<DD>
+Short help. Gives the credits and all the possible arguments.
+<P>
+<DT><B>-l number_of_layers</B>
+
+<DD>
+Specifies the number of layers to use in MCL.
+If not specified, the default value of MCL is used instead.
+<I>(communicated to MCL)</I>
+
+<P>
+<DT><B>-m stripping_mode_flag</B>
+
+<DD>
+Specifies if stripping should be used (value of 1, the default)
+or not (value of 0).
+Stripping a file means that this latter is split into multiple
+independent fragments before being submitted to MCL.
+<P>
+<I>WARNING: is stripping mode is set in mclsend2, then it must also be set in mclrecv2!</I>
+
+<P>
+<DT><B>-p rx_profile</B>
+
+<DD>
+Specifies the reception profile.
+Possible values are today:
+0 (LOW_RATE_INTERNET), 1 (MID_RATE_INTERNET), and 2 (HIGH_SPEED_LAN).
+If not specified, the default value of MCL is used instead.
+<I>(communicated to MCL)</I>
+
+<P>
+<I>WARNING: it is important that the transmission and reception profiles match (some parameters like the LCT symbol size are not automatically communicated in the current version of MCL).</I>
+
+<P>
+<DT><B>-v verbosity_level</B>
+
+<DD>
+Specifies the level of verbosity desired.
+<I>(communicated to MCL)</I>
+
+<P>
+<P>
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+<P>
+The received file is written to a temporary file, usually
+&quot;/tmp/mclftp_xxxx&quot; where &quot;xxxx&quot; is automatically replaced by a locally
+unique sequence number. It is left to the user to remove this file or
+rename it.
+<P>
+On success returns 0.
+<P>
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+<P>
+Here is a simple example.
+Traces are produced for each symbol received:
+<P>
+<PRE>
+mclrecv2 -v1 -a230.1.2.3/2323
+</PRE>
+
+<P>
+A more complex example is the following:
+<P>
+<PRE>
+mclrecv2 -a230.1.2.3/2323 -v1 -m1
+</PRE>
+
+<P>
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>COPYRIGHTS</H2>
+
+<P>
+<PRE>
+Copyright (c) 1999-2002 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - <A HREF="mailto:vincent.roca@inrialpes.fr">vincent.roca@inrialpes.fr</A>)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+</PRE>
+
+<P>
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+mclsend2">mclsend2</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+fcast">fcast</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+mcl_ctl">mcl_ctl</A></B>(3),
+
+<B>MCL</B>
+
+documentation
+<P>
+<P>
+<A NAME="lbAJ">&nbsp;</A>
+<H2>AUTHORS</H2>
+
+<P>
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+<P>
+$Id: mclrecv2.man.1,v 1.2 2003/10/27 09:55:47 roca Exp $
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAG">EXAMPLE</A><DD>
+<DT><A HREF="#lbAH">COPYRIGHTS</A><DD>
+<DT><A HREF="#lbAI">SEE ALSO</A><DD>
+<DT><A HREF="#lbAJ">AUTHORS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 07:30:02 GMT, May 25, 2005
+</BODY>
+</HTML>

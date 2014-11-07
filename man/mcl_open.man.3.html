@@ -1,0 +1,136 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of MCL_OPEN</TITLE>
+</HEAD><BODY>
+<H1>MCL_OPEN</H1>
+Section: Misc. Reference Manual Pages (3)<BR>Updated: <BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<P>
+<P>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<P>
+mcl_open - open an MCL (MultiCast Library) session
+<P>
+<P>
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<P>
+<P>
+<B> #include &quot;../src/common/mcl_lib_api.h&quot;</B><I>
+<P>
+</I><B> int mcl_open  (const char* </B><I>mode</I><B>);</B><I>
+
+<P>
+</I><A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<P>
+Mode can be
+<I>w</I>
+
+to open an MCL sending session (i.e. to be a source),
+<I>r</I>
+
+to open an MCL receiving session (i.e. to receive data).
+Two other mode,
+<I>wr</I>
+
+and
+<I>rw</I>
+
+exist in cases where you want to do both. The order is important.
+In
+<I>wr</I>
+
+mode, the session is essentially a sending session, while in
+<I>rw</I>
+
+mode the session is essentially a receiving session.
+Their use is still a bit experimental.
+<P>
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+<P>
+On success returns an MCL identifier, that will be used thenafter
+in all mcl functions, on error a negative (&lt; 0) value.
+Note that the MCL identifier is unique in the system file descriptor
+space to avoid any possible confusion.
+<P>
+<P>
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+<P>
+Here is a simple example to open an MCL session as a source.
+<P>
+<PRE>
+        int     id;
+
+        if ((id = mcl_open(&quot;w&quot;)) &lt; 0) {
+                printf(&quot;ERROR: mcl_open failed);
+                exit(-1);
+        }
+</PRE>
+
+<P>
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>COPYRIGHTS</H2>
+
+<P>
+<PRE>
+Copyright (c) 1999-2003 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - <A HREF="mailto:vincent.roca@inrialpes.fr">vincent.roca@inrialpes.fr</A>)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+</PRE>
+
+<P>
+<P>
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<P>
+<B>MCL</B>
+
+documentation
+<P>
+<P>
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTHORS</H2>
+
+<P>
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+<P>
+$Id: mcl_open.man.3,v 1.2 2003/11/28 10:05:31 roca Exp $
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">EXAMPLE</A><DD>
+<DT><A HREF="#lbAG">COPYRIGHTS</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">AUTHORS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 07:30:02 GMT, May 25, 2005
+</BODY>
+</HTML>

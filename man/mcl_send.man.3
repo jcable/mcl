@@ -1,0 +1,115 @@
+.\" Copyright (c) 1999-2003 INRIA - Universite Paris 6 - All rights reserved
+.\" (main author: Vincent Roca - vincent.roca@inrialpes.fr)
+.\" 
+.\"  This program is free software; you can redistribute it and/or
+.\"  modify it under the terms of the GNU General Public License
+.\"  as published by the Free Software Foundation; either version 2
+.\"  of the License, or (at your option) any later version.
+.\" 
+.\"  This program is distributed in the hope that it will be useful,
+.\"  but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"  GNU General Public License for more details.
+.\"
+.\"  You should have received a copy of the GNU General Public License
+.\"  along with this program; if not, write to the Free Software
+.\"  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+.\"  USA.
+
+
+.TH MCL_SEND "3" "" "MCLv3 Reference Manual"
+
+
+.SH NAME
+
+mcl_send - mcl_sendto - send data to an MCL (MultiCast Library) session
+
+
+.SH SYNOPSIS
+
+.sp
+\fB #include "../src/common/mcl_lib_api.h"\fI
+
+\fB int mcl_send  (int \fIid\fB, const void *\fIbuf\fB, int \fIbuflen\fB);\fI
+
+\fB int mcl_sendto (int \fIid\fB, const void *\fIbuf\fB, int \fIbuflen\fB, const struct sockaddr *\fIsaddr\fB, int \fIsaddr_len\fB);\fI
+.fi
+
+
+.SH DESCRIPTION
+
+Sends data on an MCL session, specifying the destination address in
+case of the 
+.I mcl_sendto
+call.
+These two calls are non blocking (asynchronous).
+
+Calling 
+.I mcl_send()
+or
+.I mcl_sendto()
+with an identifier that does not refer to an
+MCL session leads to calling the 
+.I send()
+or
+.I sendto()
+system call.
+
+
+.SH RETURN VALUE
+
+Returns the number of bytes sent on success, or a negative (< 0) value in
+case of error.
+
+Note that issuing an
+.I mcl_send()
+or
+.I mcl_sendto()
+on a session that is closed by the source triggers an error.
+
+
+.SH EXAMPLE
+
+Here is a simple example (sending side):
+
+.nf
+        int     id;
+        int     len;
+        char    buf[BUFLEN];
+
+        if (mcl_send(id, buf, BUFLEN) < 0)
+                printf("ERROR: mcl_send failed");
+                exit(-1);
+        }
+.fi
+
+
+.SH COPYRIGHTS
+
+.nf
+Copyright (c) 1999-2003 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - vincent.roca@inrialpes.fr)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+.fi
+
+
+.SH SEE ALSO
+
+.I MCL
+documentation,
+.I send()
+or
+.I sendto()
+man pages
+
+
+.SH AUTHORS
+
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+
+$Id: mcl_send.man.3,v 1.2 2003/11/28 10:05:31 roca Exp $

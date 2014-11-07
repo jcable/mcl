@@ -1,0 +1,137 @@
+.\"
+.\" Copyright (c) 1999-2003 INRIA - Universite Paris 6 - All rights reserved
+.\" (main author: Vincent Roca - vincent.roca@inrialpes.fr)
+.\" 
+.\"  This program is free software; you can redistribute it and/or
+.\"  modify it under the terms of the GNU General Public License
+.\"  as published by the Free Software Foundation; either version 2
+.\"  of the License, or (at your option) any later version.
+.\" 
+.\"  This program is distributed in the hope that it will be useful,
+.\"  but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"  GNU General Public License for more details.
+.\"
+.\"  You should have received a copy of the GNU General Public License
+.\"  along with this program; if not, write to the Free Software
+.\"  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+.\"  USA.
+
+
+.TH MCL_WAIT_EVENT "3" "" "MCLv3 Reference Manual"
+
+
+.SH NAME
+
+mcl_wait_event \- wait an event of the MultiCast Library (MCL)
+
+
+.SH SYNOPSIS
+
+.sp
+\fB #include "../src/common/mcl_lib_api.h"\fI
+
+\fB int mcl_wait_event  (int \fIid\fB, int \fIevent\fB);\fI
+.fi
+
+.SH DESCRIPTION
+
+.B mcl_wait_event
+enables the application to sleep until the event specified occurs.
+It applies to the current session (identified
+by the
+.B id
+identifier).
+As this function uses polling, it may not be awaken immediately
+after that the expected event has occurred.
+
+The arguments are:
+
+.TP
+.B int id
+session identifier returned by
+.B mcl_open
+
+.TP
+.B int event
+event name.
+.PP
+
+The following events are defined:
+.TP
+.I MCL_WAIT_EVENT_END_TX:
+wait the end of transmission of the last symbol of each layer
+(which can take quite a long time on the slowest layer).
+Only valid with a traffic source.
+
+.TP
+.I MCL_WAIT_EVENT_END_RX:
+wait the end of reception (i.e. once enough symbols have been
+received to decode all objects) or until the MCL session
+has received a ``CLOSE'' message from the traffic source.
+Only valid at a receiver.
+
+.TP
+.I MCL_WAIT_EVENT_CLOSED:
+wait untill a
+.I CLOSE
+message has been received, meaning that no symbol will ever been
+sent for this session.
+
+Using
+.I MCL_WAIT_EVENT_CLOSED
+requires that a
+.I MCL_OPT_NEVER_LEAVE_BASE_LAYER
+(see mcl_ctl(3) manual) has been issued at the session start.
+Indeed,
+.I CLOSE
+messages are sent on the base layer and without this option
+the receiver leaves the base layer once all objects have been
+successfully decoded.
+
+
+.SH RETURN VALUE
+
+On success returns 0, on error a non-zero value.
+
+
+.SH EXAMPLE
+
+Here is a simple example.
+
+.nf
+	int	err = 0;
+
+	if ((err = mcl_wait_event(id, MCL_WAIT_EVENT_END_TX)) < 0) {
+		printf("ERROR: mcl_wait_event failed\n");
+		exit(-1);
+	}
+.fi
+
+
+.SH COPYRIGHTS
+
+.nf
+Copyright (c) 1999-2003 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - vincent.roca@inrialpes.fr)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+.fi
+
+
+.SH SEE ALSO
+
+.BR mcl_open(),
+.BR MCL
+documentation
+
+
+.SH AUTHORS
+
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+
+$Id: mcl_wait_event.man.3,v 1.2 2003/11/28 10:05:31 roca Exp $

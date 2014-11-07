@@ -1,0 +1,16 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize=10,labelfontname="Helvetica",labelfontsize=10];
+  node [fontname="Helvetica",fontsize=10,shape=record];
+  Node1 [label="du",height=0.2,width=0.4,color="white", fillcolor="black", style="filled" fontcolor="white"];
+  Node1 -> Node1 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="prev\nnext",fontname="Helvetica"];
+  Node2 -> Node1 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="pkt",fontname="Helvetica"];
+  Node2 [label="mcl_rx_pkt",height=0.2,width=0.4,color="black",URL="$classmcl__rx__pkt.html"];
+  Node3 -> Node1 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="block",fontname="Helvetica"];
+  Node3 [label="block",height=0.2,width=0.4,color="black",URL="$structblock.html"];
+  Node1 -> Node3 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="du_head",fontname="Helvetica"];
+  Node4 -> Node3 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="adu",fontname="Helvetica"];
+  Node4 [label="adu",height=0.2,width=0.4,color="red",URL="$structadu.html"];
+  Node3 -> Node4 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="block_head",fontname="Helvetica"];
+  Node4 -> Node4 [dir=back,color="darkorchid3",fontsize=10,style="dashed",label="prev\nnext",fontname="Helvetica"];
+}

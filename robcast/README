@@ -1,0 +1,64 @@
+	    $Id: README,v 1.1.1.1 2003/09/03 12:45:43 chneuman Exp $
+
+		----------------------------------------
+			The RobCast Application
+			README - Vincent Roca
+		----------------------------------------
+
+
+Motivations
+-----------
+
+The Rob"ust"Cast application is a demonstration which exhibits the major
+assets of ALC/LCT in terms of robustness and source/receiver Independence.
+More precisely the RobCast application is meant to TOLERATE ANY CLIENT AND
+SERVER REBOOT, AT ANY TIME.
+
+A CLIENT reboot must not affect in any way the server, and the client must be
+able to catch up the session after it is available again without any problem.
+
+A SERVER reboot must not lead the clients to fail, but the clients must
+notice it and must only consider new messages sent after the server reboot.
+
+The current version is essentially a demo application, since no effective
+data is effectively carried by RobCAST. It must be regarded as a framework
+that enables the design of more elaborated robust client/server applications.
+
+
+Internals
+---------
+
+These features are made possible by an intelligent use of the TSI (Transport
+Session Identifier) of LCT, which along with the source address, uniquely
+identifies any ALC/LCT session, and of the TOI (Transport Object Identifier)
+which uniquely identifies any object sent in an ALC/LCT session.
+Two ALC/LCT sessions are used:
+	* a control session, which is used to carry RobCast control
+	  information, and
+	* a data session, where the application data is sent.
+More precisely, whenever the RobCast server restarts, this latter allocates
+a new TSI to be used on the data session, and sends this information to
+RobCast clients on the control session. The server then sets this TSI on
+its data session.
+A client first receives the new TSI to be used by the server from its control
+session, closes its data session to flush all pending MCL buffers, and
+opens a new data session using this TSI.
+Because each new TSI control message sent by the server must have a unique
+identifier, after a server reboot, this latter must first retrieve the
+old TOI identifier used on its previous incarnation, increment it and switch
+to this new TOI before issuing the TSI control message.
+Therefore a server must use a permanent repository where two informations
+are stored:
+	* the next TSI to use on the data session, and
+	* the next TOI to use for the TSI control message.
+These informations are kept in a file, "robcast_server_repository.txt",
+along with the RobCast binaries. If this file does not exist, it is
+automatically created.
+
+
+Acknowledgments
+---------------
+
+The authors would like to thank Eric NICOLAS (nicolas00@wanadoo.fr)
+for his contributions and discussion to the RobCast tool.
+

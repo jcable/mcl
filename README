@@ -1,0 +1,295 @@
+	  $Id: README,v 1.11 2004/12/21 14:46:28 roca Exp $
+
+     ----------------------------------------------------------
+    	  MCLv3: an Implementation of the ALC and NORM
+     Protocols for Reliable and Scalable Multicast Distribution
+
+	     README - Vincent Roca and Julien Laboure
+     ----------------------------------------------------------
+
+
+1- CONTENTS
+-----------
+
+	This archive is composed of:
+
+	- bin/*		the binary directory... This is where the binaries
+			and the MCLv3 library are put.
+	- doc		the documentation and FAQ.
+	- man		the manuals of the MCLv3 API and the various
+			applications provided.
+	- src		the source directory. There is a sub-directory
+			for ALC, another one for NORM, and a common
+			sub-directory for common source and header files.
+			In particular this is where the API header file
+			src/common/mcl_lib_api.h is located.
+	- check/*	automatic validation tools. There is a sub-directory
+			for ALC and another one for NORM. Tests are made
+			for the MCLv3 ALC/NORM library and for applications.
+	- fcast(n)	the multicast file transfer tool using either the ALC
+			or NORM reliable multicast protocols.
+			The binaries of the two versions are distinguished by
+			their name in the binary directory:
+				fcast => ALC, fcastn => NORM.
+			See doc/FAQ.txt for more information on when to
+			use Flute versus FCAST.
+	- flute		the standardized file delivery tool over ALC
+			(see RFC 3926).
+			See doc/FAQ.txt for more information on when to
+			use Flute versus FCAST.
+	- mclftp	a quick and dirty application used to test some
+			specificities of MCL. In general, you NEVER use it,
+			but FCAST instead.
+	- robcast	a simple example of client/server application that
+			is tolerant to any client or server reboot. This
+			sample tool, based on ALC, can be the basis of a 
+			more complex, extremely robust client/server
+			application.
+
+	The main features supported in the various releases are documented
+	in file:
+		doc/RELEASE_NOTES
+
+
+2- SUPPORTED OPERATING SYSTEMS
+------------------------------
+
+	Several OS/Platforms are supported
+	- PC/Linux (only tested on recent FedoraCore/Mandrake distributions)
+	- Sun/Solaris 2.8
+	- PC/Windows XP
+	- PC/FreeBSD
+
+	Porting MCLv3 to another Unix platforms should not be too difficult
+	(we are using standard POSIX syscalls), but we didn't try...
+
+
+3- TO CREATE/INSTALL THE TOOLS UNDER UNIX
+-----------------------------------------
+
+	A single general Makefile.common file defines the target operating
+	system and is included by ALL the Makefiles.
+	In theory EVERYTHING IS AUTOMATIC, but if required you can change
+	Makefile.common first, e.g. to select the appropriate compiler...
+
+	IMPORTANT: our Makefiles require the use of the GNU flavor of the
+	make command: gmake.
+	If not available and if you cannot (or don't want) to install gmake,
+	then edit all makefiles to remove gmake specificities (e.g. inline
+	the Makefile.common file in all makefiles, remove .phony lines, etc.)
+
+ * To compile everything at once...
+
+	If you use the LDPC large block FEC codec, you must also get
+	the LDPC archive, untar/unzip it at the same level as MCLv3
+	(e.g.  mcl_dir/ldpc_v1.X  and  mcl_dir/mclv3_v3.X).
+	Then you compile LDPC, which will create the ldpc library:
+		${LDPC_BINDIR}/bin/<OS>/libldpc.a
+	Then in a second step you can compile MCLv3 as explained below.
+
+	To create atomatically ALL the MCLv3 tools, you can use make at the
+	top directory. All the directories are crossed and (g)make launched
+	there. This is the recommanded solution !
+	The binaries are automatically put in the bin/<OS>/ directory.
+
+	If you only want to compile ALC (resp. NORM) tools, then type:
+		make alc	(resp. make norm)
+	at the top directory.
+	Compiling for ALC produces the fcast (and flute if Xerces-c is
+	available, see below) tools.
+	Compiling for NORM produces the fcastn tool only.
+
+ * To compile component by component...
+
+	To compile the library:
+		- If needed, edit the MCLv3 profile file:
+			src/[norm|alc]/mcl_profile.h
+		- From directory src/[norm|alc]/ type:
+			make clean; make depend; make
+
+	Then compile the application (e.g. fcast) and link
+	it with the library. From the application directory (e.g. fcast/)
+	type:
+		make clean; make depend;
+		and:
+			make alc (for the ALC version)
+		or:
+			make norm (for the NORM version).
+	The binaries are automatically put in the bin/OS_DIR/ directory.
+
+ * To compile the Flute tool...
+
+	To compile the Flute tool, Xerces-c must be installed on your host.
+		http://xml.apache.org/xerces-c
+	Under non-windows systems you have two choices:
+	 1) Install Xerces-c as a system library and dynamically link to it:
+	    - Downlowd Xerces-c "Current source release".
+	    - Build Xerces-c as explained in "Build-Instructions" on the 
+	      Xerces-c website.
+	    - Don't forget to make a "gmake install" (as root) at the end.
+	    - type "make" (or "make dynamic") in the FLUTE directory 
+	      (or "make alc" at the top mclv3 directory, if the ALC version
+	      wasn't compiled before)
+
+	 2) Install Xerces-c as a system library:
+	    - Downlowd Xerces-c "Current source release".
+	    - untar (or unzip) it at the same level as MCLv3.
+	      Rename the xerces-c directory to the name "xerces-c".
+	    - Build Xerces-c as explained in "Build-Instructions" on the 
+	      Xerces-c website.
+	    - type "make static" in the FLUTE directory
+	      (a "make alc" at the top mclv3 directory has to be perfomed
+	      before)
+
+	Xerces-c is only required by Flute, so there's no need to install it
+	if you want to use FCAST (ALC version), or are only interested in
+	NORM.
+
+	With Solaris 2.8, in order to compile with SUN's C++ compiler,
+	you may need to add the folowing supported C++ compiler:
+		*CC
+	in the following check:
+		case $cppcompiler in
+	Then use runConfigure, specifying the SUN compiler, as follows:
+	runConfigure -psolaris -c/opt/SUNWspro/bin/CC -x/opt/SUNWspro/bin/CC
+		     -minmem -nsocket -tnative -rpthread
+
+ * To validate/check everything...
+
+	Many validation scripts and applications have been written.
+	Once everything has been compiled, type:
+		check/[norm|alc]/checkall.sh
+	Each individual test is run and a report printed.
+	Note that some tests can be rather long and erroneously give the
+	impression the system hangs. This is normal.
+	If one of the tests fails, tell us immediately!!!
+
+ * Remarks
+
+	NB1: The MCLv3 library profile is defined in files
+	src/[norm|alc]/mcl_profile.h
+	Edit them as appropriate...
+
+	NB2: If you try to compile MCLv3 but don't have the LDPC archive,
+	you can run into problems since FCAST and some other applications
+	will try to link the libldpc.a library (in ${LDPC_BINDIR}/bin/<OS>/).
+	Then you can either (1) compile with RSE only and remove the
+	${LDPC_BINDIR}/libldpc.a from all makefiles (FCAST, validation...).
+	Another possibility (2) is to get the LDPC archive and compile it.
+	In that case, if you only use RSE in MCLv3, no symbol from 
+	libldpc.a will be included, and it will make the compiler happy.
+
+
+4- TO CREATE/INSTALL THE TOOLS UNDER WINDOWS
+--------------------------------------------
+
+	The MCLv3 archive includes a Visual C++ 7(.Net) Solution file (.sln)
+	to build the library and associated applications.
+	Compiling the Library using another Windows compiler has not been
+	tested, but should be possible.
+
+ * To compile...
+
+	If you use the LDPC large block FEC codec, you must also get
+	the LDPC archive, untar/unzip it at the same level as MCLv3
+	(e.g.  mcl_dir/ldpc_v1.X  and  mcl_dir/mclv3_v3.X).
+	Then you compile LDPC in Visuall C++ 7 (.Net), which will create the
+	ldpc library:
+		${LDPC_BINDIR}/bin/win32/libldpc.a
+	Then in a second step you can compile MCLv3 as explained below.
+
+	Open The MCLv3 Solution in Visual C++ 7 (.Net) and use the BUILD menu to
+	create the library and/or the MCLv3 tools (there is one project for
+	each application).
+	The binaries are created in the bin/win32/ directory.
+
+ * To compile the Flute tool...
+
+	To compile the Flute tool, Xerces-c must be installed on your host.
+		http://xml.apache.org/xerces-c
+ 	Under Windows:  
+   	    - Downlowd Xerces-c precompiled binary version for Windows.
+	    - The xerces-c directory must be at the same level 
+	      as the MCLv3 directory.
+	      Rename the xerces-c directory to the name "xerces-c".
+	    - Compile MCLv3 with FLUTE.
+ 
+	Xerces-c is only required by Flute, so there's no need to install it
+	if you want to use FCAST (ALC version), or are only interested in
+	NORM.
+
+ * To validate/check everything...
+
+	Validation tools for Windows are in the check/wincheck directory.
+	The main tool (wincheck) has its own workspace that you should open
+	with Visual C++ (located in check/wincheck/wincheck.dsw). Once
+	you've opened it, check that wincheck.dsp is the active project 
+	in the workspace, and then BUILD wincheck.exe (as wincheck has
+	dependencies, doing this will build everything required, including
+	the MCLv3 lib and tools).
+
+	Running wincheck.exe will perform a full validation script of the
+	library, calling different tests.
+	Each individual test prints a report.
+	Note that some tests can be rather long and erroneously give the
+	impression the system hangs. This is normal.
+	If one of the tests fails, tell us!!!
+
+ * Remarks
+
+	NB1: The profile of the library is defined in file
+	src/[norm|alc]/mcl_profile.h. Edit it as appropriate...
+
+
+5- TO USE THE TOOLS
+-------------------
+
+	For FCAST, FCASTN, and FLUTE applications, type:
+		fcast[n] -help
+	or:
+		flute -help
+	to see the available parameters.
+
+	There are also manual pages for each tool in the man directory.
+	Type
+		man ./flute.man.1
+	to read it, or use the html/pdf versions (if not available,
+	a make pdf or make html in the man directory will build them,
+	assuming you have the required conversion tools).
+
+	Exemple (more examples in the man pages):
+		$ flute -send -a225.1.2.3/2323 -v1 -phigh -ospeed file.ps
+		for the source, and:
+		$ flute -recv -a225.1.2.3/2323 -v1 -phigh -ospeed -force
+		for the receiver.
+
+
+NOTES
+-----
+
+	The MCLv3 library is distributed under an Open Source / GNU GPL
+	licence.
+	FCAST and other applications built on top of MCLv3 are distributed
+	under an  Open Source / GNU GPL licence.
+        The official copyright and licence is in file LICENCE.TXT.
+	See the related LICENCE.TXT file for LDPC large block FEC codec
+	licence information.
+
+	The official MCLv3 web site URL:
+	http://www.inrialpes.fr/planete/people/roca/mcl/
+
+	Two (spam free!) moderated mailing lists exist:
+		mcl-announce@inrialpes.fr	to be informed
+		mcl-bugs@inrialpes.fr		to report problems, bugs,
+						suggestions...
+	To subscribe, see the official MCLv3 web site.
+	To unsubscribe, send me an email at:
+		vincent.roca@inrialpes.fr
+
+	For further informations/comments (or just if you find this tool
+	interesting ;-) then send me an email at:
+		vincent.roca@inrialpes.fr
+	If you have special needs, don't hesitate to ask us, maybe it can
+	be easily added to the next release... We are also open to any
+	suggestion, and if you want to help, you're welcome ;-)
+

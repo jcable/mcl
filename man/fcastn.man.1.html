@@ -1,0 +1,428 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of FCASTN</TITLE>
+</HEAD><BODY>
+<H1>FCASTN</H1>
+Section: Misc. Reference Manual Pages (1)<BR>Updated: <BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+
+fcastn - send or receive files using the MultiCast Library (MCL) using
+the NORM protocol
+
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+
+<B>fcastn</B>
+
+
+[<B>-h</B>[<B>elp</B>]]
+[<B>-send</B>]
+[<B>-recv</B>]
+[<B>-a address</B>[<B>/port</B>]]
+[<B>-if address</B>]
+
+
+
+[<B>-v verbosity_level</B>]
+[<B>-stat stat_level</B>]
+[<B>-silent</B>]
+[<B>-tmp tmp_dir_string</B>]
+[<B>-p low|med|high|lan</B>]
+[<B>-p size</B>[<B>/rate</B>]]
+
+[<B>-P</B>]
+[<B>-t ttl</B>]
+[<B>-R</B>]
+
+
+[<B>-fec n</B>]
+
+[<B>-src address</B>
+[<B>-int</B>]
+[<B>-never</B>]
+[<B>-force</B>]
+[<B>file list or directory</B>]
+
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+
+<B>fcastn</B>
+
+is a multicast file distribution application built over the 
+MultiCast Library (MCL) which uses the NORM (NACK/ACK Oriented
+Reliable Multicast) protocol.
+<B>fcastn</B>
+
+can run both as a sender or a receiver.
+<B>fcastn</B>
+
+has many features like the ability to send recursively all the files
+of a given directory and its subdirectories but unlike
+<B>fcast</B>
+
+(which is based on the ALC reliable multicast protocol), it
+cannot be used in
+<B>``on-demand''</B>
+
+mode, but only in
+<B>``push''</B>
+
+mode.
+<B>fcastn</B>
+
+communicates many meta-data information along with the files in
+order to precisely re-construct the file at the receiver.
+An application-level checksum (using the same algorithm as that of TCP)
+is also used in order to detect possible transmission errors.
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+
+The following arguments can be provided
+<B>both at a sending or receiving fcast.</B>
+
+
+<DL COMPACT>
+<DT><B>-h[elp]</B>
+
+<DD>
+Gives the credits, the compilation parameters and all the possible 
+<B>fcast</B>
+
+arguments.
+
+<DT><B>-send or -recv</B>
+
+<DD>
+Set the Fcast application mode to 
+<B>sender </B>
+
+OR to 
+<B>receiver. </B>
+
+You must ALWAYS specify one of these two modes.
+
+<DT><B>-a address[/port]</B>
+
+<DD>
+Specifies the unicast or multicast IPv4 address of the base layer and its UDP
+port number (if specified).
+If no
+<B>-a</B>
+
+and/or
+<B>/port</B>
+
+argument is provided, then the default target address (usually that of
+the loopback interface) and port number of MCL are used.
+With multicast addresses, the address and port number of layers 1 and above
+are derived from that of the base layer by MCL (usually by incrementing the
+address and port number).
+<I>(communicated to MCL)</I>
+
+
+<DT><B>-if address</B>
+
+<DD>
+The network interface to use is the one attached to the local address
+specified (or hostname specified). 
+This option is only required on multi-homed hosts or on routers as the
+default interface chosen by the system without this option to send/receive
+multicast may not be the one you want to use.
+<I>(communicated to MCL)</I>
+
+
+<DT><B>-v verbosity_level</B>
+
+<DD>
+Specifies the level of verbosity desired from the MCL library.
+This option also automatically enables the -stat 2 option to
+add statistics.
+Note that full verbosity requires that the MCL library be compiled in
+DEBUG mode.
+<I>(communicated to MCL)</I>
+
+
+<DT><B>-stat stat_level</B>
+
+<DD>
+Specifies the level of statistics desired from the MCL library.
+Level 0 (default) means nothing, level 1 means that only the final
+statistics (at end of session) will be displayed, level 2 means that each
+time an object is fully received, statistics are displayed.
+<I>(communicated to MCL)</I>
+
+
+<DT><B>-silent</B>
+
+<DD>
+Enables the silent mode (nothing sent to stdout).
+
+<DT><B>-tmp tmp_dir_string</B>
+
+<DD>
+Set the MCL temporary directory to be tmp_dir_string rather than its
+default (usually &quot;/tmp&quot; with Unix).
+The argument is a string, e.g. :
+-tmp/home/roca/tmp
+<I>(communicated to MCL)</I>
+
+
+<DT><B>-p low|med|high|lan</B>
+
+<DD>
+Specifies the transmission profile. 
+Possible values are:
+<B>low </B>
+
+(LOW_RATE_INTERNET), 
+<B>med </B>
+
+(MID_RATE_INTERNET),
+<B>hig </B>
+
+(HIGH_SPEED_INTERNET), and
+<B>high</B>
+
+(HIGH_SPEED_LAN).
+If not specified, the default value of MCL is used instead.
+The
+<B>-p size[/rate]</B>
+
+argument can be used instead (but not at the same time).
+<I>(communicated to MCL)</I>
+
+
+<I>WARNING: it is important that the transmission and reception profiles match, so use it on both ends.</I>
+
+
+<DT><B>-p size[/rate]</B>
+
+<DD>
+Specifies the datagram size (in bytes) (at a sender or receiver), and
+optionally the transmission rate (in bits/s) (only at a sender).
+This argument cannot be used along with one of the
+<B>-p low|med|high|lan</B>
+
+arguments.
+<I>(communicated to MCL)</I>
+
+
+<I>WARNING: it is important that the transmission and reception profiles match, so use it on both ends (only -p size at a receiver).</I>
+
+
+<DT><B>-P</B>
+
+<DD>
+If enabled, causes fcast to make a pause before exiting (WIN32 only).
+Used to prevent the closing of console window when fcast done, thus giving
+some time to read outputs.
+
+
+</DL>
+<P>
+
+
+The following arguments are
+<B>specific to a sender.</B>
+
+
+
+<DL COMPACT>
+<DT><B>-t ttl</B>
+
+<DD>
+Specifies the time to live (ttl) value of the IP header.
+If not specified, the default value of MCL is used instead (usually 1).
+Use -t 1 if all the receivers are attached to the same LAN as the source.
+<I>(communicated to MCL)</I>
+
+
+<DT><B>-R</B>
+
+<DD>
+Enables the recursive mode.
+Using this flag, fcast recursively sends the whole directory tree given as a
+parameter.
+At the receiver side, the same directory tree is created in the CURRENT 
+directory (fcast never goes upward).
+
+<DT><B>-fec n</B>
+
+<DD>
+Set the FEC ratio to n. This FEC ratio is the N/K ratio, of the
+total number of symbols after FEC encoding (data + FEC) to the 
+number of source symbols (data).
+A default value of 2 is used, meaning that the same amount of FEC
+symbols as original source symbols is produced.
+Using
+<I>-fec 1</I>
+
+means that no FEC packets will be produced.
+A limitation in this version is that this ratio must be an integer.
+<I>(communicated to MCL)</I>
+
+
+
+</DL>
+<P>
+
+
+The following arguments are
+<B>specific to a receiver.</B>
+
+
+<DL COMPACT>
+<DT><B>-src address</B>
+
+<DD>
+Specifies the unicast IPv4 address or name of the source.
+At a receiver &lt;src_addr; TSI&gt; are used to fully identify the ALC session
+and to filter incoming packets.
+If no
+<B>-src</B>
+
+argument is provided, then any packet matching the TSI (if provided)
+will be accepted with the risk they belong to other sessions
+(e.g if they use the same &lt;multicast address, port&gt; tuple).
+<I>(communicated to MCL)</I>
+
+
+<DT><B>-int -never or -force</B>
+
+<DD>
+Sets the overwriting mode for an
+
+receiver when a file to save already exists. 
+<B>int </B>
+
+stands for interactive mode, meaning that the user will always be asked
+before overwriting a file. 
+Using 
+<B>never</B>
+
+, files are never overwritten. 
+Finally 
+<B>force</B>
+
+means that any existing file will be automatically overwritten.
+Default is
+<B>int</B>
+
+<P>
+mode where the answer will quickly disappear!).
+
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+
+Here is a simple example where we send the file &quot;foo.bar&quot; 
+on group 225.1.2.3 :
+
+<PRE>
+fcastn -send -a225.1.2.3/2323 -v1 ./foo.bar
+</PRE>
+
+
+A more complex example is the following, sending the whole directory &quot;foobar/&quot; :
+
+<PRE>
+fcastn -send -a225.1.2.3/2323 -stat1 -phigh -R foobar/
+</PRE>
+
+
+A receiver for the previous exemple:
+
+<PRE>
+fcastn -recv -R -a225.1.2.3/2323 -stat1 -phigh -never
+</PRE>
+
+
+Here is a session where we completely specify the transmission parameters
+(1024 bytes of payload per packet, and 1Mbps transmission rate):
+
+<PRE>
+fcastn -send -a225.1.2.3/2323 -v1 -p1024/1000000 ./foo.bar
+fcastn -recv -a225.1.2.3/2323 -v1 -p1024
+</PRE>
+
+
+
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>COPYRIGHTS</H2>
+
+
+<PRE>
+Copyright (c) 1999-2002 INRIA - All rights reserved
+(main authors: Vincent ROCA    - <A HREF="mailto:vincent.roca@inrialpes.fr">vincent.roca@inrialpes.fr</A>
+               Julien  LABOURE - <A HREF="mailto:julien.laboure@inrialpes.fr">julien.laboure@inrialpes.fr</A>)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+</PRE>
+
+
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+fcast">fcast</A></B>(1)
+
+for the ALC version,
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+mcl_ctl">mcl_ctl</A></B>(3),
+
+<B>MCL</B>
+
+documentation,
+the INRIA Research Report 4411 (March 2002) titled
+&quot;Improving the Efficiency of a Multicast File Transfer Tool Based on ALC&quot;
+
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTHORS</H2>
+
+<PRE>
+Julien LABOURE (INRIA Rhone-Alpes, Planete project)
+Vincent ROCA (INRIA Rhone-Alpes, Planete project)
+</PRE>
+
+
+$Id: fcastn.man.1,v 1.4 2004/12/17 11:53:12 roca Exp $
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLE</A><DD>
+<DT><A HREF="#lbAG">COPYRIGHTS</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">AUTHORS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 07:30:02 GMT, May 25, 2005
+</BODY>
+</HTML>

@@ -1,0 +1,13 @@
+HOW TO REPORT A BUG
+-------------------
+
+fill-in the following squeletton:
+
+MCL version:    mcl_v2.X.X
+severity:	critical/performances/...
+description:    ...
+corrections:    ... (if identified ;-)
+identified by:  your email address
+date:		...
+
+and send it to mcl-bugs@inrialpes.fr

@@ -1,0 +1,219 @@
+.\" Copyright (c) 1999-2002 INRIA - Universite Paris 6 - All rights reserved
+.\" (main author: Vincent Roca - vincent.roca@inrialpes.fr)
+.\" 
+.\"  This program is free software; you can redistribute it and/or
+.\"  modify it under the terms of the GNU General Public License
+.\"  as published by the Free Software Foundation; either version 2
+.\"  of the License, or (at your option) any later version.
+.\" 
+.\"  This program is distributed in the hope that it will be useful,
+.\"  but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"  GNU General Public License for more details.
+.\"
+.\"  You should have received a copy of the GNU General Public License
+.\"  along with this program; if not, write to the Free Software
+.\"  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+.\"  USA.
+
+
+.TH MCLSEND2 "1" "" "MCLv3 Reference Manual"
+
+
+.SH NAME
+
+mclsend2 \- send a single file using the MultiCast Library (MCL)
+
+
+.SH SYNOPSIS
+
+.B mclsend2
+.nh
+[\fB-h\fP[\fBelp\fP]]
+[\fB-a address\fP[\fB/port\fP]
+[\fB-l nb_of_layers\fP]
+[\fB-p tx_profile\fP]
+[\fB-v verbosity_level\fP]
+[\fB-c\fP]
+[\fB-f fec_ratio\fP]
+[\fB-t ttl\fP]
+[\fB-m stripping_mode_flag\fP]
+[\fB-k keep_push_mode_flag\fP]
+[\fB-s lct_sched\fP]
+[\fB-S object_sched\fP]
+.hy
+
+
+.SH DESCRIPTION
+
+.B mclsend2
+is meant to easily test all the advanced features of the MultiCast library
+(MCL).
+It is a simplified multicast file transfer tool that is used along with
+.B mclrecv2 .
+Compared to the
+.B fcast
+multicast file transfer tool, it has limited possibilities (e.g. there
+is no recursive mode, no attribute is communicated along with the file,
+there is no checksum).
+Less efforts have also been spent on the tool conviviality (e.g.
+concerning the argument names).
+But
+.B mclsend2 /
+.B mclrecv2
+are extremely valuable to test and compare many advanced features of the
+MCL library as the user controls many (usually hidden) parameters.
+
+
+.SH OPTIONS
+
+The following arguments can be provided.
+
+.TP
+.B \-a address[/port]
+Specifies the unicast or multicast address of the base layer (and its UDP
+port number).
+.I (communicated to MCL)
+If no
+.B -a
+and/or
+.B /port
+argument is provided, then the default target address and port number of
+MCL are used.
+With multicast addresses, the address and port number of layers 1 and above
+are derived from that of the base layer by MCL (usually by incrementing the
+address and port).
+.I (communicated to MCL)
+
+.TP
+.B \-c
+Set the
+.I continuous mode
+for "on-demand" transmissions (e.g. transmissions where receivers arrive
+at their discretion, download the file and leave).
+By default it is not set.
+.I (communicated to MCL)
+
+.TP
+.B \-f fec_ratio
+Specifies the FEC ratio (a floating point number) to use.
+This ratio is given by nb_of_data_symbols / total_nb_of_symbols,
+so a fec_ratio of 1.0 means no FEC at all,
+a fec_ratio of 2.0 means "as many FEC symbols as there are data symbols", etc.
+If not specified, the default value of MCL is used instead.
+.I (communicated to MCL)
+
+.TP
+.B \-h[elp]
+Short help. Gives the credits and all the possible arguments.
+
+.TP
+.B \-k keep_push_mode_flag
+Specifies if the keep/push mode should be used (value of 1, the default)
+or not (value of 0).
+This parameter is only meaningful in stripping mode.
+.I (communicated to MCL)
+
+.TP
+.B \-l number_of_layers
+Specifies the number of layers to use in MCL.
+If not specified, the default value of MCL is used instead.
+.I (communicated to MCL)
+
+.TP
+.B \-m stripping_mode_flag
+Specifies if stripping should be used (value of 1, the default)
+or not (value of 0).
+Stripping a file means that this latter is splitted into multiple
+independent fragments before being submitted to MCL.
+
+.I WARNING: if stripping mode is set in mclsend2, then it must also be set in mclrecv2!
+
+.TP
+.B \-p tx_profile
+Specifies the transmission profile. 
+Possible values are today:
+0 (LOW_RATE_INTERNET), 1 (MID_RATE_INTERNET), and 2 (HIGH_SPEED_LAN).
+If not specified, the default value of MCL is used instead.
+.I (communicated to MCL)
+
+.I WARNING: it is important that the transmission and reception profiles match (some parameters like the LCT symbol size are not automatically communicated in the current version of MCL).
+
+.TP
+.B \-S obj_sched
+Specifies the object scheduler (i.e. in stripping mode, in what order should
+the objects be scheduled on the various layers).
+Currently one can choose
+0 (SEQUENTIAL_OBJ_ORDER), 1 (RANDOM_OBJ_ORDER), 2 (PARTIALLY_MIXED_ORDER)
+or 3 (MIXED_ORDER).
+If not specified, the default value of MCL is used instead.
+.I (communicated to MCL)
+
+.TP
+.B \-s lct_sched
+Specifies the symbol scheduler (i.e. what symbols to send on what layer)
+to use. 
+Currently one can choose either 0 (send the same symbols on each layer)
+or 1 (send data on the base layer, a first set of FEC symbols on layer 1,
+a second set of FEC symbols on layer 2, etc.).
+If not specified, the default value of MCL is used instead.
+.I (communicated to MCL)
+
+.TP
+.B \-t ttl
+Specifies the time to live (ttl) value of the IP header.
+If not specified, the default value of MCL is used instead.
+.I (communicated to MCL)
+
+.TP
+.B \-v verbosity_level
+Specifies the level of verbosity desired.
+.I (communicated to MCL)
+
+
+.SH EXAMPLE
+
+Here is a simple example where the file "/tmp/file_to_send" is sent
+using the MCL defaults on group 230.1.2.3 and above.
+Traces are produced for each object (if the file is stripped) and each
+packet sent:
+
+.nf
+mclsend2 -v1 -a230.1.2.3/2323 /tmp/file_to_send
+.fi
+
+A more complex example is the following:
+
+.nf
+mclsend2 -a230.1.2.3/2323 -v1 -m1 -s1 -S3 /tmp/mclsend2.man
+.fi
+
+
+.SH COPYRIGHTS
+
+.nf
+Copyright (c) 1999-2002 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - vincent.roca@inrialpes.fr)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+.fi
+
+
+.SH SEE ALSO
+
+.BR mclrecv2 (1),
+.BR fcast (1),
+.BR mcl_ctl (3),
+.BR MCL
+documentation
+
+
+.SH AUTHORS
+
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+
+$Id: mclsend2.man.1,v 1.2 2003/10/27 09:55:47 roca Exp $

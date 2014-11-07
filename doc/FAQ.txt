@@ -1,0 +1,498 @@
+	$Id: FAQ.txt,v 1.9 2005/03/22 16:22:17 francill Exp $
+	--------------------------------------------------------------
+	MCLv3, FCAST/FCASTN and FLUTE Frequently Asked Questions (FAQ)
+			vincent.roca@inrialpes.fr
+	--------------------------------------------------------------
+
+
+1- General
+   1.1- What is MCL useful for ?
+   1.2- What are the differences between the "on-demand" (-cont arg of FCAST)
+	and "push" (default) modes ?
+   1.3- How can I be sure that receivers actually finished receiving the file ?
+   1.4- I have a problem not listed, who can help me ?
+   1.5- I already have an application and want to use MCL for the multicast
+	distribution. Is it possible ?
+   1.6- Is MCL's FCAST the same as Jim Gemmel's FCAST (MS) ?
+   1.7- Is MCL compliant with the ALC/LCT documents and FLUTE ?
+
+2- Performances
+   2.1- What are the maximum FCAST performances ?
+   2.2- FCAST does not send packets immediately. It is normal ?
+   2.3- The disk activity is very high at the sending FCAST. Is it normal ?
+   2.4- The disk activity is very high at the receiving FCAST. Is it normal ?
+   2.5- How can I improve the FCAST performances ?
+   2.6- Why is the standard FTP X times faster than FCAST ?
+   2.7- Should I use FLUTE or FCAST ?
+   2.8- Why does the source send more packets than expected in PUSH mode ?
+
+3- Troubleshooting
+   3.1- My receiver does not see any packet arriving
+   3.2- It does not compile!
+   3.3- Fcast prints "Waiting for data..." and nothing happens during several
+	tens of seconds, is it normal
+   3.4- Sending a 1 Gigabyte fails whereas df -k tells me there's enough room
+	on the disk
+   3.5- My receiver seems to receive the whole file normally but at the end
+	it hangs...
+   3.6- I have strange error messages ("mcl_fsm_update_state: ERROR, event XXX
+	invalid in state XXX")
+   3.7- The receiving FCAST fails
+
+
+--------------------------------------------------------------------------------
+
+
+SECTION 1: General
+------------------
+
+1.1- What is MCL useful for ?
+------------------------------
+
+MCL is a reliable multicast library implementing the ALC (Asynchronous
+Layered Coding) and NORM protocols standardized by the RMT group of the
+IETF.
+Both protocols are used for reliable multicast transmissions.
+
+ALC is of particular interest for sessions working in an "on-demand"
+delivery mode (see below) or sessions where there is no (a very little)
+back channel (e.g. satellite).
+You can also use ALC if you are concerned by scalability aspects since
+the abscence of feedback channel in ALC warrants an unlimited scalability,
+or by the heterogeneity of clients.
+Finally ALC is an extremely robust protocol and clients are totally
+independant from one another.
+
+NORM requires the presence of a back channel (i.e. receivers must have
+the possibility to send ACK/NACK packets to the source). This is a major
+difference with ALC that can operate on strictly unidirectional networks.
+Besides, NORM is limited to a "push" delivery mode, and has by nature a
+limited scalability.
+Yet it can easily handle the transmission of huge files, which is less
+the case of ALC.
+
+
+1.2- What are the differences between the "on-demand" (-cont arg of FCAST)
+---- and "push" (default) modes ? ----------------------------------------
+
+The default "push" mode requires a synchronous start: all receivers must be
+ready before the session starts. It can be used for instance by a reference
+server to synchronize several clients. This is the only possibility if
+NORM is used (i.e. FCASTN tool).
+The "on-demand" mode enables each receiver to arrive at its discretion,
+download the file(s) and leave. It can be used for a scalable distribution
+distribution of a popular content. It is limited to ALC (i.e. FCAST tool).
+
+
+1.3- How can I be sure that receivers actually finished receiving the file ?
+----------------------------------------------------------------------------
+
+As there is no feedback flowing from the receiver to the source with ALC,
+there is no mean to be sure everybody actually received the file.
+Yet in "on-demand" mode a receiver will continue, listening for new packets
+until it successfully downloaded the file. So the source can be optimistic.
+In "push" mode there will always be a risk that the session finishes too
+quickly. You can reduce this risk by asking for a predefined session extension
+using the -repeatN parameter of the sending FCAST. You can for instance
+ask that data is sent twice on each layer with -repeat2, thereby giving
+the opportunity to finish reception even if the first transmission is not
+sufficient.
+
+This is less true with NORM (i.e. when using FCASTN) since there are feedback
+(positive and negative ACKs), but there is still a risk, for instance if a
+receiver gets disconnected for a duration superior to the maximum recovery
+delay of NORM.
+
+
+1.4- I have a problem not listed, who can help me ?
+---------------------------------------------------
+
+You can send the description of the problem experienced to the
+mcl-bugs __at__ inrialpes.fr mailing list (preferred), or send it directly
+to me.
+
+
+1.5- I already have an application and want to use MCL for the multicast
+---- distribution. Is it possible ? ------------------------------------
+
+Sure and this is an important asset of MCL compared to some other reliable
+multicast implementations! MCL has been designed since the begining to be
+a library, completely distinct from any possible upper application, with
+a well defined and straightforward upper API close to the well known socket
+API. It guaranties that many different applications (in addition to the ones
+that are provided) can be ported/designed to use MCL. Many examples of how
+to do that are provided (see for instance check/alc and check/norm
+applications).
+
+
+1.6- Is MCL's FCAST the same as Jim Gemmell's FCAST (MS) ?
+----------------------------------------------------------
+
+These programs are totally independant. Ours follows the ALC/LCT
+specifications, uses several transmission layers, implements several
+congestion control protocols, uses high performance large block FEC
+codes, and is still supported... This is not the case of J. Gemmell's
+FCAST.
+The only relationship between the two programs is that ours is inspired
+from the first ALC I-D that describes a generic transfer tool, fcast, which
+forms the basis of our FCAST application... And Jim Gemmel is one of the
+co-authors of this I-D !
+
+
+1.7- Is MCL compliant with the ALC/LCT documents and FLUTE ?
+------------------------------------------------------------
+
+Yes, since the early versions of MCL we always tried to keep as close as
+possible to the (at that time) Internet-drafts. Now that ALC/LCT have
+become IETF standards (RFC 3450-3451-3452), we did our best to make them
+compliant.
+Since October 2003, FLUTE conformance has been tested through interoperability
+tests with two other implementations. Using the FLUTE application guaranties
+a full standard compliancy (ALC, LCT, and FLUTE).
+This is a little bit different with FCAST which relies on a non ALC/LCT
+conformant SIG_NONEWADU Extension Header (see mcl_lct_hdr.h) (required
+by the client's FSM), and FCAST itself follows a non FLUTE conformant
+approach.
+(see 2.7 for additional FCAST versus FLUTE comparison)
+
+
+SECTION 2: Performances
+-----------------------
+
+2.1- What are the maximum FCAST performances ?
+----------------------------------------------
+
+There is no single answer. FCAST performances really really depend on the
+environment:
+- Are all hosts on a LAN or on the MBONE ? Performances will be higher on
+  a LAN where the MTU is known (and usually higher), group add and leave
+  latency almost null, congestion existent (no router is crossed) even if
+  there can be collisions, and the "single layer" mode possible...
+- What is the average loss ratio ? ALC/LCT is very sensitive to losses that
+  are interpreted as congestion indications and therefore trigger layer
+  removal.
+- Is multicast routing working well ? ALC/LCT requires for optimal performances
+  a working multicast routing service where layers (i.e. multicast groups)
+  can be added and removed quickly (even if IGMP introduces some latency).
+
+Having said that we experimented on an idle fast Ethernet LAN (100MB),
+using two dedicated PIII/1GHz/Linux(RH7.2) PCs, several FCAST transfers
+of a 40MB file, using MCL version 2.1, and a Reed-Solomon FEC codec.
+We experienced throughputs over 13 Mbps in on-demand mode.
+This is an optimal throughput, in a situation where no loss is experienced
+and that only includes the reception and FEC/application_checksum decoding
+times.
+
+  ./fcast -recv -a225.1.2.3/2323 -v0 -ospeed -plan -l10 -force
+  ./fcast -send -a225.1.2.3/2323 -v0 -ospeed -plan -l10 -repeat3 /tmp/file_40000000
+
+
+2.2- FCAST does not send packets immediately. It is normal ?
+------------------------------------------------------------
+
+Yes, when the application submits a new object, there is an initial FEC
+packet calculation process followed by the calculation of the packet sending
+(random) order in each layer. Packets will be sent over the network only
+when these two steps are finished. With small files, this is not an issue,
+with large files, this time can be significant, especially if our LDGM
+FEC codes are not used.
+
+
+2.3- The disk activity is very high at the sending FCAST. Is it normal ?
+------------------------------------------------------------------------
+
+It means that the amount of RAM devoted to store data/FEC is not
+sufficient to contain the working set, and the exceeding data/FEC is
+therefore stored on the disk. This is a problem if you want to do high
+speed transmissions as disk I/Os may not be fast enough (MCL performs
+random I/Os !).
+You can improve the situation by setting the threshold to a higher value.
+
+in src/mcl_profile.h, set:
+#define VIRTUAL_TX_MEM
+#define VIRTUAL_TX_MAX_PHY_MEM_SIZE     60*1024*1024
+(or any value compatible with the amount of physical memory available
+on the source)
+then go to the root and compile everything:
+make
+
+!!!WARNING: no longer available in MCL_v2.99.0 to MCL_v2.99.4 versions!!!
+   Will be re-enabled in future releases...
+
+
+2.4- The disk activity is very high at the receiving FCAST. Is it normal ?
+--------------------------------------------------------------------------
+
+The situation is similar to question 2.3. Yet this is less a problem at
+a receiver, even in case of high speed transmissions, as disk I/Os are
+sequential during the reception process. This is only penalizing during the
+FEC decoding process.
+You can improve the situation by setting the threshold to a higher value.
+(same method as in answer 2.3, with the VIRTUAL_RX_MEM and
+ VIRTUAL_RX_MAX_PHY_MEM_SIZE constants instead).
+
+!!!WARNING: no longer available in MCL_v2.99.0 to MCL_v2.99.4 versions!!!
+   Will be re-enabled in future releases...
+
+
+2.5- How can I improve the FCAST performances ?
+-----------------------------------------------
+
+There are several ways to improve FCAST performances (in decreasing
+importance order):
+
+- use our large block LDPC/LDGM FEC codec (default in pre-compiled versions).
+
+- increase the maximum block size supported by our LDPC/LDGM codec
+  (src/alc/mcl_profile.h). For instance:
+  #ifdef LDPC_FEC
+  #define LDPC_DEFAULT_K              40*1000 /* at most 40*10^3 packets */
+  #define LDPC_DEFAULT_N              80*1000 /* at most 80*10^3 packets */
+  #endif
+  Doing this requires you have enough RAM for encoding/decoding...
+
+- if you are on a LAN, use the -plan profile at both the source and receivers
+  (in particular FCAST will use a single layer which significantly reduces
+  duplicates at the receiver)
+
+- if you are on the Internet, then try the -phigh profile... and use -pmed
+  if receivers experience too many losses. Otherwise use the -psize/rate
+  manual transmission rate control.
+
+- if you are not in single layer mode (in particular if you are not using
+  -plan), then increase the FEC expansion ratio (default is 1.5, i.e. 50%
+  of additional parity packets). A value of 2.0 largely improves the overall
+  performance since it creates additional FEC packets, and therefore reduces
+  the probability of having duplicates among the layers.. Yet having higher
+  FEC expansion ratios requires to have a higher amount of RAM memory... A
+  good balance must be found here.
+
+- try to increase the RAM storage threshold as explained in answers 2.3 and
+  2.4. This is of utmost importance at the source.
+
+- try the -ospeed optimization profile at both the source and receivers.
+  If receivers experience too many losses, and if you suspect they can be
+  CPU bounded, then try the -ocpu optimization profile.
+
+- make sure you compiled everything in optimized mode (edit all Makefiles)
+
+- do not use NFS volumes for instance as the source or destination file
+  location.
+
+To have an idea of the global decoding inefficiency, you can use the -stat1
+(or -stat2) argument at the receiver and look at the global_ineff_ratio 
+value. For instance, in -plan mode we experienced global_ineff_ratio=1.015,
+meaning that only 1.5% of packets in addition to the strict minimum (i.e. oject
+size) were required to do decoding. But between the same hosts, in -phigh
+mode and the default 1.5 FEC expansion ratio, we experienced:
+global_ineff_ratio=1.457, which falls down to: global_ineff_ratio=1.118
+(i.e. 11.8% of additional packets) if we specify a 2.5 FEC expansion ratio
+at the source.
+
+
+2.6- Why is the standard FTP X times faster than FCAST ?
+--------------------------------------------------------
+
+FTP uses TCP which is a point to point protocol and therefore creates a
+strong association between the source and the receiver, with feedback
+information.
+On the opposite, MCL cannot use any feedback information from the receivers
+and cannot adapt it flow to each receiver individually.
+This is why when there is a single receiver multicast is necessarily
+less performant than unicast ! That's different in case of a high number
+of receivers.
+
+
+2.7- Should I use FLUTE or FCAST ?
+----------------------------------
+
+FLUTE is a standard.
+FCAST is a proprietary tool coming from an old version of the ALC document
+(see draft-ietf-rmt-pi-alc-01.txt, mirrored in the MCLv3 site).
+The major difference between the two tools come from the way file meta-data
+is carried within the ALC session:
+- with FLUTE meta-data are carried as a separate ALC object
+- with FCAST meta-data are carried within the file object.
+
+FCAST's implementation is simpler (no need for XML parsing), and
+perfectly suited to situations where ALL clients are interested by
+ALL the objects sent within a given ALC session.
+
+FLUTE implementation is much more complex (e.g. it relies on an XML
+parsing tool, currently Xerces). For simple situations, FCAST will
+be more efficient. But (1) FLUTE is a standard, and (2) FLUTE can be
+used in situations where FCAST is totally inappropriate. For instance,
+if the objects sent within a FLUTE session are largely different, and if
+clients may be interested by a subset of them only, FLUTE enables each
+to filter packets of interest upon reception, which leads to major
+memory and processing saving.
+
+(see 1.7 for additional FCAST versus FLUTE comparison)
+
+
+2.8- Why does the source send more packets than expected in PUSH mode ?
+-----------------------------------------------------------------------
+
+This is perfectly normal, even if you don't use the -repeat parameter
+of either FCAST or FLUTE (both tools behave in the same way from this point
+of view). In PUSH mode, we have added an optimization which consists
+in starting source packet transmissions sequentially, at the very begining
+of the session, while doing FEC encoding. This is an easy way of: (1) hiding
+calculation behind transmissions, that start earlier, and (2) reducing the
+download time at a receiver, especially if this latter experiences no packet
+loss. Only when this sequential transmission stops does the source continue
+by sending (a random permutation of) the source and FEC packets on the
+various layers, as expected.
+So in PUSH mode and if "-repeat" is not used, there will be, in case the
+file is small enough to be encoded as a single block of k packets:
+ k (seq. tx.) + nb_of_layers * (FEC_ratio * k)
+packets sent, where FEC_ratio is specified with the "-fec" argument.
+
+This behavior does not take place in on-demand mode (meaningless). It can
+also be invalidated by avoiding to define the following macro
+(src/alc/mcl_profile.h):
+/* #define ANTICIPATED_TX_FOR_PUSH */
+and recompilling the tools.
+
+
+SECTION 3: Troubleshooting
+--------------------------
+
+3.1- My receiver does not see any packet arriving
+-------------------------------------------------
+
+There are two possible reasons:
+
+- if your source and receiver are not on the same LAN, i.e. if multicast
+  routing is required, make sure the TTL used by the source is high enough.
+  You can slowly increase the TTL using the -tN parameter. Remember that by
+  default FCAST uses a TTL equal to 1, assuming everybody is on the same
+  LAN !
+
+- if your receiver is a multi-homed host (i.e. a host with several physical
+  interfaces), or a router, then it is possible that he does not listen
+  multicast packets on the right interface. In that case, use the -ifN
+  option of FCAST (release 2.1.1 or higher):
+
+    -ifn          the network interface to use is the one attached to the
+                  local address n (only used on multi-homed hosts/routers)
+                  (you can use either a hostname or an IP address)
+
+  For instance, on router A, with two Ethernet cards, eth0 with IP
+  194.199.33.12 and eth1 with IP 194.199.34.25, you can start FCAST
+  with -if194.199.33.12 to receive multicast packets from interface eth0,
+  with -if194.199.34.25 to receive from interface eth1.
+
+
+3.2- It does not compile!
+-------------------------
+
+Two possibles reasons are:
+- you don't use GNU make
+- you don't have makedepend
+
+1/ The MCL (and associated application) building process requires the use
+of the GNU Make tool. This version of Make (e.g. natively included in
+Linux distributions) provides several usefull extensions to the standard
+Make tool (e.g. the one provided natively with the Sun/Solaris OS).
+If you don't have the GNU version of make you can:
+
+- retrieve and install GNU Make from the official site (recommanded).
+	http://www.gnu.org/software/make/make.html
+  It is available in binary format for most OS which means it should not be
+  too difficult to install.
+
+- change all the MCL makefiles to avoid the use of gmake.
+  In short you should:
+	- copy the top Makefile.common file in the various Makefiles and
+	  therefore remove the "include ../Makefile.common" instruction of
+	  these Makefiles,
+	- select the appropriate lines corresponding to your OS, remove the
+	  other ones as well as the "ifeq (${OS},solaris)" (or similar lines).
+
+2/ Compiling also requires the makedepend tool to update the various
+header dependancies in the various Makefiles (this is why these Makefiles
+have the following lines:
+# Dependencies automatically created by makedepend (see depend target above).
+#
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+Yet it is also possible that the makedepend tool is not available on your
+system (e.g. on RH Linux, it is only available if the XFree86-devel rpm has
+been installed!). In that case you can:
+
+- either remove the "${MAKE} depend" section of the top Makefile,
+- with Linux, install the XFree86-devel rpm, or
+- use a perl version of the makedepend tool, which saves the need to
+  install any package and runs on all systems having perl!
+
+
+3.3- Fcast prints "Waiting for data..." and nothing happens during several
+     tens of seconds, is it normal? --------------------------------------
+------------------------------------
+
+This is perfectly normal, except that packets may be received even if fcast
+does not see them. In fact packets are received by the ALC/LCT layer (within
+the MCL library) and are only returned to the Fcast receiving application
+when a file fragment has been completely received which may take time.
+If you want to make sure that reception occurs, you should run the receiving
+fcast in verbose mode (-v1 is sufficient).
+Otherwise use top, you'll see the fcast size growing regularly when packets
+are effectively received (they are first stored in memory).
+Then, if the memory buffer (of limited size) turns full, additional packets
+will be stored in the temporary file, so have a look at file /tmp/mcl_vtm_*,
+you'll see it growing regularly.
+
+
+3.4- Sending a 1 Gigabyte fails whereas df -k tells me there's enough room
+     on the disk ---------------------------------------------------------
+----------------
+
+File systems have file-size limitations, usually 2^31 bytes (this is what
+happens on my Linux RH-6.2 host), and 2^31 is 2.147.483.648 bytes, that
+is to say a bit more than 2 Gigabytes (with giga meaning 10^9).
+As MCL uses a temporary file to store both data and FEC symbols, this
+file quickly grows... until it's too large!
+With huge files make sure that you use an appropriate FEC ratio
+(-fec2) at the sending source, as it directly impacts the temporary
+file size.
+The solution is known (use the Large File I/O API) but we didn't found
+time so far to do the work...
+
+
+3.5- My receiver seems to receive the whole file normally but at the end
+     it hangs... -------------------------------------------------------
+-----------------
+
+By default the receiving FCAST tool is interactive, and asks for the
+permission before overwritting an already existing file. If you are
+in verbose mode, you may not have seen the question:
+File "foo.bar" exists, overwrite? [y/n]
+In that case type y <RETURN>...
+You can also use the -force or -never option at the received, depending
+on what you want. See the FCAST man...
+
+
+3.6- I have strange error messages ("mcl_fsm_update_state: ERROR, event XXX
+     invalid in state XXX") -----------------------------------------------
+----------------------------
+
+This occurs when the Finite State Machine (FSM) controlling the sending
+and receiving sessions encounters an event in an non-appropriate state.
+It usually takes place when two sessions get mixed, e.g. when a previous
+incarnation of a sender keeps sending packets when a new sender is
+restarted (with the same parameters).
+You can avoid it by using a different TSI (transport session identifier)
+on each incarnation of MCL or FCAST.
+You can also use a different address and/or port number range.
+
+
+3.7- The receiving FCAST fails
+------------------------------
+
+Most problems of this kind are due to a mismatch in the sender and
+receiver FCAST arguments. Check in particular the transmission profiles
+(-pXXX, -singlelayer, -psize). Since for instance the packet size is
+not communicated in any way by MCL, the receiver often truncates the
+incoming packets, and either FEC decoding or the FCAST checksum
+verification fail.
+

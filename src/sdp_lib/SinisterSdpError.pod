@@ -1,0 +1,294 @@
+=head1 NAME
+
+SinisterSdpError - SinisterSdp error handling.
+
+=head1 SYNOPSIS
+
+ #include <stdarg.h>
+ #include <stdio.h>
+ #include <SDP/SDP_Parser.h>
+ 
+ /* Function to quit: */
+ int quit(const char *format, ...)
+ {
+ 	va_list arg;
+ 
+ 	va_start(format, arg);
+ 	vfprintf(stderr, format, arg);
+ 	va_end(arg);
+ 
+ 	exit(0);
+ }
+ 
+ /* Error handlers that can be registered: */
+ void fatal_error_handler(SDP_Error error_code, const char *error_string)
+ {
+ 	quit("An error has occurred: %s", error_string);
+ }
+ int non_fatal_error_handler(SDP_Error error_code, const char *error_string)
+ {
+ 	fprintf(stderr, "WARNING: %s", error_string);
+	return 1; /* Keep going... */
+ }
+ 
+ int main(void)
+ {
+ 	SDP_Parser *parser;
+ 	SDP_Description *description;
+ 
+ 	parser = SDP_NewParser();
+ 	if (parser == NULL)
+		quit("Error: %s\n", SDP_GetLastErrorString());
+ 
+ 	description = SDP_ParseFile(parser, './sessions/description.sdp');
+ 	if (description == NULL)
+ 		quit("Couldn't parse: %s\n", SDP_GetLastErrorString());
+ 
+ 	...
+ 
+ 	/* Or, instead, register the error handlers: */
+ 	SDP_SetFatalErrorHandler(fatal_error_handler);
+ 	SDP_SetNonFatalErrorHandler(fatal_error_handler);
+ 
+ 	/* Now you can just ignore all return codes: */
+ 	parser = SDP_NewParser();
+ 	description = SDP_ParseFile(parser, './sessions/description.sdp');
+
+	...
+ }
+
+=head1 DESCRIPTION
+
+SinisterSdp employs a standard error code system for handling errors. Functions
+return either false values or NULL pointers to indicate failure, and error
+codes and strings can be retrieved using C<SDP_GetLastError()> and
+C<SDP_GetLastErrorString()>.
+
+In addition, you can register error handlers to catch and process errors as
+they occur.
+
+The error code variable, error string variable, and the variables that hold the
+function pointers to the error handlers are the only I<real> global variables
+in SinisterSdp, and they are B<not> reentrant and they are B<not> thread-safe.
+This was done to keep portability at a maximum and refrain from having to
+introduce any platform-specific code into what is otherwise a relatively
+straightforward text manipulating library.
+
+If you need thread safety, go edit SDP_Error.c and put the variables in thread
+local storage.
+
+=head1 FUNCTIONS
+
+The following functions are available:
+
+=head2 SDP_GetLastError()
+
+ SDP_Error SDP_GetLastError(void);
+
+This function retrieves the error code of the last error that occurred. If some
+function call fails, call this to find out why.
+
+=over 4
+
+=item Return Value
+
+This function returns the error code of the last error to occur from the global
+error code variable.
+
+The following error codes may be returned by C<SDP_GetLastError()>:
+
+=over 4
+
+=item Fatal errors:
+
+ SDP_ERR_OUT_OF_MEMORY
+ SDP_ERR_FILE_OPEN_FAILED
+
+=item Non-fatal errors:
+
+ SDP_ERR_MALFORMED_LINE
+ SDP_ERR_MALFORMED_V_FIELD
+ SDP_ERR_MALFORMED_O_FIELD
+ SDP_ERR_MALFORMED_E_FIELD
+ SDP_ERR_MALFORMED_P_FIELD
+ SDP_ERR_MALFORMED_C_FIELD
+ SDP_ERR_MALFORMED_B_FIELD
+ SDP_ERR_MALFORMED_T_FIELD
+ SDP_ERR_MALFORMED_R_FIELD
+ SDP_ERR_MALFORMED_Z_FIELD
+ SDP_ERR_MALFORMED_K_FIELD
+ SDP_ERR_MALFORMED_A_FIELD
+ SDP_ERR_MALFORMED_M_FIELD
+ SDP_ERR_INVALID_TYPE_CHARACTER
+ SDP_ERR_MULTIPLE_UNIQUE_FIELDS
+ SDP_ERR_FIELDS_OUT_OF_SEQUENCE
+
+=back
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_GetLastErrorString()
+
+ const char *SDP_GetLastErrorString(void);
+
+In addition to error codes, SinisterSdp functions produce printable error
+messages when they fail. these messages are generated on the fly and stored in
+the global error string variable.
+
+=over 4
+
+=item Return Value
+
+A pointer to the global error string variable.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_ErrorRaised()
+
+ int SDP_ErrorRaised(void);
+
+Can be used to tell whether or not any error has occurred yet.
+
+=over 4
+
+=item Return Value
+
+Returns true if some error has been raised, false otherwise.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_SetFatalErrorHandler(handler)
+
+ void SDP_SetFatalErrorHandler(SDP_FatalErrorHandler handler);
+
+This function allows you to register a handler to be invoked when any "fatal"
+error occurs. A fatal error being one that the routine you called cannot
+continue after and must return prematurely.
+
+Afterwards, any time a fatal error occurs, your handler will be invoked with
+the error code as the first argument and the error string as the second.
+
+Here's the prototype of a sample handler:
+
+ void sample_fatal_error_handler(
+ 	SDP_Error      error_code,
+ 	const char *   error_string
+ );
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item handler
+
+A pointer to the handler function to register. If NULL, nothing will be invoked
+for fatal errors.
+
+=back
+
+=back
+
+=head2 SDP_SetNonFatalErrorHandler(handler)
+
+ void SDP_SetNonFatalErrorHandler(SDP_NonFatalErrorHandler handler);
+
+This function allows you to register a non-fatal error handler to be invoked
+for all non-fatal errors. Non-fatal errors being errors that the function you
+called *can* continue safely after, but probably shouldn't. The return value
+of your handler is used by the function you called to tell whether or not it 
+should keep going anyway. A true return value means it should, a false value
+means it shouldn't.
+
+Here's the prototype of a sample handler:
+
+ int sample_non_fatal_error_handler(
+ 	SDP_Error      error_code,
+ 	const char *   error_string
+ );
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item handler
+
+A pointer to the handler function to register. If NULL, nothing will be invoked
+for non-fatal errors.
+
+=back
+
+=back
+
+=head2 SDP_UseHandlersForErrors(use_handlers)
+
+ void SDP_UseHandlersForErrors(int use_handlers);
+
+This function allows you to turn on or turn off the error handlers by
+specifying a true or false value respectively. When off, neither of the two
+handlers will be invoked when errors occur.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item use_handlers
+
+Boolean true or false; invoke the error handlers when errors occur?
+
+=back
+
+=back
+
+=head1 BUGS
+
+Bugs in this package can be reported and monitored using sourceforge.net:
+http://sourceforge.net/tracker/?atid=644250&group_id=106387&func=browse
+
+You can also email me directly:
+<william_g_davis at users dot sourceforge dot net>.
+
+=head1 COPYRIGHT
+
+Copyright 2004 by William G. Davis.
+
+This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.
+
+=cut
+
+

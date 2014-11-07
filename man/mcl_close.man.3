@@ -1,0 +1,96 @@
+.\" Copyright (c) 1999-2003 INRIA - Universite Paris 6 - All rights reserved
+.\" (main author: Vincent Roca - vincent.roca@inrialpes.fr)
+.\" 
+.\"  This program is free software; you can redistribute it and/or
+.\"  modify it under the terms of the GNU General Public License
+.\"  as published by the Free Software Foundation; either version 2
+.\"  of the License, or (at your option) any later version.
+.\" 
+.\"  This program is distributed in the hope that it will be useful,
+.\"  but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"  GNU General Public License for more details.
+.\"
+.\"  You should have received a copy of the GNU General Public License
+.\"  along with this program; if not, write to the Free Software
+.\"  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+.\"  USA.
+
+
+.TH MCL_CLOSE "3" "" "MCLv3 Reference Manual"
+
+
+.SH NAME
+
+mcl_close \- close an MCL (MultiCast Library) session
+
+
+.SH SYNOPSIS
+
+.sp
+\fB #include "../src/common/mcl_lib_api.h"\fI
+
+\fB int mcl_close  (int \fIid\fB);\fI
+.fi
+
+.SH DESCRIPTION
+
+Closes an MCL session.
+This call is
+.B blocking (i.e. synchronous) on the sending side
+to let it send all the data that has not yet been sent.
+This call
+.B returns immediately on the receiving side.
+
+Calling 
+.I mcl_close()
+with an identifier that does not refer to an MCL session leads to calling the 
+.I close()
+system call with that identifier.
+
+
+
+.SH RETURN VALUE
+
+Returns 0 on success, a negative (< 0) value in case of error.
+
+
+.SH EXAMPLE
+
+Here is a simple example to close an MCL session as a source.
+
+.nf
+        int     id;
+
+        if (mcl_close(id) < 0) {
+                printf("ERROR: mcl_close failed");
+                exit(-1);
+        }
+.fi
+
+
+.SH COPYRIGHTS
+
+.nf
+Copyright (c) 1999-2003 INRIA - Universite Paris 6 -
+All rights reserved
+(main author: Vincent Roca - vincent.roca@inrialpes.fr)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+.fi
+
+
+.SH SEE ALSO
+
+.BR MCL
+documentation
+
+
+.SH AUTHORS
+
+Vincent Roca (INRIA Rhone-Alpes, Planete project)
+
+$Id: mcl_close.man.3,v 1.2 2003/11/28 10:05:30 roca Exp $

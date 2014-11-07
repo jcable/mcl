@@ -1,0 +1,5091 @@
+=head1 NAME
+
+SinisterSdpDescriptions - Routines to manipulate descriptions.
+
+=head1 SYNOPSIS
+
+ #include <SDP/SDP_Description.h>
+ 
+ int main(void)
+ {
+ 	SDP_Description *description = SDP_NewDescription();
+ 	SDP_SetProtocolVersion(description, 1);
+ 	SDP_SetSessionName(description, "Session Name");
+ 	...
+ }
+
+=head1 DESCRIPTION
+
+This document describes how to use C<SDP_Description> structs.
+
+These structs are returned by the SinisterSdp parser functions and manpulated
+using a series of Get/Set, Add/Remove, and New/Destroy routines.
+You'll probably only end up using the Get routines and maybe a few of the Set
+routines, but the others are always there if you need them.
+
+The functions that return "const char *" return pointers to internal string
+buffers. If you need to modify them, then use strdup() or something similar to
+copy them, then modify the copy.
+
+=head1 FUNCTIONS
+
+The following routines are available:
+
+=head1 CONSTRUCTOR FUNCTIONS
+
+These functions create and return new structs to encapsulate some portion of an
+SDP description.
+
+=head2 SDP_NewDescription()
+
+ SDP_Description *SDP_NewDescription(void);
+
+This function creates a new C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_Description> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Description struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewOwner()
+
+ SDP_Owner *SDP_NewOwner(void);
+
+This function creates a new C<SDP_Owner> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_Owner> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Owner struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewEmailContact()
+
+ SDP_EmailContact *SDP_NewEmailContact(void);
+
+This function creates a new C<SDP_EmailContact> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_EmailContact> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_EmailContact struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewPhoneContact()
+
+ SDP_PhoneContact *SDP_NewPhoneContact(void);
+
+This function creates a new C<SDP_PhoneContact> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_PhoneContact> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_PhoneContact struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewConnection()
+
+ SDP_Connection *SDP_NewConnection(void);
+
+This function creates a new C<SDP_Connection> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_Connection> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Connection struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewBandwidth()
+
+ SDP_Bandwidth *SDP_NewBandwidth(void);
+
+This function creates a new C<SDP_Bandwidth> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_Bandwidth> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Bandwidth struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewSessionPlayTime()
+
+ SDP_SessionPlayTime *SDP_NewSessionPlayTime(void);
+
+This function creates a new C<SDP_SessionPlayTime> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_SessionPlayTime> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_SessionPlayTime struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewRepeatTime()
+
+ SDP_RepeatTime *SDP_NewRepeatTime(void);
+
+This function creates a new C<SDP_RepeatTime> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_RepeatTime> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_RepeatTime struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewZoneAdjustment()
+
+ SDP_ZoneAdjustment *SDP_NewZoneAdjustment(void);
+
+This function creates a new C<SDP_ZoneAdjustment> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_ZoneAdjustment> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_ZoneAdjustment struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewEncryption()
+
+ SDP_Encryption *SDP_NewEncryption(void);
+
+This function creates a new C<SDP_Encryption> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_Encryption> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Encryption struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewAttribute()
+
+ SDP_Attribute *SDP_NewAttribute(void);
+
+This function creates a new C<SDP_Attribute> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_Attribute> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_Attribute struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head2 SDP_NewMediaDescription()
+
+ SDP_MediaDescription *SDP_NewMediaDescription(void);
+
+This function creates a new C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns a pointer to the newly created
+C<SDP_MediaDescription> struct. If an error occurs, it returns a NULL pointer
+instead. For extended error information call C<SDP_GetLastError()>. The
+possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         create the SDP_MediaDescription struct.
+
+=item Parameters
+
+None.
+
+=back
+
+=head1 "SET" ACCESSOR FUNCTIONS
+
+These functions enable you to set values within structs that encapsulates
+portions of an SDP description.
+
+=head2 SDP_SetProtocolVersion(description, version)
+
+ void SDP_SetProtocolVersion(
+ 	SDP_Description *   description,
+ 	int                 version
+ );
+
+This function sets the protocol version within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item version
+
+The version.
+
+=back
+
+=back
+
+=head2 SDP_SetOwner(description, username, session_id, session_version, network_type, address_type, address)
+
+ int SDP_SetOwner(
+ 	SDP_Description *   description,
+ 	const char *        username,
+ 	const char *        session_id,
+ 	const char *        session_version,
+ 	const char *        network_type,
+ 	const char *        address_type,
+ 	const char *        address
+ );
+
+This function sets the owner within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item username
+
+A pointer to a string containing the username.
+
+=item session_id
+
+A pointer to a string containing the session id.
+
+=item session_version
+
+A pointer to a string containing the session version.
+
+=item network_type
+
+A pointer to a string containing the network type.
+
+=item address_type
+
+A pointer to a string containing the address type.
+
+=item address
+
+A pointer to a string containing the address.
+
+=back
+
+=back
+
+=head2 SDP_SetUsername(owner, username)
+
+ int SDP_SetUsername(
+ 	SDP_Owner *    owner,
+ 	const char *   username
+ );
+
+This function sets the username within an C<SDP_Owner>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the username.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+A pointer to the C<SDP_Owner> struct.
+
+=item username
+
+A pointer to a string containing the username.
+
+=back
+
+=back
+
+=head2 SDP_SetSessionID(owner, session_id)
+
+ int SDP_SetSessionID(
+ 	SDP_Owner *    owner,
+ 	const char *   session_id
+ );
+
+This function sets the session iD within an C<SDP_Owner>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session iD.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+A pointer to the C<SDP_Owner> struct.
+
+=item session_id
+
+A pointer to a string containing the session id.
+
+=back
+
+=back
+
+=head2 SDP_SetSessionVersion(owner, session_version)
+
+ int SDP_SetSessionVersion(
+ 	SDP_Owner *    owner,
+ 	const char *   session_version
+ );
+
+This function sets the session version within an C<SDP_Owner>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session version.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+A pointer to the C<SDP_Owner> struct.
+
+=item session_version
+
+A pointer to a string containing the session version.
+
+=back
+
+=back
+
+=head2 SDP_SetOwnerNetworkType(owner, network_type)
+
+ int SDP_SetOwnerNetworkType(
+ 	SDP_Owner *    owner,
+ 	const char *   network_type
+ );
+
+This function sets the owner network type within an C<SDP_Owner>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner network type.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+A pointer to the C<SDP_Owner> struct.
+
+=item network_type
+
+A pointer to a string containing the network type.
+
+=back
+
+=back
+
+=head2 SDP_SetOwnerAddressType(owner, address_type)
+
+ int SDP_SetOwnerAddressType(
+ 	SDP_Owner *    owner,
+ 	const char *   address_type
+ );
+
+This function sets the owner address type within an C<SDP_Owner>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner address type.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+A pointer to the C<SDP_Owner> struct.
+
+=item address_type
+
+A pointer to a string containing the address type.
+
+=back
+
+=back
+
+=head2 SDP_SetOwnerAddress(owner, address)
+
+ int SDP_SetOwnerAddress(
+ 	SDP_Owner *    owner,
+ 	const char *   address
+ );
+
+This function sets the owner address within an C<SDP_Owner>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the owner address.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+A pointer to the C<SDP_Owner> struct.
+
+=item address
+
+A pointer to a string containing the address.
+
+=back
+
+=back
+
+=head2 SDP_SetSessionName(description, session_name)
+
+ int SDP_SetSessionName(
+ 	SDP_Description *   description,
+ 	const char *        session_name
+ );
+
+This function sets the session name within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session name.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item session_name
+
+A pointer to a string containing the session name.
+
+=back
+
+=back
+
+=head2 SDP_SetSessionInformation(description, session_information)
+
+ int SDP_SetSessionInformation(
+ 	SDP_Description *   description,
+ 	const char *        session_information
+ );
+
+This function sets the session information within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the session information.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item session_information
+
+A pointer to a string containing the session information.
+
+=back
+
+=back
+
+=head2 SDP_SetURI(description, uri)
+
+ int SDP_SetURI(
+ 	SDP_Description *   description,
+ 	const char *        uri
+ );
+
+This function sets the URI within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the URI.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item uri
+
+A pointer to a string containing the uri.
+
+=back
+
+=back
+
+=head2 SDP_AddEmailContact(description, email_contact)
+
+ void SDP_AddEmailContact(
+ 	SDP_Description *    description,
+ 	SDP_EmailContact *   email_contact
+ );
+
+This function adds an C<SDP_EmailContact> struct to the email contact
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the email contact linked list.
+
+=item email_contact
+
+A pointer to the C<SDP_EmailContact> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewEmailContact(description, address, name)
+
+ int SDP_AddNewEmailContact(
+ 	SDP_Description *   description,
+ 	const char *        address,
+ 	const char *        name
+ );
+
+This function creates and adds a new email contact to the
+email contact linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the email contact.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the email contact linked list.
+
+=item address
+
+A pointer to a string containing the address.
+
+=item name
+
+A pointer to a string containing the name.
+
+=back
+
+=back
+
+=head2 SDP_SetEmailAddress(email_contact, address)
+
+ int SDP_SetEmailAddress(
+ 	SDP_EmailContact *   email_contact,
+ 	const char *         address
+ );
+
+This function sets the email address within an C<SDP_EmailContact>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the email address.
+
+=item Parameters
+
+=over 4
+
+=item email_contact
+
+A pointer to the C<SDP_EmailContact> struct.
+
+=item address
+
+A pointer to a string containing the address.
+
+=back
+
+=back
+
+=head2 SDP_SetEmailName(email_contact, name)
+
+ int SDP_SetEmailName(
+ 	SDP_EmailContact *   email_contact,
+ 	const char *         name
+ );
+
+This function sets the email name within an C<SDP_EmailContact>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the email name.
+
+=item Parameters
+
+=over 4
+
+=item email_contact
+
+A pointer to the C<SDP_EmailContact> struct.
+
+=item name
+
+A pointer to a string containing the name.
+
+=back
+
+=back
+
+=head2 SDP_AddPhoneContact(description, phone_contact)
+
+ void SDP_AddPhoneContact(
+ 	SDP_Description *    description,
+ 	SDP_PhoneContact *   phone_contact
+ );
+
+This function adds an C<SDP_PhoneContact> struct to the phone contact
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the phone contact linked list.
+
+=item phone_contact
+
+A pointer to the C<SDP_PhoneContact> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewPhoneContact(description, number, name)
+
+ int SDP_AddNewPhoneContact(
+ 	SDP_Description *   description,
+ 	const char *        number,
+ 	const char *        name
+ );
+
+This function creates and adds a new phone contact to the
+phone contact linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the phone contact.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the phone contact linked list.
+
+=item number
+
+A pointer to a string containing the number.
+
+=item name
+
+A pointer to a string containing the name.
+
+=back
+
+=back
+
+=head2 SDP_SetPhoneNumber(phone_contact, number)
+
+ int SDP_SetPhoneNumber(
+ 	SDP_PhoneContact *   phone_contact,
+ 	const char *         number
+ );
+
+This function sets the phone number within an C<SDP_PhoneContact>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the phone number.
+
+=item Parameters
+
+=over 4
+
+=item phone_contact
+
+A pointer to the C<SDP_PhoneContact> struct.
+
+=item number
+
+A pointer to a string containing the number.
+
+=back
+
+=back
+
+=head2 SDP_SetPhoneName(phone_contact, name)
+
+ int SDP_SetPhoneName(
+ 	SDP_PhoneContact *   phone_contact,
+ 	const char *        name
+ );
+
+This function sets the phone name within an C<SDP_PhoneContact>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the phone name.
+
+=item Parameters
+
+=over 4
+
+=item phone_contact
+
+A pointer to the C<SDP_PhoneContact> struct.
+
+=item name
+
+A pointer to a string containing the name.
+
+=back
+
+=back
+
+=head2 SDP_SetConnection(description, network_type, address_type, address, ttl, total_addresses)
+
+ int SDP_SetConnection(
+ 	SDP_Description *   description,
+ 	const char *        network_type,
+ 	const char *        address_type,
+ 	const char *        address,
+ 	int                 ttl,
+ 	int                 total_addresses
+ );
+
+This function sets the connection within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item network_type
+
+A pointer to a string containing the network type.
+
+=item address_type
+
+A pointer to a string containing the address type.
+
+=item address
+
+A pointer to a string containing the address.
+
+=item ttl
+
+The ttl.
+
+=item total_addresses
+
+The total addresses.
+
+=back
+
+=back
+
+=head2 SDP_SetConnectionNetworkType(connection, network_type)
+
+ int SDP_SetConnectionNetworkType(
+ 	SDP_Connection *   connection,
+ 	const char *       network_type
+ );
+
+This function sets the connection network type within an C<SDP_Connection>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection network type.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+A pointer to the C<SDP_Connection> struct.
+
+=item network_type
+
+A pointer to a string containing the network type.
+
+=back
+
+=back
+
+=head2 SDP_SetConnectionAddressType(connection, address_type)
+
+ int SDP_SetConnectionAddressType(
+ 	SDP_Connection *   connection,
+ 	const char *       address_type
+ );
+
+This function sets the connection address type within an C<SDP_Connection>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection address type.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+A pointer to the C<SDP_Connection> struct.
+
+=item address_type
+
+A pointer to a string containing the address type.
+
+=back
+
+=back
+
+=head2 SDP_SetConnectionAddress(connection, address)
+
+ int SDP_SetConnectionAddress(
+ 	SDP_Connection *   connection,
+ 	const char *       address
+ );
+
+This function sets the connection address within an C<SDP_Connection>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the connection address.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+A pointer to the C<SDP_Connection> struct.
+
+=item address
+
+A pointer to a string containing the address.
+
+=back
+
+=back
+
+=head2 SDP_SetConnectionTTL(connection, ttl)
+
+ void SDP_SetConnectionTTL(
+ 	SDP_Connection *   connection,
+ 	int                ttl
+ );
+
+This function sets the connection tTL within an C<SDP_Connection>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+A pointer to the C<SDP_Connection> struct.
+
+=item ttl
+
+The ttl.
+
+=back
+
+=back
+
+=head2 SDP_SetTotalConnectionAddresses(connection, total_addresses)
+
+ void SDP_SetTotalConnectionAddresses(
+ 	SDP_Connection *   connection,
+ 	int                total_addresses
+ );
+
+This function sets the total connection addresses within an C<SDP_Connection>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+A pointer to the C<SDP_Connection> struct.
+
+=item total_addresses
+
+The total addresses.
+
+=back
+
+=back
+
+=head2 SDP_SetBandwidth(description, modifier, value)
+
+ int SDP_SetBandwidth(
+ 	SDP_Description *   description,
+ 	const char *        modifier,
+ 	long                value
+ );
+
+This function sets the bandwidth within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the bandwidth.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item modifier
+
+A pointer to a string containing the modifier.
+
+=item value
+
+The value.
+
+=back
+
+=back
+
+=head2 SDP_SetBandwidthModifier(bandwidth, modifier)
+
+ int SDP_SetBandwidthModifier(
+ 	SDP_Bandwidth *   bandwidth,
+ 	const char *      modifier
+ );
+
+This function sets the bandwidth modifier within an C<SDP_Bandwidth>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the bandwidth modifier.
+
+=item Parameters
+
+=over 4
+
+=item bandwidth
+
+A pointer to the C<SDP_Bandwidth> struct.
+
+=item modifier
+
+A pointer to a string containing the modifier.
+
+=back
+
+=back
+
+=head2 SDP_SetBandwidthValue(bandwidth, value)
+
+ void SDP_SetBandwidthValue(
+ 	SDP_Bandwidth *   bandwidth,
+ 	long              value
+ );
+
+This function sets the bandwidth value within an C<SDP_Bandwidth>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item bandwidth
+
+A pointer to the C<SDP_Bandwidth> struct.
+
+=item value
+
+The value.
+
+=back
+
+=back
+
+=head2 SDP_AddSessionPlayTime(description, session_play_time)
+
+ void SDP_AddSessionPlayTime(
+ 	SDP_Description *       description,
+ 	SDP_SessionPlayTime *   session_play_time
+ );
+
+This function adds an C<SDP_SessionPlayTime> struct to the session play time
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the session play time linked list.
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewSessionPlayTime(description, start_time, end_time)
+
+ int SDP_AddNewSessionPlayTime(
+ 	SDP_Description *   description,
+ 	time_t              start_time,
+ 	time_t              end_time
+ );
+
+This function creates and adds a new session play time to the
+session play time linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the session play time.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the session play time linked list.
+
+=item start_time
+
+The start time.
+
+=item end_time
+
+The end time.
+
+=back
+
+=back
+
+=head2 SDP_SetStartTime(session_play_time, start_time)
+
+ void SDP_SetStartTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	time_t                  start_time
+ );
+
+This function sets the start time within an C<SDP_SessionPlayTime>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> struct.
+
+=item start_time
+
+The start time.
+
+=back
+
+=back
+
+=head2 SDP_SetEndTime(session_play_time, end_time)
+
+ void SDP_SetEndTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	time_t                  end_time
+ );
+
+This function sets the end time within an C<SDP_SessionPlayTime>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> struct.
+
+=item end_time
+
+The end time.
+
+=back
+
+=back
+
+=head2 SDP_AddRepeatTime(session_play_time, repeat_time)
+
+ void SDP_AddRepeatTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	SDP_RepeatTime *        repeat_time
+ );
+
+This function adds an C<SDP_RepeatTime> struct to the repeat time
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> struct containing the repeat time linked list.
+
+=item repeat_time
+
+A pointer to the C<SDP_RepeatTime> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewRepeatTime(session_play_time, repeat_interval, active_duration, repeat_offsets, total_offsets)
+
+ int SDP_AddNewRepeatTime(
+ 	SDP_SessionPlayTime *   session_play_time,
+ 	unsigned long           repeat_interval,
+ 	unsigned long           active_duration,
+ 	const unsigned long     repeat_offsets[],
+ 	int                     total_offsets
+ );
+
+This function creates and adds a new repeat time to the
+repeat time linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the repeat time.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> struct containing the repeat time linked list.
+
+=item repeat_interval
+
+The repeat interval.
+
+=item active_duration
+
+The active duration.
+
+=item repeat_offsets
+
+The repeat offsets.
+
+=item total_offsets
+
+The total offsets.
+
+=back
+
+=back
+
+=head2 SDP_SetRepeatInterval(repeat_time, repeat_interval)
+
+ void SDP_SetRepeatInterval(
+ 	SDP_RepeatTime *   repeat_time,
+ 	unsigned long      repeat_interval
+ );
+
+This function sets the repeat interval within an C<SDP_RepeatTime>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+A pointer to the C<SDP_RepeatTime> struct.
+
+=item repeat_interval
+
+The repeat interval.
+
+=back
+
+=back
+
+=head2 SDP_SetActiveDuration(repeat_time, active_duration)
+
+ void SDP_SetActiveDuration(
+ 	SDP_RepeatTime *   repeat_time,
+ 	unsigned long      active_duration
+ );
+
+This function sets the active duration within an C<SDP_RepeatTime>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+A pointer to the C<SDP_RepeatTime> struct.
+
+=item active_duration
+
+The active duration.
+
+=back
+
+=back
+
+=head2 SDP_SetRepeatOffsets(repeat_time, repeat_offsets, total_offsets)
+
+ int SDP_SetRepeatOffsets(
+ 	SDP_RepeatTime *      repeat_time,
+ 	const unsigned long   repeat_offsets[],
+ 	int                   total_offsets
+ );
+
+This function sets the repeat offsets within an C<SDP_RepeatTime>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the repeat offsets.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+A pointer to the C<SDP_RepeatTime> struct.
+
+=item repeat_offsets
+
+The repeat offsets.
+
+=item total_offsets
+
+The total offsets.
+
+=back
+
+=back
+
+=head2 SDP_AddZoneAdjustment(description, zone_adjustment)
+
+ void SDP_AddZoneAdjustment(
+ 	SDP_Description *      description,
+ 	SDP_ZoneAdjustment *   zone_adjustment
+ );
+
+This function adds an C<SDP_ZoneAdjustment> struct to the zone adjustment
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the zone adjustment linked list.
+
+=item zone_adjustment
+
+A pointer to the C<SDP_ZoneAdjustment> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewZoneAdjustment(description, time, offset)
+
+ int SDP_AddNewZoneAdjustment(
+ 	SDP_Description *   description,
+ 	time_t              time,
+ 	long                offset
+ );
+
+This function creates and adds a new zone adjustment to the
+zone adjustment linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the zone adjustment.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the zone adjustment linked list.
+
+=item time
+
+The time.
+
+=item offset
+
+The offset.
+
+=back
+
+=back
+
+=head2 SDP_SetZoneAdjustmentTime(zone_adjustment, time)
+
+ void SDP_SetZoneAdjustmentTime(
+ 	SDP_ZoneAdjustment *   zone_adjustment,
+ 	time_t                 time
+ );
+
+This function sets the zone adjustment time within an C<SDP_ZoneAdjustment>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item zone_adjustment
+
+A pointer to the C<SDP_ZoneAdjustment> struct.
+
+=item time
+
+The time.
+
+=back
+
+=back
+
+=head2 SDP_SetZoneAdjustmentOffset(zone_adjustment, offset)
+
+ void SDP_SetZoneAdjustmentOffset(
+ 	SDP_ZoneAdjustment *   zone_adjustment,
+ 	long                   offset
+ );
+
+This function sets the zone adjustment offset within an C<SDP_ZoneAdjustment>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item zone_adjustment
+
+A pointer to the C<SDP_ZoneAdjustment> struct.
+
+=item offset
+
+The offset.
+
+=back
+
+=back
+
+=head2 SDP_SetEncryption(description, method, key)
+
+ int SDP_SetEncryption(
+ 	SDP_Description *   description,
+ 	const char *        method,
+ 	const char *        key
+ );
+
+This function sets the encryption within an C<SDP_Description>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the encryption.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct.
+
+=item method
+
+A pointer to a string containing the method.
+
+=item key
+
+A pointer to a string containing the key.
+
+=back
+
+=back
+
+=head2 SDP_SetEncryptionMethod(encryption, method)
+
+ int SDP_SetEncryptionMethod(
+ 	SDP_Encryption *   encryption,
+ 	const char *       method
+ );
+
+This function sets the encryption method within an C<SDP_Encryption>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the encryption method.
+
+=item Parameters
+
+=over 4
+
+=item encryption
+
+A pointer to the C<SDP_Encryption> struct.
+
+=item method
+
+A pointer to a string containing the method.
+
+=back
+
+=back
+
+=head2 SDP_SetEncryptionKey(encryption, key)
+
+ int SDP_SetEncryptionKey(
+ 	SDP_Encryption *   encryption,
+ 	const char *       key
+ );
+
+This function sets the encryption key within an C<SDP_Encryption>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the encryption key.
+
+=item Parameters
+
+=over 4
+
+=item encryption
+
+A pointer to the C<SDP_Encryption> struct.
+
+=item key
+
+A pointer to a string containing the key.
+
+=back
+
+=back
+
+=head2 SDP_AddAttribute(description, attribute)
+
+ void SDP_AddAttribute(
+ 	SDP_Description *   description,
+ 	SDP_Attribute *     attribute
+ );
+
+This function adds an C<SDP_Attribute> struct to the attribute
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the attribute linked list.
+
+=item attribute
+
+A pointer to the C<SDP_Attribute> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewAttribute(description, name, value)
+
+ int SDP_AddNewAttribute(
+ 	SDP_Description *   description,
+ 	const char *        name,
+ 	const char *        value
+ );
+
+This function creates and adds a new attribute to the
+attribute linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the attribute.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the attribute linked list.
+
+=item name
+
+A pointer to a string containing the name.
+
+=item value
+
+A pointer to a string containing the value.
+
+=back
+
+=back
+
+=head2 SDP_SetAttributeName(attribute, name)
+
+ int SDP_SetAttributeName(
+ 	SDP_Attribute *   attribute,
+ 	const char *      name
+ );
+
+This function sets the attribute name within an C<SDP_Attribute>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the attribute name.
+
+=item Parameters
+
+=over 4
+
+=item attribute
+
+A pointer to the C<SDP_Attribute> struct.
+
+=item name
+
+A pointer to a string containing the name.
+
+=back
+
+=back
+
+=head2 SDP_SetAttributeValue(attribute, value)
+
+ int SDP_SetAttributeValue(
+ 	SDP_Attribute *   attribute,
+ 	const char *      value
+ );
+
+This function sets the attribute value within an C<SDP_Attribute>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the attribute value.
+
+=item Parameters
+
+=over 4
+
+=item attribute
+
+A pointer to the C<SDP_Attribute> struct.
+
+=item value
+
+A pointer to a string containing the value.
+
+=back
+
+=back
+
+=head2 SDP_AddMediaDescription(description, media_description)
+
+ void SDP_AddMediaDescription(
+ 	SDP_Description *        description,
+ 	SDP_MediaDescription *   media_description
+ );
+
+This function adds an C<SDP_MediaDescription> struct to the media description
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the media description linked list.
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewMediaDescription(description, media_type, port, total_ports, transport_protocol, formats, media_information)
+
+ int SDP_AddNewMediaDescription(
+ 	SDP_Description *   description,
+ 	const char *        media_type,
+ 	unsigned short      port,
+ 	unsigned short      total_ports,
+ 	const char *        transport_protocol,
+ 	const char *        formats,
+ 	const char *        media_information
+ );
+
+This function creates and adds a new media description to the
+media description linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the media description.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct containing the media description linked list.
+
+=item media_type
+
+A pointer to a string containing the media type.
+
+=item port
+
+The port.
+
+=item total_ports
+
+The total ports.
+
+=item transport_protocol
+
+A pointer to a string containing the transport protocol.
+
+=item formats
+
+A pointer to a string containing the formats.
+
+=item media_information
+
+A pointer to a string containing the media information.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaType(media_description, media_type)
+
+ int SDP_SetMediaType(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             media_type
+ );
+
+This function sets the media type within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media type.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item media_type
+
+A pointer to a string containing the media type.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaPort(media_description, port)
+
+ void SDP_SetMediaPort(
+ 	SDP_MediaDescription *   media_description,
+ 	unsigned short           port
+ );
+
+This function sets the media port within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item port
+
+The port.
+
+=back
+
+=back
+
+=head2 SDP_SetTotalMediaPorts(media_description, total_ports)
+
+ void SDP_SetTotalMediaPorts(
+ 	SDP_MediaDescription *   media_description,
+ 	unsigned short           total_ports
+ );
+
+This function sets the total media ports within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item total_ports
+
+The total ports.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaTransportProtocol(media_description, transport_protocol)
+
+ int SDP_SetMediaTransportProtocol(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             transport_protocol
+ );
+
+This function sets the media transport protocol within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media transport protocol.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item transport_protocol
+
+A pointer to a string containing the transport protocol.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaFormats(media_description, formats)
+
+ int SDP_SetMediaFormats(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             formats
+ );
+
+This function sets the media formats within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media formats.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item formats
+
+A pointer to a string containing the formats.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaInformation(media_description, media_information)
+
+ int SDP_SetMediaInformation(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             media_information
+ );
+
+This function sets the media information within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media information.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item media_information
+
+A pointer to a string containing the media information.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaConnection(media_description, network_type, address_type, address, ttl, total_addresses)
+
+ int SDP_SetMediaConnection(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             network_type,
+ 	const char *             address_type,
+ 	const char *             address,
+ 	int                      ttl,
+ 	int                      total_addresses
+ );
+
+This function sets the media connection within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media connection.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item network_type
+
+A pointer to a string containing the network type.
+
+=item address_type
+
+A pointer to a string containing the address type.
+
+=item address
+
+A pointer to a string containing the address.
+
+=item ttl
+
+The ttl.
+
+=item total_addresses
+
+The total addresses.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaBandwidth(media_description, modifier, value)
+
+ int SDP_SetMediaBandwidth(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             modifier,
+ 	long                     value
+ );
+
+This function sets the media bandwidth within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media bandwidth.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item modifier
+
+A pointer to a string containing the modifier.
+
+=item value
+
+The value.
+
+=back
+
+=back
+
+=head2 SDP_SetMediaEncryption(media_description, method, key)
+
+ int SDP_SetMediaEncryption(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             method,
+ 	const char *             key
+ );
+
+This function sets the media encryption within an C<SDP_MediaDescription>
+struct.
+
+=over 4
+
+=item Return Value
+
+It returns true if no error occurs, false otherwise. For extended error
+information call C<SDP_GetLastError()>. The possible error codes returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to set the media encryption.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct.
+
+=item method
+
+A pointer to a string containing the method.
+
+=item key
+
+A pointer to a string containing the key.
+
+=back
+
+=back
+
+=head2 SDP_AddMediaAttribute(media_description, attribute)
+
+ void SDP_AddMediaAttribute(
+ 	SDP_MediaDescription *   media_description,
+ 	SDP_Attribute *          attribute
+ );
+
+This function adds an C<SDP_Attribute> struct to the media attribute
+linked list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct containing the media attribute linked list.
+
+=item attribute
+
+A pointer to the C<SDP_Attribute> struct to add.
+
+=back
+
+=back
+
+=head2 SDP_AddNewMediaAttribute(media_description, name, value)
+
+ int SDP_AddNewMediaAttribute(
+ 	SDP_MediaDescription *   media_description,
+ 	const char *             name,
+ 	const char *             value
+ );
+
+This function creates and adds a new media attribute to the
+media attribute linked list.
+
+=over 4
+
+=item Return Value
+
+If no error occurs, it returns true. If an error occurs, it returns false. For
+extended error information call C<SDP_GetLastError()>. The possible error codes
+returned are:
+
+ SDP_ERR_OUT_OF_MEMORY - There's not enough memory available to 
+                         to create and add the media attribute.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct containing the media attribute linked list.
+
+=item name
+
+A pointer to a string containing the name.
+
+=item value
+
+A pointer to a string containing the value.
+
+=back
+
+=back
+
+=head1 "GET" ACCESSOR FUNCTIONS
+
+These functions enable you to retrieve values from structs that encapsulates
+portions of an SDP description.
+
+=head2 SDP_GetNextDescription(description)
+
+ #define SDP_GetNextDescription SDP_GetNext
+
+Gets the next C<SDP_Description> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_Description> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to a C<SDP_Description> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPreviousDescription(description)
+
+ #define SDP_GetPreviousDescription SDP_GetPrevious
+
+Gets the previous C<SDP_Description> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the previous C<SDP_Description> struct in the linked list, or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to a C<SDP_Description> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetProtocolVersion(description)
+
+ int SDP_GetProtocolVersion(SDP_Description *description);
+
+This function retrieves the protocol version from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+The protocol version.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the protocol version from.
+
+=back
+
+=back
+
+=head2 SDP_GetOwner(description)
+
+ SDP_Owner *SDP_GetOwner(SDP_Description *description);
+
+This function retrieves the owner from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the owner.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the owner from.
+
+=back
+
+=back
+
+=head2 SDP_GetUsername(owner)
+
+ const char *SDP_GetUsername(SDP_Owner *owner);
+
+This function retrieves the username from an C<SDP_Owner> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the username.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+The C<SDP_Owner> struct to retrieve the username from.
+
+=back
+
+=back
+
+=head2 SDP_GetSessionID(owner)
+
+ const char *SDP_GetSessionID(SDP_Owner *owner);
+
+This function retrieves the session iD from an C<SDP_Owner> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the session iD.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+The C<SDP_Owner> struct to retrieve the session iD from.
+
+=back
+
+=back
+
+=head2 SDP_GetSessionVersion(owner)
+
+ const char *SDP_GetSessionVersion(SDP_Owner *owner);
+
+This function retrieves the session version from an C<SDP_Owner> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the session version.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+The C<SDP_Owner> struct to retrieve the session version from.
+
+=back
+
+=back
+
+=head2 SDP_GetOwnerNetworkType(owner)
+
+ const char *SDP_GetOwnerNetworkType(SDP_Owner *owner);
+
+This function retrieves the owner network type from an C<SDP_Owner> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the owner network type.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+The C<SDP_Owner> struct to retrieve the owner network type from.
+
+=back
+
+=back
+
+=head2 SDP_GetOwnerAddressType(owner)
+
+ const char *SDP_GetOwnerAddressType(SDP_Owner *owner);
+
+This function retrieves the owner address type from an C<SDP_Owner> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the owner address type.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+The C<SDP_Owner> struct to retrieve the owner address type from.
+
+=back
+
+=back
+
+=head2 SDP_GetOwnerAddress(owner)
+
+ const char *SDP_GetOwnerAddress(SDP_Owner *owner);
+
+This function retrieves the owner address from an C<SDP_Owner> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the owner address.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+The C<SDP_Owner> struct to retrieve the owner address from.
+
+=back
+
+=back
+
+=head2 SDP_GetSessionName(description)
+
+ const char *SDP_GetSessionName(SDP_Description *description);
+
+This function retrieves the session name from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the session name.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the session name from.
+
+=back
+
+=back
+
+=head2 SDP_GetSessionInformation(description)
+
+ const char *SDP_GetSessionInformation(SDP_Description *description);
+
+This function retrieves the session information from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the session information.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the session information from.
+
+=back
+
+=back
+
+=head2 SDP_GetURI(description)
+
+ const char *SDP_GetURI(SDP_Description *description);
+
+This function retrieves the URI from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the URI.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the URI from.
+
+=back
+
+=back
+
+=head2 SDP_GetEmailContacts(description)
+
+ SDP_EmailContact *SDP_GetEmailContacts(SDP_Description *description);
+
+This function retrieves the email contacts from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the email contacts.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the email contacts from.
+
+=back
+
+=back
+
+=head2 SDP_GetNextEmailContact(email_contact)
+
+ #define SDP_GetNextEmailContact SDP_GetNext
+
+Gets the next C<SDP_EmailContact> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_EmailContact> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item email_contact
+
+A pointer to a C<SDP_EmailContact> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPreviousEmailContact(email_contact)
+
+ #define SDP_GetPreviousEmailContact SDP_GetPrevious
+
+Gets the previous C<SDP_EmailContact> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the previous C<SDP_EmailContact> struct in the linked list, or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item email_contact
+
+A pointer to a C<SDP_EmailContact> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetEmailAddress(email_contact)
+
+ const char *SDP_GetEmailAddress(SDP_EmailContact *email_contact);
+
+This function retrieves the email address from an C<SDP_EmailContact> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the email address.
+
+=item Parameters
+
+=over 4
+
+=item email_contact
+
+The C<SDP_EmailContact> struct to retrieve the email address from.
+
+=back
+
+=back
+
+=head2 SDP_GetEmailName(email_contact)
+
+ const char *SDP_GetEmailName(SDP_EmailContact *email_contact);
+
+This function retrieves the email name from an C<SDP_EmailContact> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the email name.
+
+=item Parameters
+
+=over 4
+
+=item email_contact
+
+The C<SDP_EmailContact> struct to retrieve the email name from.
+
+=back
+
+=back
+
+=head2 SDP_RemoveEmailContact(description, email_contact)
+
+ void SDP_RemoveEmailContact(
+ 	SDP_Description *    description,
+ 	SDP_EmailContact *   email_contact
+ );
+
+This removes (but does not destroy) the specified C<SDP_EmailContact>
+struct from the email contact list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct  containing the list.
+
+=item email_contact
+
+A pointer to the C<SDP_EmailContact> you want removed from the list.
+
+=back
+
+=back
+
+=head2 SDP_GetPhoneContacts(description)
+
+ SDP_PhoneContact *SDP_GetPhoneContacts(SDP_Description *description);
+
+This function retrieves the phone contacts from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the phone contacts.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the phone contacts from.
+
+=back
+
+=back
+
+=head2 SDP_GetNextPhoneContact(phone_contact)
+
+ #define SDP_GetNextPhoneContact SDP_GetNext
+
+Gets the next C<SDP_PhoneContact> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_PhoneContact> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item phone_contact
+
+A pointer to a C<SDP_PhoneContact> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPreviousPhoneContact(phone_contact)
+
+ #define SDP_GetPreviousPhoneContact SDP_GetPrevious
+
+Gets the previous C<SDP_PhoneContact> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the previous C<SDP_PhoneContact> struct in the linked list, or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item phone_contact
+
+A pointer to a C<SDP_PhoneContact> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPhoneNumber(phone_contact)
+
+ const char *SDP_GetPhoneNumber(SDP_PhoneContact *phone_contact);
+
+This function retrieves the phone number from an C<SDP_PhoneContact> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the phone number.
+
+=item Parameters
+
+=over 4
+
+=item phone_contact
+
+The C<SDP_PhoneContact> struct to retrieve the phone number from.
+
+=back
+
+=back
+
+=head2 SDP_GetPhoneName(phone_contact)
+
+ const char *SDP_GetPhoneName(SDP_PhoneContact *phone_contact);
+
+This function retrieves the phone name from an C<SDP_PhoneContact> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the phone name.
+
+=item Parameters
+
+=over 4
+
+=item phone_contact
+
+The C<SDP_PhoneContact> struct to retrieve the phone name from.
+
+=back
+
+=back
+
+=head2 SDP_RemovePhoneContact(description, phone_contact)
+
+ void SDP_RemovePhoneContact(
+ 	SDP_Description *    description,
+ 	SDP_PhoneContact *   phone_contact
+ );
+
+This removes (but does not destroy) the specified C<SDP_PhoneContact>
+struct from the phone contact list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct  containing the list.
+
+=item phone_contact
+
+A pointer to the C<SDP_PhoneContact> you want removed from the list.
+
+=back
+
+=back
+
+=head2 SDP_GetConnection(description)
+
+ SDP_Connection *SDP_GetConnection(SDP_Description *description);
+
+This function retrieves the connection from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the connection.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the connection from.
+
+=back
+
+=back
+
+=head2 SDP_GetConnectionNetworkType(connection)
+
+ const char *SDP_GetConnectionNetworkType(SDP_Connection *connection);
+
+This function retrieves the connection network type from an C<SDP_Connection> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the connection network type.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+The C<SDP_Connection> struct to retrieve the connection network type from.
+
+=back
+
+=back
+
+=head2 SDP_GetConnectionAddressType(connection)
+
+ const char *SDP_GetConnectionAddressType(SDP_Connection *connection);
+
+This function retrieves the connection address type from an C<SDP_Connection> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the connection address type.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+The C<SDP_Connection> struct to retrieve the connection address type from.
+
+=back
+
+=back
+
+=head2 SDP_GetConnectionAddress(connection)
+
+ const char *SDP_GetConnectionAddress(SDP_Connection *connection);
+
+This function retrieves the connection address from an C<SDP_Connection> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the connection address.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+The C<SDP_Connection> struct to retrieve the connection address from.
+
+=back
+
+=back
+
+=head2 SDP_GetConnectionTTL(connection)
+
+ int SDP_GetConnectionTTL(SDP_Connection *connection);
+
+This function retrieves the connection tTL from an C<SDP_Connection> struct.
+
+=over 4
+
+=item Return Value
+
+The connection tTL.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+The C<SDP_Connection> struct to retrieve the connection tTL from.
+
+=back
+
+=back
+
+=head2 SDP_GetTotalConnectionAddresses(connection)
+
+ int SDP_GetTotalConnectionAddresses(SDP_Connection *connection);
+
+This function retrieves the total connection addresses from an C<SDP_Connection> struct.
+
+=over 4
+
+=item Return Value
+
+The total connection addresses.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+The C<SDP_Connection> struct to retrieve the total connection addresses from.
+
+=back
+
+=back
+
+=head2 SDP_GetBandwidth(description)
+
+ SDP_Bandwidth *SDP_GetBandwidth(SDP_Description *description);
+
+This function retrieves the bandwidth from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the bandwidth.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the bandwidth from.
+
+=back
+
+=back
+
+=head2 SDP_GetBandwidthModifier(bandwidth)
+
+ const char *SDP_GetBandwidthModifier(SDP_Bandwidth *bandwidth);
+
+This function retrieves the bandwidth modifier from an C<SDP_Bandwidth> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the bandwidth modifier.
+
+=item Parameters
+
+=over 4
+
+=item bandwidth
+
+The C<SDP_Bandwidth> struct to retrieve the bandwidth modifier from.
+
+=back
+
+=back
+
+=head2 SDP_GetBandwidthValue(bandwidth)
+
+ long SDP_GetBandwidthValue(SDP_Bandwidth *bandwidth);
+
+This function retrieves the bandwidth value from an C<SDP_Bandwidth> struct.
+
+=over 4
+
+=item Return Value
+
+The bandwidth value.
+
+=item Parameters
+
+=over 4
+
+=item bandwidth
+
+The C<SDP_Bandwidth> struct to retrieve the bandwidth value from.
+
+=back
+
+=back
+
+=head2 SDP_GetSessionPlayTimes(description)
+
+ SDP_SessionPlayTime *SDP_GetSessionPlayTimes(
+ 	SDP_Description *description
+ );
+
+This function retrieves the session play times from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the session play times.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the session play times from.
+
+=back
+
+=back
+
+=head2 SDP_GetNextSessionPlayTime(session_play_time)
+
+ #define SDP_GetNextSessionPlayTime SDP_GetNext
+
+Gets the next C<SDP_SessionPlayTime> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_SessionPlayTime> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to a C<SDP_SessionPlayTime> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPreviousSessionPlayTime(session_play_time)
+
+ #define SDP_GetPreviousSessionPlayTime SDP_GetPrevious
+
+Gets the previous C<SDP_SessionPlayTime> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the previous C<SDP_SessionPlayTime> struct in the linked list, or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to a C<SDP_SessionPlayTime> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetStartTime(session_play_time)
+
+ time_t SDP_GetStartTime(SDP_SessionPlayTime *session_play_time);
+
+This function retrieves the start time from an C<SDP_SessionPlayTime> struct.
+
+=over 4
+
+=item Return Value
+
+The start time.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+The C<SDP_SessionPlayTime> struct to retrieve the start time from.
+
+=back
+
+=back
+
+=head2 SDP_GetEndTime(session_play_time)
+
+ time_t SDP_GetEndTime(SDP_SessionPlayTime *session_play_time);
+
+This function retrieves the end time from an C<SDP_SessionPlayTime> struct.
+
+=over 4
+
+=item Return Value
+
+The end time.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+The C<SDP_SessionPlayTime> struct to retrieve the end time from.
+
+=back
+
+=back
+
+=head2 SDP_GetRepeatTimes(session_play_time)
+
+ SDP_RepeatTime *SDP_GetRepeatTimes(
+ 	SDP_SessionPlayTime *session_play_time
+ );
+
+This function retrieves the repeat times from an C<SDP_SessionPlayTime> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the repeat times.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+The C<SDP_SessionPlayTime> struct to retrieve the repeat times from.
+
+=back
+
+=back
+
+=head2 SDP_GetNextRepeatTime(repeat_time)
+
+ #define SDP_GetNextRepeatTime SDP_GetNext
+
+Gets the next C<SDP_RepeatTime> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_RepeatTime> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+A pointer to a C<SDP_RepeatTime> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPreviousRepeatTime(repeat_time)
+
+ #define SDP_GetPreviousRepeatTime SDP_GetPrevious
+
+Gets the previous C<SDP_RepeatTime> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the previous C<SDP_RepeatTime> struct in the linked list, or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+A pointer to a C<SDP_RepeatTime> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetRepeatInterval(repeat_time)
+
+ unsigned long SDP_GetRepeatInterval(SDP_RepeatTime *repeat_time);
+
+This function retrieves the repeat interval from an C<SDP_RepeatTime> struct.
+
+=over 4
+
+=item Return Value
+
+The repeat interval.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+The C<SDP_RepeatTime> struct to retrieve the repeat interval from.
+
+=back
+
+=back
+
+=head2 SDP_GetActiveDuration(repeat_time)
+
+ unsigned long SDP_GetActiveDuration(SDP_RepeatTime *repeat_time);
+
+This function retrieves the active duration from an C<SDP_RepeatTime> struct.
+
+=over 4
+
+=item Return Value
+
+The active duration.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+The C<SDP_RepeatTime> struct to retrieve the active duration from.
+
+=back
+
+=back
+
+=head2 SDP_GetRepeatOffsets(repeat_time)
+
+ unsigned long *SDP_GetRepeatOffsets(SDP_RepeatTime *repeat_time);
+
+This function retrieves the repeat offsets from an C<SDP_RepeatTime> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the repeat offsets.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+The C<SDP_RepeatTime> struct to retrieve the repeat offsets from.
+
+=back
+
+=back
+
+=head2 SDP_GetTotalRepeatOffsets(repeat_time)
+
+ int SDP_GetTotalRepeatOffsets(SDP_RepeatTime *repeat_time);
+
+This function retrieves the total repeat offsets from an C<SDP_RepeatTime> struct.
+
+=over 4
+
+=item Return Value
+
+The total repeat offsets.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+The C<SDP_RepeatTime> struct to retrieve the total repeat offsets from.
+
+=back
+
+=back
+
+=head2 SDP_RemoveRepeatTime(session_play_times, repeat_time)
+
+ void SDP_RemoveRepeatTime(
+ 	SDP_SessionPlayTime *   session_play_times,
+ 	SDP_RepeatTime *        repeat_time
+ );
+
+This removes (but does not destroy) the specified C<SDP_RepeatTime>
+struct from the repeat time list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item session_play_times
+
+A pointer to the C<SDP_SessionPlayTime> struct  containing the list.
+
+=item repeat_time
+
+A pointer to the C<SDP_RepeatTime> you want removed from the list.
+
+=back
+
+=back
+
+=head2 SDP_RemoveSessionPlayTime(description, session_play_time)
+
+ void SDP_RemoveSessionPlayTime(
+ 	SDP_Description *       description,
+ 	SDP_SessionPlayTime *   session_play_time
+ );
+
+This removes (but does not destroy) the specified C<SDP_SessionPlayTime>
+struct from the session play time list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct  containing the list.
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> you want removed from the list.
+
+=back
+
+=back
+
+=head2 SDP_GetZoneAdjustments(description)
+
+ SDP_ZoneAdjustment *SDP_GetZoneAdjustments(SDP_Description *description);
+
+This function retrieves the zone adjustments from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the zone adjustments.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the zone adjustments from.
+
+=back
+
+=back
+
+=head2 SDP_GetNextZoneAdjustment(zone_adjustment)
+
+ #define SDP_GetNextZoneAdjustment SDP_GetNext
+
+Gets the next C<SDP_ZoneAdjustment> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_ZoneAdjustment> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item zone_adjustment
+
+A pointer to a C<SDP_ZoneAdjustment> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPreviousZoneAdjustment(zone_adjustment)
+
+ #define SDP_GetPreviousZoneAdjustment SDP_GetPrevious
+
+Gets the previous C<SDP_ZoneAdjustment> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the previous C<SDP_ZoneAdjustment> struct in the linked list, or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item zone_adjustment
+
+A pointer to a C<SDP_ZoneAdjustment> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetZoneAdjustmentTime(zone_adjustment)
+
+ time_t SDP_GetZoneAdjustmentTime(SDP_ZoneAdjustment *zone_adjustment);
+
+This function retrieves the zone adjustment time from an C<SDP_ZoneAdjustment> struct.
+
+=over 4
+
+=item Return Value
+
+The zone adjustment time.
+
+=item Parameters
+
+=over 4
+
+=item zone_adjustment
+
+The C<SDP_ZoneAdjustment> struct to retrieve the zone adjustment time from.
+
+=back
+
+=back
+
+=head2 SDP_GetZoneAdjustmentOffset(zone_adjustment)
+
+ long SDP_GetZoneAdjustmentOffset(SDP_ZoneAdjustment *zone_adjustment);
+
+This function retrieves the zone adjustment offset from an C<SDP_ZoneAdjustment> struct.
+
+=over 4
+
+=item Return Value
+
+The zone adjustment offset.
+
+=item Parameters
+
+=over 4
+
+=item zone_adjustment
+
+The C<SDP_ZoneAdjustment> struct to retrieve the zone adjustment offset from.
+
+=back
+
+=back
+
+=head2 SDP_RemoveZoneAdjustment(description, zone_adjustment)
+
+ void SDP_RemoveZoneAdjustment(
+ 	SDP_Description *      description,
+ 	SDP_ZoneAdjustment *   zone_adjustment
+ );
+
+This removes (but does not destroy) the specified C<SDP_ZoneAdjustment>
+struct from the zone adjustment list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct  containing the list.
+
+=item zone_adjustment
+
+A pointer to the C<SDP_ZoneAdjustment> you want removed from the list.
+
+=back
+
+=back
+
+=head2 SDP_GetEncryption(description)
+
+ SDP_Encryption *SDP_GetEncryption(SDP_Description *description);
+
+This function retrieves the encryption from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the encryption.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the encryption from.
+
+=back
+
+=back
+
+=head2 SDP_GetEncryptionMethod(encryption)
+
+ const char *SDP_GetEncryptionMethod(SDP_Encryption *encryption);
+
+This function retrieves the encryption method from an C<SDP_Encryption> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the encryption method.
+
+=item Parameters
+
+=over 4
+
+=item encryption
+
+The C<SDP_Encryption> struct to retrieve the encryption method from.
+
+=back
+
+=back
+
+=head2 SDP_GetEncryptionKey(encryption)
+
+ const char *SDP_GetEncryptionKey(SDP_Encryption *encryption);
+
+This function retrieves the encryption key from an C<SDP_Encryption> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the encryption key.
+
+=item Parameters
+
+=over 4
+
+=item encryption
+
+The C<SDP_Encryption> struct to retrieve the encryption key from.
+
+=back
+
+=back
+
+=head2 SDP_GetAttributes(description)
+
+ SDP_Attribute *SDP_GetAttributes(SDP_Description *description);
+
+This function retrieves the attributes from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the attributes.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the attributes from.
+
+=back
+
+=back
+
+=head2 SDP_GetNextAttribute(attribute)
+
+ #define SDP_GetNextAttribute SDP_GetNext
+
+Gets the next C<SDP_Attribute> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_Attribute> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item attribute
+
+A pointer to a C<SDP_Attribute> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetPreviousAttribute(attribute)
+
+ #define SDP_GetPreviousAttribute SDP_GetPrevious
+
+Gets the previous C<SDP_Attribute> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the previous C<SDP_Attribute> struct in the linked list, or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item attribute
+
+A pointer to a C<SDP_Attribute> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetAttributeName(attribute)
+
+ const char *SDP_GetAttributeName(SDP_Attribute *attribute);
+
+This function retrieves the attribute name from an C<SDP_Attribute> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the attribute name.
+
+=item Parameters
+
+=over 4
+
+=item attribute
+
+The C<SDP_Attribute> struct to retrieve the attribute name from.
+
+=back
+
+=back
+
+=head2 SDP_GetAttributeValue(attribute)
+
+ const char *SDP_GetAttributeValue(SDP_Attribute *attribute);
+
+This function retrieves the attribute value from an C<SDP_Attribute> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the attribute value.
+
+=item Parameters
+
+=over 4
+
+=item attribute
+
+The C<SDP_Attribute> struct to retrieve the attribute value from.
+
+=back
+
+=back
+
+=head2 SDP_RemoveAttribute(description, attribute)
+
+ void SDP_RemoveAttribute(
+ 	SDP_Description *   description,
+ 	SDP_Attribute *     attribute
+ );
+
+This removes (but does not destroy) the specified C<SDP_Attribute>
+struct from the attribute list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct  containing the list.
+
+=item attribute
+
+A pointer to the C<SDP_Attribute> you want removed from the list.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaDescriptions(description)
+
+ SDP_MediaDescription *SDP_GetMediaDescriptions(
+ 	SDP_Description *description
+ );
+
+This function retrieves the media descriptions from an C<SDP_Description> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the media descriptions.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+The C<SDP_Description> struct to retrieve the media descriptions from.
+
+=back
+
+=back
+
+=head2 SDP_GetNextMediaDescription(media_description)
+
+ #define SDP_GetNextMediaDescription SDP_GetNext
+
+Gets the next C<SDP_MediaDescription> struct from the linked list.
+
+=over 4
+
+=item Return Value
+
+A pointer to the next C<SDP_MediaDescription> struct in the linked list or NULL if there is none.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to a C<SDP_MediaDescription> struct.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaType(media_description)
+
+ const char *SDP_GetMediaType(SDP_MediaDescription *media_description);
+
+This function retrieves the media type from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the media type.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media type from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaPort(media_description)
+
+ unsigned short SDP_GetMediaPort(SDP_MediaDescription *media_description);
+
+This function retrieves the media port from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+The media port.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media port from.
+
+=back
+
+=back
+
+=head2 SDP_GetTotalMediaPorts(media_description)
+
+ unsigned short SDP_GetTotalMediaPorts(
+ 	SDP_MediaDescription *media_description
+ );
+
+This function retrieves the total media ports from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+The total media ports.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the total media ports from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaTransportProtocol(media_description)
+
+ const char *SDP_GetMediaTransportProtocol(
+ 	SDP_MediaDescription *media_description
+ );
+
+This function retrieves the media transport protocol from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the media transport protocol.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media transport protocol from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaFormats(media_description)
+
+ const char *SDP_GetMediaFormats(SDP_MediaDescription *media_description);
+
+This function retrieves the media formats from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the media formats.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media formats from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaInformation(media_description)
+
+ const char *SDP_GetMediaInformation(
+ 	SDP_MediaDescription *media_description
+ );
+
+This function retrieves the media information from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the string containing the media information.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media information from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaConnection(media_description)
+
+ SDP_Connection *SDP_GetMediaConnection(
+ 	SDP_MediaDescription *media_description
+ );
+
+This function retrieves the media connection from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the media connection.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media connection from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaBandwidth(media_description)
+
+ SDP_Bandwidth *SDP_GetMediaBandwidth(
+ 	SDP_MediaDescription *media_description
+ );
+
+This function retrieves the media bandwidth from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the media bandwidth.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media bandwidth from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaEncryption(media_description)
+
+ SDP_Encryption *SDP_GetMediaEncryption(
+ 	SDP_MediaDescription *media_description
+ );
+
+This function retrieves the media encryption from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the media encryption.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media encryption from.
+
+=back
+
+=back
+
+=head2 SDP_GetMediaAttributes(media_description)
+
+ SDP_Attribute *SDP_GetMediaAttributes(
+ 	SDP_MediaDescription *media_description
+ );
+
+This function retrieves the media attributes from an C<SDP_MediaDescription> struct.
+
+=over 4
+
+=item Return Value
+
+A pointer to the media attributes.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+The C<SDP_MediaDescription> struct to retrieve the media attributes from.
+
+=back
+
+=back
+
+=head2 SDP_RemoveMediaDescription(description, media_description)
+
+ void SDP_RemoveMediaDescription(
+ 	SDP_Description *        description,
+ 	SDP_MediaDescription *   media_description
+ );
+
+This removes (but does not destroy) the specified C<SDP_MediaDescription>
+struct from the media description list.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct  containing the list.
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> you want removed from the list.
+
+=back
+
+=back
+
+=head1 DESTRUCTOR FUNCTIONS
+
+These functions destroy dynamically allocated structures.
+
+=head2 SDP_DestroyDescriptions(descriptions)
+
+ void SDP_DestroyDescriptions(SDP_Description *descriptions);
+
+This function destroys a descriptions linked list from an
+C<SDP_Description> struct, releasing its memory back to the operating system.
+Do not try to use any items from the descriptions linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item descriptions
+
+A pointer to the C<SDP_Description> struct to destroy the descriptions from.
+
+=back
+
+=back
+
+=head2 SDP_DestroyDescription(description)
+
+ void SDP_DestroyDescription(SDP_Description *description);
+
+This function destroys a C<SDP_Description> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyOwner(owner)
+
+ void SDP_DestroyOwner(SDP_Owner *owner);
+
+This function destroys a C<SDP_Owner> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item owner
+
+A pointer to the C<SDP_Owner> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyEmailContacts(description)
+
+ void SDP_DestroyEmailContacts(SDP_Description *description);
+
+This function destroys a email contacts linked list from an
+C<SDP_Description> struct, releasing its memory back to the operating system.
+Do not try to use any items from the email contacts linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct to destroy the email contacts from.
+
+=back
+
+=back
+
+=head2 SDP_DestroyEmailContact(email_contact)
+
+ void SDP_DestroyEmailContact(SDP_EmailContact *email_contact);
+
+This function destroys a C<SDP_EmailContact> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item email_contact
+
+A pointer to the C<SDP_EmailContact> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyPhoneContacts(description)
+
+ void SDP_DestroyPhoneContacts(SDP_Description *description);
+
+This function destroys a phone contacts linked list from an
+C<SDP_Description> struct, releasing its memory back to the operating system.
+Do not try to use any items from the phone contacts linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct to destroy the phone contacts from.
+
+=back
+
+=back
+
+=head2 SDP_DestroyPhoneContact(phone_contact)
+
+ void SDP_DestroyPhoneContact(SDP_PhoneContact *phone_contact);
+
+This function destroys a C<SDP_PhoneContact> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item phone_contact
+
+A pointer to the C<SDP_PhoneContact> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyConnection(connection)
+
+ void SDP_DestroyConnection(SDP_Connection *connection);
+
+This function destroys a C<SDP_Connection> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item connection
+
+A pointer to the C<SDP_Connection> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyBandwidth(bandwidth)
+
+ void SDP_DestroyBandwidth(SDP_Bandwidth *bandwidth);
+
+This function destroys a C<SDP_Bandwidth> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item bandwidth
+
+A pointer to the C<SDP_Bandwidth> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroySessionPlayTimes(description)
+
+ void SDP_DestroySessionPlayTimes(SDP_Description *description);
+
+This function destroys a session play times linked list from an
+C<SDP_Description> struct, releasing its memory back to the operating system.
+Do not try to use any items from the session play times linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct to destroy the session play times from.
+
+=back
+
+=back
+
+=head2 SDP_DestroySessionPlayTime(session_play_time)
+
+ void SDP_DestroySessionPlayTime(SDP_SessionPlayTime *session_play_time);
+
+This function destroys a C<SDP_SessionPlayTime> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyRepeatTimes(session_play_time)
+
+ void SDP_DestroyRepeatTimes(SDP_SessionPlayTime *session_play_time);
+
+This function destroys a repeat times linked list from an
+C<SDP_SessionPlayTime> struct, releasing its memory back to the operating system.
+Do not try to use any items from the repeat times linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item session_play_time
+
+A pointer to the C<SDP_SessionPlayTime> struct to destroy the repeat times from.
+
+=back
+
+=back
+
+=head2 SDP_DestroyRepeatTime(repeat_time)
+
+ void SDP_DestroyRepeatTime(SDP_RepeatTime *repeat_time);
+
+This function destroys a C<SDP_RepeatTime> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item repeat_time
+
+A pointer to the C<SDP_RepeatTime> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyZoneAdjustments(description)
+
+ void SDP_DestroyZoneAdjustments(SDP_Description *description);
+
+This function destroys a zone adjustments linked list from an
+C<SDP_Description> struct, releasing its memory back to the operating system.
+Do not try to use any items from the zone adjustments linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct to destroy the zone adjustments from.
+
+=back
+
+=back
+
+=head2 SDP_DestroyZoneAdjustment(zone_adjustment)
+
+ void SDP_DestroyZoneAdjustment(SDP_ZoneAdjustment *zone_adjustment);
+
+This function destroys a C<SDP_ZoneAdjustment> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item zone_adjustment
+
+A pointer to the C<SDP_ZoneAdjustment> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyEncryption(encryption)
+
+ void SDP_DestroyEncryption(SDP_Encryption *encryption);
+
+This function destroys a C<SDP_Encryption> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item encryption
+
+A pointer to the C<SDP_Encryption> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyAttributes(description)
+
+ void SDP_DestroyAttributes(SDP_Description *description);
+
+This function destroys an attributes linked list from an
+C<SDP_Description> struct, releasing its memory back to the operating system.
+Do not try to use any items from the attributes linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct to destroy the attributes from.
+
+=back
+
+=back
+
+=head2 SDP_DestroyAttribute(attribute)
+
+ void SDP_DestroyAttribute(SDP_Attribute *attribute);
+
+This function destroys a C<SDP_Attribute> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item attribute
+
+A pointer to the C<SDP_Attribute> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyMediaDescriptions(description)
+
+ void SDP_DestroyMediaDescriptions(SDP_Description *description);
+
+This function destroys a media descriptions linked list from an
+C<SDP_Description> struct, releasing its memory back to the operating system.
+Do not try to use any items from the media descriptions linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item description
+
+A pointer to the C<SDP_Description> struct to destroy the media descriptions from.
+
+=back
+
+=back
+
+=head2 SDP_DestroyMediaDescription(media_description)
+
+ void SDP_DestroyMediaDescription(SDP_MediaDescription *media_description);
+
+This function destroys a C<SDP_MediaDescription> struct, releasing
+its memory back to the operating system. Do not try to use the struct or any part of
+it again after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct to destroy.
+
+=back
+
+=back
+
+=head2 SDP_DestroyMediaAttributes(media_description)
+
+ void SDP_DestroyMediaAttributes(SDP_MediaDescription *media_description);
+
+This function destroys a media attributes linked list from an
+C<SDP_MediaDescription> struct, releasing its memory back to the operating system.
+Do not try to use any items from the media attributes linked list after destroying it.
+
+=over 4
+
+=item Return Value
+
+None.
+
+=item Parameters
+
+=over 4
+
+=item media_description
+
+A pointer to the C<SDP_MediaDescription> struct to destroy the media attributes from.
+
+=back
+
+=back
+
+=head1 BUGS
+
+Bugs in this package can be reported and monitored using sourceforge.net:
+http://sourceforge.net/tracker/?atid=644250&group_id=106387&func=browse
+
+You can also email me directly:
+<william_g_davis at users dot sourceforge dot net>.
+
+=head1 COPYRIGHT
+
+Copyright 2004 by William G. Davis.
+
+This library is free software released under the terms of the GNU Lesser
+General Public License (LGPL), the full terms of which can be found in the
+"COPYING" file that comes with the distribution.
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.
+
+=cut

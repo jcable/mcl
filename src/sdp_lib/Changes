@@ -1,0 +1,38 @@
+Changelog for SinisterSdp.
+--------------------------------------------------------------------------------
+
+[0.80]
+Fixed two infinite loop bugs in _ParseContactField(). Also fixed the
+SDP_AssertTrue() macro, and fixed a memory leak in _ParseRepeatTimeField().
+The SinisterSdpDescriptions documentation has been improved too.
+
+[0.75]
+Heavily cleaned up the Parser code. Added error codes specific to each type of
+field and added more error checking in general. The SDP_EventStreamParser
+module was also improved. Many more comments were added as well.
+
+[0.70]
+Moved the linked list macros from SDP_Utility.h to their own header file,
+SDP_LinkedList. Also created a new internal struct similar to SDP_Str to
+encapsulate lists with few other macros to manipulate it. Moved some of the
+string manipulation code from SDP_Generator.c to SDP_Str.c, and flushed out the
+SDP_Str module more.
+
+[0.60]
+Shipping now with documentation in HTML and POD format.
+
+[0.50]
+Fixed up some of the generator functions, and also added functions to generate
+from each type of structure. Also added custom assertion macros and sprinkled
+calls to them throughout the code.
+
+[0.40]
+Added a large module to encapsulate the structures used to store parsed values
+from a description. This module provides New(), Get(), Set(), and Destroy()
+functions for each object. Also moved _SplitField() into its own module,
+SDP_StreamTokenizer. 
+
+[0.07]
+
+Initial release.
+

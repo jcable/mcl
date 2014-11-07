@@ -1,0 +1,61 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmclalc", "src\alc\libmclalc.vcproj", "{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fcast", "fcast\fcast.vcproj", "{EFA02B50-FACA-4736-8324-BAEEB9EED725}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "robcast_client", "robcast\robcast_client.vcproj", "{4D556DD8-A4A6-4C1A-99D7-614D498E86CA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "robcast_server", "robcast\robcast_server.vcproj", "{4139BD27-57C0-434A-BA0E-E49AE4C50DDF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdp_lib", "src\sdp_lib\sdplib.vcproj", "{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flute_lib", "src\flute_lib\flute_lib.vcproj", "{FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flute", "flute\flute.vcproj", "{D62E15CB-88C0-4821-9B67-3144825DFF9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{EFA02B50-FACA-4736-8324-BAEEB9EED725}.0 = {B42905F7-0F95-4E9B-9F50-F74EAA8C2105}
+		{4D556DD8-A4A6-4C1A-99D7-614D498E86CA}.0 = {B42905F7-0F95-4E9B-9F50-F74EAA8C2105}
+		{4139BD27-57C0-434A-BA0E-E49AE4C50DDF}.0 = {B42905F7-0F95-4E9B-9F50-F74EAA8C2105}
+		{FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}.0 = {B42905F7-0F95-4E9B-9F50-F74EAA8C2105}
+		{FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}.1 = {B42905F7-0F95-4E9B-9F50-F74EAA8C2105}
+		{D62E15CB-88C0-4821-9B67-3144825DFF9C}.0 = {FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Debug.ActiveCfg = Debug|Win32
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Debug.Build.0 = Debug|Win32
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Release.ActiveCfg = Release|Win32
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Release.Build.0 = Release|Win32
+		{EFA02B50-FACA-4736-8324-BAEEB9EED725}.Debug.ActiveCfg = Debug|Win32
+		{EFA02B50-FACA-4736-8324-BAEEB9EED725}.Debug.Build.0 = Debug|Win32
+		{EFA02B50-FACA-4736-8324-BAEEB9EED725}.Release.ActiveCfg = Release|Win32
+		{EFA02B50-FACA-4736-8324-BAEEB9EED725}.Release.Build.0 = Release|Win32
+		{4D556DD8-A4A6-4C1A-99D7-614D498E86CA}.Debug.ActiveCfg = Debug|Win32
+		{4D556DD8-A4A6-4C1A-99D7-614D498E86CA}.Release.ActiveCfg = Release|Win32
+		{4D556DD8-A4A6-4C1A-99D7-614D498E86CA}.Release.Build.0 = Release|Win32
+		{4139BD27-57C0-434A-BA0E-E49AE4C50DDF}.Debug.ActiveCfg = Debug|Win32
+		{4139BD27-57C0-434A-BA0E-E49AE4C50DDF}.Release.ActiveCfg = Release|Win32
+		{4139BD27-57C0-434A-BA0E-E49AE4C50DDF}.Release.Build.0 = Release|Win32
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Debug.ActiveCfg = Debug|Win32
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Debug.Build.0 = Debug|Win32
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Release.ActiveCfg = Release|Win32
+		{B42905F7-0F95-4E9B-9F50-F74EAA8C2105}.Release.Build.0 = Release|Win32
+		{FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}.Debug.ActiveCfg = Debug|Win32
+		{FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}.Debug.Build.0 = Debug|Win32
+		{FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}.Release.ActiveCfg = Release|Win32
+		{FCD7B10A-D566-4233-AFB1-2CEDEAAA064C}.Release.Build.0 = Release|Win32
+		{D62E15CB-88C0-4821-9B67-3144825DFF9C}.Debug.ActiveCfg = Debug|Win32
+		{D62E15CB-88C0-4821-9B67-3144825DFF9C}.Debug.Build.0 = Debug|Win32
+		{D62E15CB-88C0-4821-9B67-3144825DFF9C}.Release.ActiveCfg = Release|Win32
+		{D62E15CB-88C0-4821-9B67-3144825DFF9C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,95 @@
+# $Id: i-am-a.file,v 1.1 2005/05/12 16:15:08 moi Exp $
+#
+# Makefile
+#
+
+####### OS Dependant Definitions ######
+
+# they are defined in the following file...
+# edit Rules.make as appropriate
+include ../Rules.mk
+
+
+# libraries required
+ifeq (${OS},linux)
+	# Linux version
+	# MCL library requires -lpthread
+	#
+	BINDIR = ../bin/linux
+	LIBRARIES = -lc -lm -lpthread ${BINDIR}/libmcl.a
+endif
+
+ifeq (${OS},solaris)
+	# Solaris version: requires -lsocket -lnsl and -L/usr/ucblib -lucb
+	#
+	BINDIR = ../bin/solaris
+	LIBRARIES = -lc -lm -lsocket -lnsl -L/usr/ucblib -lucb -lposix4 -lpthread ${BINDIR}/libmcl.a
+endif
+
+
+###### Other variables ######
+
+# Local CFLAGS.
+
+# gcc version
+CFLAGS  = -O -g ${OSFLAGS}
+
+# cc version
+# -fullwarn for IRIX c compiler
+#CFLAGS  = -O -fullwarn ${OSFLAGS} 
+
+SRCFILES = test_no_tx.c
+OFILES	 = test_no_tx.o
+TARGETS  = test_no_tx
+
+
+###### Dependancies ######
+
+all:	${TARGETS}
+
+test_no_tx:	test_no_tx.o ${BINDIR}/libmcl.a
+	${CC} ${CFLAGS} test_no_tx.o ${LIBRARIES} -o test_no_tx
+	strip test_no_tx
+
+clean :
+	@for f in core ${OFILES} ; do \
+		if [ -f "$${f}" ] ; then \
+			rm "$${f}"; \
+		fi \
+	done
+
+cleanall : clean
+	@for f in core ${TARGETS} ; do \
+		if [ -f "$${f}" ] ; then \
+			rm $${f} ; \
+		fi \
+	done
+
+depend :
+	# use -p to say that objects are in the bin dir
+	# ${DEPEND} -pbin/ -- ${CFLAGS} -- ${SRCFILES}
+	${DEPEND} -- ${CFLAGS} -- ${SRCFILES}
+
+
+# Dependencies automatically created by makedepend (see depend target above).
+#
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+test_no_tx.o: /usr/include/stdio.h /usr/include/features.h
+test_no_tx.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
+test_no_tx.o: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stddef.h
+test_no_tx.o: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stdarg.h
+test_no_tx.o: /usr/include/bits/types.h /usr/include/libio.h
+test_no_tx.o: /usr/include/_G_config.h /usr/include/bits/stdio_lim.h
+test_no_tx.o: /usr/include/netinet/in.h /usr/include/limits.h
+test_no_tx.o: /usr/include/bits/posix1_lim.h /usr/include/bits/local_lim.h
+test_no_tx.o: /usr/include/linux/limits.h /usr/include/bits/posix2_lim.h
+test_no_tx.o: /usr/include/stdint.h /usr/include/bits/wordsize.h
+test_no_tx.o: /usr/include/sys/types.h /usr/include/time.h
+test_no_tx.o: /usr/include/endian.h /usr/include/bits/endian.h
+test_no_tx.o: /usr/include/sys/select.h /usr/include/bits/select.h
+test_no_tx.o: /usr/include/bits/sigset.h /usr/include/sys/sysmacros.h
+test_no_tx.o: /usr/include/bits/socket.h /usr/include/bits/sockaddr.h
+test_no_tx.o: /usr/include/asm/socket.h /usr/include/asm/sockios.h
+test_no_tx.o: /usr/include/bits/in.h /usr/include/bits/byteswap.h
+test_no_tx.o: ../src/mcl_lib.h

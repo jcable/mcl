@@ -1,0 +1,467 @@
+	$Id: RELEASE_NOTES,v 1.29 2005/05/24 15:43:21 roca Exp $
+
+	-----------------------------------------------------
+	MCL LIBRARY RELEASE NOTES - vincent.roca@inrialpes.fr
+	-----------------------------------------------------
+
+
+Supported functionalities
+-------------------------
+
+The following table lists the supported functionalities in the
+various releases...
+
+  Functionalities                     library version number
+                                        2.3  2.4 2.99 2.991 2.992 2.993 2.994 2.995 2.996
+------upper interface-----------------|----|----|----|-----|-----|-----|-----|-----|-----|
+scatter/gather support                | NO | NO | NO | NO  | NO  | NO  | P   | P   | Y   |
+FLUTE API                             | NO | NO | NO | NO  | NO  | NO  | NO  | NO  | Y   |
+                                      |    |    |    |     |     |     |     |     |     |
+------networking----------------------|----|----|----|-----|-----|-----|-----|-----|-----|
+IPv6 support                          | NO | NO | NO | NO  | NO  | NO  | P   | Y   | Y   |
+IPv4 SSM (Source Specific Multicast)  | NO | NO | NO | NO  | NO  | NO  | NO  | NO  | Y   |
+IPv6 SSM (Source Specific Multicast)  | NO | NO | NO | NO  | NO  | NO  | NO  | NO  | P   |
+                                      |    |    |    |     |     |     |     |     |     |
+------reliability---------------------|----|----|----|-----|-----|-----|-----|-----|-----|
+FEC (reed-solomon) for reliability    | Y  | Y  | Y  | Y   | Y   | Y   | Y   | Y   | Y   |
+LDGM large block FEC codec            | NO | NO | Y  | Y   | Y   | Y   | Y   | Y   | Y   |
+                                      |    |    |    |     |     |     |     |     |     |
+------ALC/LCT functionalities---------|----|----|----|-----|-----|-----|-----|-----|-----|
+ALC (Asynch Layered Coding) compliant | Y  | Y  | Y  | Y   | R   | Y   | Y   | Y   | Y   |
+LCT (Layered Coding Transp) compliant | Y  | Y  | Y  | Y   | E   | Y   | Y   | Y   | Y   |
+virtual transmission memory service   | Y  | Y  | Y  | NO  | M   | NO  | NO  | NO  | NO  |
+virtual reception memory service      | Y  | Y  | Y  | NO  | O   | NO  | NO  | NO  | Y   |
+congestion control (RLC)              | Y  | Y  | Y  | Y   | V   | Y   | Y   | Y   | Y   |
+congestion control (FLID-SL)          | Y  | Y  | Y  | Y   | E   | Y   | Y   | Y   | Y   |
+select() support                      | P  | P  | Y  | Y   | D   | Y   | Y   | Y   | Y   |
+1->n with feedback n->1               | Y  | Y  | NO | NO  | !   | NO  | NO  | NO  | NO  |
+m->n support (can be both tx and rx)  | NO | NO | NO | NO  | !   | NO  | NO  | NO  | NO  |
+support of file size >> memory size   | Y  | Y  | NO | NO  | !   | NO  | NO  | NO  | NO  |
+                                      |    |    |    |     |     |     |     |     |     |
+------NORM functionalities------------|----|----|----|-----|-----|-----|-----|-----|-----|
+NORM support included                 | NO | NO | NO | NO  | Y   | Y   | Y   | Y   | Y   |
+NORM compliant                        | NO | NO | NO | NO  | NO  | NO  | NO  | NO  | NO  |
+congestion control (pgmcc/tfmcc)      | NO | NO | NO | NO  | NO  | NO  | NO  | NO  | NO  |
+                                      |    |    |    |     |     |     |     |     |     |
+------applications--------------------|----|----|----|-----|-----|-----|-----|-----|-----|
+flute compliant                       | NO | NO | NO | P   | NO  | Y   | Y   | Y   | Y   |
+fcast application                     | Y  | Y  | Y  | Y   | Y   | Y   | Y   | Y   | Y   |
+windows fcast GUI frontend            | Y  | Y  | Y  | Y   | Y   | Y   | Y   | NO  | NO  |
+robcast application                   | NO | NO | Y  | Y   | Y   | Y   | Y   | Y   | Y   |
+                                      |    |    |    |     |     |     |     |     |     |
+------system--------------------------|----|----|----|-----|-----|-----|-----|-----|-----|
+linux support                         | Y  | Y  | Y  | Y   | Y   | Y   | Y   | Y   | Y   |
+solaris support                       | Y  | Y  | Y  | Y   | Y   | Y   | Y   | Y   | Y   |
+freebsd support                       | NO | NO | NO | P   | NO  | P   | Y   | Y   | Y   |
+windows XP (visual C++)               | Y  | Y  | Y  | Y   | NO  | P   | P   | Y   | Y   |
+                                      |    |    |    |     |     |     |     |     |     |
+
+Y: yes		(validated)
+P: partial	(not fully validated or including known bugs or important
+		 limitations)
+NO: not available
+
+
+Notes for MCLv3 release 2.99.6 - May, 2005.
+-----------------------------------------------------
+
+This is a major version with many changes for the ALC and
+FLUTE part:
+- Creation of a C++ FLUTE API. The Flute application is now a small application
+  built on top of the FLUTE API. Writting your own application on top of this
+  FLUTE API enables a full and dynamic control of the FLUTE/ALC session, e.g. to
+  add transmission cycles to the carousel, add/remove files to the carousel, and
+  many other things. Extending the example Flute application to add new
+  functionalities is both feasible and straightforward.
+- Receivers are no longer limited by their RAM size (receiving files whose
+  size is an order of magnitude larger than the host's RAM is feasible).
+  This is made possible by a dedicated virtual receive memory management scheme.
+- IPv4 SSM (source specific multicast) is now supported.
+- IPv6 SSM (source specific multicast) is now supported (Linux with 2.6.x
+  kernels, tested with FC2 and FC3 distributions).
+- Added automatic MCLv3-FLUTE versus MAD-FLUTE interoperability validation
+  scripts.
+
+
+2/ NORM part:
+- No change.
+
+Dependancies: requires LDPC v1.8; only tested with Xerces-C++ v2.6.0
+
+
+Notes for MCLv3 release 2.99.5 - December 21st, 2004.
+-----------------------------------------------------
+
+This is a major version with many changes for the ALC and
+FLUTE part. We consider it is a stable version.
+1/ ALC part:
+- Largely improved FLUTE application:
+  * FLUTE is now based on Xerces-c, the XML library of the Apache
+    Software Foundation (view README for build instructions)
+  * FLUTE runs on all platforms, including Windows, FreeBSD, Solaris,
+    and iPAQ/Linux (!)
+  * Many FLUTE internal improvements
+  * Improved performances at a receiver (one data copy less thanks
+    to the mcl_recvmsg() function)
+  * Added a reception meter for each file sent within the session
+  * Added FLUTE man page (and updated FCAST's man page too)
+- IPv6 support on Windows platforms
+- Congestion control protocol can now be selected at runtime
+  (rather than preset at compilation time).
+- Short LCT header fields (16 bits) for the TOI and TSI fields 
+  are now supported and used whenever possible.
+- AIX, IRIX, HP-UX support added (thanks to Florian Geyer). 
+  Not fully tested though.
+- Many bugfixes
+- Warning: -singlelayer argument of FCAST/FLUTE is replaced by the -cc0
+  argument (i.e. no congestion control)
+2/ NORM part:
+- No change.
+
+Dependancies: only tested on LDPC v1.7 and Xerces-C++ v2.6.0
+
+
+Notes for MCLv3 release 2.99.4-unstable - October 4th, 2004.
+------------------------------------------------------------
+
+This is a major version with many changes for the ALC part. Due to the
+high number of changes, we consider it is an unstable version.
+1/ ALC part:
+- Added IPv6 support (only tested with FreeBSD; does not work yet
+  with Windows)
+- Improved LDGM-* support (results in significant memory savings).
+- Added an object aggregation scheme for improved efficiency when
+  sending a large number of small objects.
+- Completely re-wrote a great part of the internal ALC library
+  (even if not finished) and removed a lot of historical code.
+- Added mcl_recvmsg for scattering I/O.
+2/ NORM part:
+- No major changes, only cosmetic improvements.
+
+
+Notes for MCLv3 release 2.99.3b - March 9th, 2004.
+--------------------------------------------------
+
+This is the first release where NORM and ALC codes are both integrated.
+1/ ALC part:
+- This release requires LDPC_v1.3 (February 25th, 2004).
+- ALC/LCT/FLUTE compliant. Interoperability has been checked with three other
+  implementations.
+- many improvements (in particular new blocking algorithm both at ALC and
+  FCAST, better FEC support, supports FEC Encoding ID 129 when used with
+  small block FEC (not recommended though))
+- FLUTE application improvements (yet FCAST remains the prefered, most
+  stable application), but it is still not available under Windows.
+- FCAST automatically chooses between Reed-Solomon and LDGM FEC depending
+  on each file size, so both codecs may be used in the same session.
+- FLID-SL is the new congestion control default (yet MCLv3 can be
+  compiled with RLC support if needed by changing src/alc/mcl_profile.h file).
+  Many cleanups in FLID code.
+- FreeBSD support added (thanks to Panagiotis Astithas). Not fully tested
+  though.
+2/ NORM part:
+- removed many memory leaks (thanks to George Coulouris)
+- still rather experimental and non conformant... Use with great care!
+
+
+Notes for MCLv3 release 2.99.2 - December 19th, 2003.
+-----------------------------------------------------
+
+This is the first release of the NORM code.
+The current NORM protocol is still very very experimental (not fully tested)
+and does not conform to the latest NORM document (and only loosely to previous
+ones)!
+So only use it if you want to have a first feeling of what NORM support will
+look like in the future...
+- added NORM code...
+- ...and removed ALC code from this release!
+- only tested on Linux/Solaris, no Windows support yet for NORM.
+- the same FCAST application has been updated to run on both ALC and NORM.
+
+
+Notes for MCLv3 release 2.99.1 - November 24th, 2003.
+-----------------------------------------------------
+
+This is the second pre-MCLv3 release.
+This release includes both RSE and LDGM-staircase which is the new default.
+The LDGM-staircase source distribution (version 1.1 required) is available
+separately.
+
+- added FLUTE support (see draft-ietf-rmt-flute-04.txt).
+  This version is currently only available for Linux, and assumes gdome2
+  has been installed on your host. It is still experimental (some
+  limitations are known for this release), take it into account...
+- successful interoperability tests have been carried out with two other
+  ALC/FLUTE implementations, but this is not the end of the story...
+- LDGM-staircase is fully integrated and is the new default FEC codec.
+  Using this codec largely improves performances.
+  Yet if Linux/Solaris interoperate, because of the use of a different
+  srand()/rand() algorithms, Win32 tools using LDPC do not interoperate
+  with the corresponding Unix versions.
+- we changed the -plan profile of FCAST! It now defines a single layer
+  (unlike other -plow/med/high profiles). Consequently there is no
+  congestion control when -plan is used (it's useless within a LAN!)
+  and you shouldn't use it if routers are crossed...
+- many things have been clarified/improved in the source code, and several
+  bug corrected
+- NORM, currently under progress, is still not integrated in this release
+- the -phuge profile is no longer supported with the LDGM codec and by
+  default is undefined (enable the #define in mcl_profile.h if you want to
+  use it using Reed-Solomon)
+
+
+Notes for MCLv3 release 2.99.0 - July 22nd, 2003.
+-------------------------------------------------
+
+This is the first pre-MCLv3 release.
+Many things are new, including the distribution tree.
+In this release, only RSE is included by default.
+LDPC/LDGM is available separately and can be used in MCLv3, but at your
+own risks (LDGM integration is not finished, performances are often
+behind those of RSE, and Linux/Solaris interoperability is bad).
+Yet interested people can download the LDPC package, set the LDPC define
+in src/alc/mcl_profile.cpp, and compile everything (make alc; at the top
+directory). The NORM component is not available in this release (still
+under development...).
+
+- new distribution tree, with ALC/LCT and NORM sub-directories
+  (NORM, currently under progress is not integrated in this release)
+- progressive move from C to C++ and full reorganization of source files
+  is under progress. GCC is no longer supported, we use G++ instead.
+- new LDGM large block FEC codec partially integrated, but still
+  very experimental.
+- new RobCast application available to illustrate how ALC/LCT can be
+  used for a client/server application robust to any number of restart
+  of the client and/or the server application (thanks to Eric Nicolas). 
+- various bug corrections.
+
+
+Notes for release 2.4 - February 12th, 2003.
+--------------------------------------------
+
+- added the -singlelayer profile to FCAST and MCL. Enables an efficient use
+  of FCAST in closed/well known environments, where congestion control is not
+  required (e.g. satellites). Congestion control is not used then, so do not
+  use this mode when using FCAST over the Internet.
+  This mode is compatible with the -o[speed|space|cpu] and -p[low|mid|high|lan]
+  profiles.
+- added the -p datagram_size[/rate] argument to FCAST. Usefull to create
+  profiles other than those of p[low|mid|high|lan]
+- fixed a bug in FCAST when stopped with CTRL-C 
+- various minor MCL improvements
+- FcastWin Application updated for new features (v1.1)
+
+
+Notes for release 2.3 - Oct 1st, 2002.
+------------------------------------------
+
+- Some bugs have been reported and/or found in mcl and in the fcast tool, so 2.3 is a bug fixes release.
+- Improved some sockets and threads aspects in the WIN32 Version of fcast and mcl.
+- Added a new fcast test for single file without path in the validation scripts (check/).
+
+
+Notes for release 2.2.2 - Sept 20th, 2002.
+------------------------------------------
+
+- the MCL library is now distributed under a GNU LGPL (lesser GPL) license
+  to enable its use in private applications. The upper applications are still
+  distributed under a GNU GPL license.
+- fixed a bug in Fcast Tool (when overwriting, file was not tuncated if old file was bigger than new one)
+- +some minor updates.
+
+
+Notes for release 2.2.1 - May 30th, 2002.
+-----------------------------------------
+
+This is essentially a bug fix release, the only big change being the fcast
+frontend:
+- added a graphical Windows frontend to fcast: FcastWin (beta version)
+- fixed a bug when using several sessions
+- fixed memory leak problem (thanks to Liu)
+- fixed two fd leak problem (thanks to Xin Liu)
+- fixed few bugs in the fcast application.
+- added several validation programs
+- added compliancy with alc-07 draft
+
+
+Notes for release 2.2 - March, 2002.
+------------------------------------
+
+A major release, including several major improvements:
+- new packet scheduling for improved sequential disk accesses. Usefull for
+  the high speed transmission of files whose size >> physical memory size.
+  We succeeded in transmitting a 1GB file between two PIII/1GHz/Linux PCs
+  at a 4.174 Mbps rate in "push" mode ("read from disk/coding/transmission/
+  decoding/write to disk" times included).
+- reduced burstiness at the sending side
+- addition of FLID-SL (static layer) congestion control. Still a bit
+  experimental in this release. Use with care and prefer RLC in hard
+  environments!!!
+- improved performances, essentially noticeable with very large files
+- the <source_address; TSI> can be specified with FCAST to precisely
+  identify the ALC session and filter incoming packets
+
+
+Notes for release 2.1.1 - January 5th, 2002.
+---------------------------------------------
+
+- added -ifn option to FCAST for multi-homed hosts and routers.
+- Using a dedicated testbed (100mbps Ethernet, two PIII/1GHz/Linux PCs) and
+  40MB files, we achieved up to 13.6 Mbps transmission rates. 
+- several cleanups and minor corrections
+We believe this version is mature enough to be used in operational environments!
+
+
+Notes for release 2.1.0 - November 6th, 2001.
+---------------------------------------------
+
+- LCTv2 and ALCv3 compliancy
+- improved performances
+  Up to 3.5Mbps in PUSH mode with a 40MB file on a LAN (includes coding,
+  transfer and decoding time) and 4.0Mbps in ON-DEMAND with
+  the same file on a LAN (only includes transfer and decoding time).
+  Uses two PIII/700/Linux PCs.
+  After changing the ANTICIPATED_TX_FOR_PUSH_AGGRESSIVENESS parameter to favor
+  high end receivers, up to 6.8Mbps in PUSH mode on a LAN with the same file
+  and same hosts.
+  These are optimal throughput, in situations where no loss is experienced!
+  Parameters:
+  ./fcast -recv -a225.1.2.3/2323 -v0 -ospeed -plan -force
+  ./fcast -send -a225.1.2.3/2323 -v0 -ospeed -plan -repeat3 /tmp/file_40000000
+- several cleanups and minor corrections
+- works (again) under windows2000
+
+
+Notes for release 2.0.6 - October 2nd, 2001.
+---------------------------------------------
+
+Many important improvements...
+- many many performance improvements: ~2.4Mbps in PUSH mode with a
+  40MB file on a LAN, with two PIII/700/Linux PCs, using the following
+  parameters:
+  ./fcast -recv -a225.1.2.3/2323 -v0 -plan -ospeed -force
+  ./fcast -send -a225.1.2.3/2323 -v0 -plan -ospeed -fec2 -l6 /tmp/file_40000000
+  (and reception rates above 3Mbps have been experienced with smaller files)
+- improved time management in the transmission thread (derived from
+  code provided by Benoit. Thanks!)
+- fcast is now fully functional (e.g. it supports recursive mode)
+
+Limitation: no longer works with Windows (will be soon corrected)
+
+
+Notes for release 2.0.5 - July 27th, 2001.
+-------------------------------------------
+
+Some improvements...
+- support of CPU optimization mode in fcast/MCL.
+- improved support of Virtual Transmission/Reception
+  Memory service.
+- fixed several bugs in fcast.
+- added new fcast validation scripts.
+- fcast recursive mode is still unavailable (will be fixed
+  in the next release).
+
+
+Notes for release 2.0.4 - July 9th, 2001.
+------------------------------------------
+
+Several improvements...
+- supports disk storage of incoming packets on the receiving side
+- traces can be sent to a file rather than on stdout/stderr
+- includes a validation tool that produces ill-formed packets, to
+  check that a receiver identifies the problem suitably
+
+
+Notes for release 2.0.3 - June 11th, 2001.
+------------------------------------------
+
+A major release...
+- MCL is now LCT (Layered Coding Transport) compliant!
+- added a virtual transmission memory service to allow the transmission
+  of very large objects
+- added manual pages
+- the fcast application now includes several high level optimisations
+  (tx profile for low/medium/high rates and space versus speed optimization)
+- added the MCL_OPT_POSTPONE_FEC_DECODING mode (very usefull to optimize
+  reception times with high speed connections and/or slow FEC codecs.
+- added various other object/symbol scheduling modes
+
+
+Notes for release 2.0.1 - January 2001.
+---------------------------------------
+
+An important evolution of 2.0.pre_alpha:
+- more supported platforms (including WindowsNT 4.0) and several
+  C/C++ compilers.
+- multiple sessions can be defined within a single MCL instance (i.e. an
+  application)
+- many internal major redesign and improvements
+- full memory cleanup
+
+
+Notes for release 2.0.pre_alpha - October 2000.
+-----------------------------------------------
+
+This is a major release!
+- MCL is now ALC (Asynchronous Layered Coding) compliant!
+- Fcast (multicast file transfer) as defined in ALC i-draft
+- object/block/symbol supported
+- delivery of ADUs in arrival order now supported
+- many internal major redesign and improvements
+
+
+Notes for release 1.2 - July 27th, 2000.
+----------------------------------------
+
+- ODL support added (see http://www-rp.lip6.fr/~roca/mcl/)
+- RLC support added for multicast congestion control
+- internal major redesign
+
+
+Notes for release 1.1 - January 6th, 2000.
+------------------------------------------
+
+- added a FSM (Finite State Machine)
+- added functions to add/drop a layer (can be called e.g. by a congestion
+  control module) (only available with GMMG scheduling)
+- a host can at the same time receive and transmit in unicast over an MCL
+  endpoint (feedback of each receiver as with bench[d] in RTT mode).
+- support the select() syscall of the Socket API to wait on MCL and/or
+  other non MCL endpoints (i.e. on a standard socket) (not fully tested yet!)
+
+Known problems (in addition to limitations listed in the table):
+
+- DSS/plain schedulings are provisoirely broken in this version
+
+
+Notes for release 1.0 - October 22, 1999.
+-----------------------------------------
+
+Many improvements in this release:
+
+- comes with the bench traffic generator, modified to use the library API
+- DSS sched now works normally
+- a basic scheduling (called plain sched) is available. Consists in a single
+  layer where packets are sent in sequence
+- signalization redundancy has been improved. Data packets are now
+  self-sufficient even if new ADUs are still announced as soon as possible
+- improved statistics
+- tested on Linux (see note for release 0.9b) and Solaris 2.5.1/2.6
+
+Known problems (in addition to limitations listed in the table):
+
+- very large memory consumption at the sending side (no freeing policy yet)
+- no session nore configuration announcement
+
+
+Notes for release 0.9beta - July 22, 1999.
+------------------------------------------
+
+First public release.
+This is still beta code and many aspects are still not supported.
+Yet you can use it with the internal application (we still have a few
+problems with the external bench application).
+Currently it has only been tested on Linux (RedHat5.x/standard 2.0.3x
+kernels plateforms).
+(NB: beware of multicast compilation options if you build a personal kernel!)
+
